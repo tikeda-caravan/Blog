@@ -14,5 +14,25 @@
     "preview": {},
     "last_modified": "2020-08-13T21:09:45+09:00",
     "input_file": {}
+  },
+  {
+    "path": "posts/2020-08-13-distill-blog/",
+    "title": "distill パッケージ使ってblog記事を作る",
+    "description": "Rstudio社が提供するdistill パッケージを使って、Blog記事の作り方の説明",
+    "author": [
+      {
+        "name": "あんごう",
+        "url": "about.html"
+      }
+    ],
+    "date": "2020-08-13",
+    "categories": [
+      "R",
+      "distill",
+      "blog"
+    ],
+    "preview": "posts/2020-08-13-distill-blog/distill-preview.png",
+    "last_modified": "2020-08-13T23:14:57+09:00",
+    "input_file": "distill-blog.utf8.md"
   }
 ]
