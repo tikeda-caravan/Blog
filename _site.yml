@@ -4,6 +4,7 @@ description: |
   自由気ままにあんごうがRのこと(その他)を書いてくブログ
 output_dir: "_site"
 navbar:
+  logo: images/tikeda-logo.jpeg
   right:
     - text: "Home"
       href: index.html
