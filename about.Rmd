@@ -1,0 +1,19 @@
+---
+title: "About this blog"
+description: |
+  Some additional details about the blog
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+はじめまして、あんごうと言います。
+
+このBlogは、あんごうの、あんごうによる、あんごうのためのBlogになります。
+
+具体的に言うと、あんごうはおバカさんなのですぐ物事を忘れてしまいます。
+なので、このBlogをあんごうの暗記メモとして活用していきたいと思います。
+
+あんごうは、まだ分からないことが多いので、暖かい目で見守っていただけるとうれしいです。
+

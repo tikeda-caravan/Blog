@@ -1,0 +1,27 @@
+---
+title: "Welcome to あんごうの経験"
+description: |
+  Welcome to our new blog, あんごうの経験. We hope you enjoy 
+  reading what we have to say!
+author:
+  - name: あんごう
+    url: about.html
+date: 08-13-2020
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Learn more about creating blogs with Distill at:
+# https://rstudio.github.io/distill/blog.html
+
+```
+
+はじめまして、あんごうです。
+
+このBlogについては、[ここ](about.html)をご覧ください。
+
