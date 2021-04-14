@@ -1,0 +1,100 @@
+---
+title: "アンケートデータの加工技術-その1"
+description: |
+  A short description of the post.
+author:
+  - name: あんごう
+    url: about.html
+date: 04-08-2021
+output:
+  distill::distill_article:
+    self_contained: false
+    draft: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+```
+
+# アンケートデータの特性
+
+アンケートデータの一般的な形は以下のデータ形式であることが多い。
+
+```{r}
+answer <- tibble::tibble(
+  id = 1:100,
+  sex = as.numeric(rbernoulli(n = 100, p = 0.4)) + 1,
+  age = rbinom(n = 100, size = 100, prob = 0.5),
+  prefid = as.integer(runif(n = 100, min = 1, max = 47))
+) %>% 
+  print
+```
+
+```{r}
+layouts <- read.csv(file = here::here("_posts/2021-04-08-1/layouts.csv")) %>% 
+  print
+```
+
+```{r}
+answer_longer <- answer %>% 
+  tidyr::pivot_longer(-id, names_to = "variables", values_to = "values") %>% 
+  dplyr::left_join(layouts, by = c("variables", "values" = "choices")) %>% 
+  print
+```
+
+```{r}
+answer_wider <- answer_longer %>% 
+  tidyr::pivot_wider(
+    names_from = c("variables", "variables.lab"),
+    values_from = c("values", "choices.lab")
+  ) %>% 
+  print
+```
+
+```{r}
+answer_wider <- answer_longer %>% 
+  tidyr::pivot_wider(
+    names_from = c("variables"), values_from = c("values", "choices.lab")
+  ) %>% 
+  print
+```
+
+```{r}
+answer_longer <- answer %>% 
+  tidyr::pivot_longer(-id, names_to = "variables", values_to = "values") %>% 
+  dplyr::left_join(layouts, by = c("variables", "values" = "choices")) %>% 
+  dplyr::select(-variables.lab) %>% 
+  print
+
+answer_wider <- answer_longer %>% 
+  tidyr::pivot_wider(
+    names_from = c("variables"),
+    values_from = c("values", "choices.lab"),
+    names_glue = "{variables}_{.value}",
+  ) %>% 
+  dplyr::rename_with(~stringr::str_remove(.x, "_values")) %>% 
+  dplyr::rename_with(~stringr::str_remove(.x, "_values")) %>% 
+  print
+```
+
+```{r}
+answer_longer <- answer %>% 
+  tidyr::pivot_longer(-id, names_to = "variables", values_to = "values") %>% 
+  dplyr::left_join(layouts, by = c("variables", "values" = "choices")) %>% 
+  dplyr::select(-variables.lab) %>% 
+  print
+
+answer_wider <- answer_longer %>% 
+  dplyr::mutate(choices = paste0(variables, ".lab")) %>%
+  tidyr::pivot_wider(
+    names_from = c("variables"),
+    values_from = c("values"),
+  ) %>% 
+  tidyr::pivot_wider(
+    names_from = "choices",
+    values_from = "choices.lab"
+  ) %>% 
+  print
+```
+

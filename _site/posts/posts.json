@@ -1,5 +1,21 @@
 [
   {
+    "path": "posts/2021-04-08-1/",
+    "title": "アンケートデータの加工技術-その1",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "あんごう",
+        "url": "about.html"
+      }
+    ],
+    "date": "2021-04-08",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2021-04-14T17:44:25+09:00",
+    "input_file": "1.utf8.md"
+  },
+  {
     "path": "posts/welcome/",
     "title": "Welcome to あんごうの経験",
     "description": "Welcome to our new blog, あんごうの経験. We hope you enjoy \nreading what we have to say!",
