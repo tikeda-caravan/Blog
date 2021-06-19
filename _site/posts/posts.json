@@ -1,37 +1,5 @@
 [
   {
-    "path": "posts/2021-04-08-1/",
-    "title": "アンケートデータの加工技術-その1",
-    "description": "A short description of the post.",
-    "author": [
-      {
-        "name": "あんごう",
-        "url": "about.html"
-      }
-    ],
-    "date": "2021-04-08",
-    "categories": [],
-    "preview": {},
-    "last_modified": "2021-04-14T17:44:25+09:00",
-    "input_file": "1.utf8.md"
-  },
-  {
-    "path": "posts/welcome/",
-    "title": "Welcome to あんごうの経験",
-    "description": "Welcome to our new blog, あんごうの経験. We hope you enjoy \nreading what we have to say!",
-    "author": [
-      {
-        "name": "あんごう",
-        "url": "about.html"
-      }
-    ],
-    "date": "2020-08-13",
-    "categories": [],
-    "preview": {},
-    "last_modified": "2020-08-13T21:09:45+09:00",
-    "input_file": {}
-  },
-  {
     "path": "posts/2020-08-13-distill-blog/",
     "title": "distill パッケージ使ってblog記事を作る",
     "description": "Rstudio社が提供するdistill パッケージを使って、Blog記事の作り方の説明",
@@ -48,7 +16,21 @@
       "blog"
     ],
     "preview": "posts/2020-08-13-distill-blog/distill-preview.png",
-    "last_modified": "2020-08-13T23:14:57+09:00",
-    "input_file": "distill-blog.utf8.md"
+    "last_modified": "2020-08-13T23:14:56+09:00"
+  },
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to あんごうの経験",
+    "description": "Welcome to our new blog, あんごうの経験. We hope you enjoy \nreading what we have to say!",
+    "author": [
+      {
+        "name": "あんごう",
+        "url": "about.html"
+      }
+    ],
+    "date": "2020-08-13",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2020-08-13T21:09:45+09:00"
   }
 ]
