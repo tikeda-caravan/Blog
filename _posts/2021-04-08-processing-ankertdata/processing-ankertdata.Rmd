@@ -9,7 +9,7 @@ date: 04-08-2021
 output:
   distill::distill_article:
     self_contained: false
-    draft: true
+draft: true
 ---
 
 ```{r setup, include=FALSE}
@@ -32,7 +32,9 @@ answer <- tibble::tibble(
 ```
 
 ```{r}
-layouts <- read.csv(file = here::here("_posts/2021-04-08-1/layouts.csv")) %>% 
+layouts <- read.csv(
+    file = here::here("_posts/2021-04-08-processing-ankertdata/layouts.csv")
+  ) %>% 
   print
 ```
 
@@ -68,13 +70,13 @@ answer_longer <- answer %>%
   print
 
 answer_wider <- answer_longer %>% 
-  tidyr::pivot_wider(
-    names_from = c("variables"),
-    values_from = c("values", "choices.lab"),
-    names_glue = "{variables}_{.value}",
-  ) %>% 
-  dplyr::rename_with(~stringr::str_remove(.x, "_values")) %>% 
-  dplyr::rename_with(~stringr::str_remove(.x, "_values")) %>% 
+  # tidyr::pivot_wider(
+  #   names_from = c("variables"),
+  #   values_from = c("values", "choices.lab"),
+  #   names_glue = "{variables}_{.value}",
+  # ) %>% 
+  # dplyr::rename(~stringr::str_remove(.x, "_values")) %>% 
+  # dplyr::rename(~stringr::str_remove(.x, "_values")) %>% 
   print
 ```
 
