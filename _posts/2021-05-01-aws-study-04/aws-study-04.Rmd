@@ -1,11 +1,11 @@
 ---
 title: "aws-study-04"
 description: |
-  A short description of the post.
+  AWSの勉強-ネットワーキング
 author:
   - name: あんごう
     url: about.html
-date: 05-01-2021
+date: "`r format(Sys.time(), '%Y/%m/%d')`"
 categories:
   - AWS
 output:

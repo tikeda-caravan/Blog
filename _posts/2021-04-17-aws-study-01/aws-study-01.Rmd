@@ -1,11 +1,11 @@
 ---
 title: "AWS-study-01"
 description: |
-  A short description of the post.
+  AWSの勉強-AWS認定試験について
 author:
   - name: あんごう
     url: about.html
-date: 04-17-2021
+date: "`r format(Sys.time(), '%Y/%m/%d')`"
 categories:
   - AWS
 output:
