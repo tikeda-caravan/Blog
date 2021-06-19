@@ -44,12 +44,12 @@
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","draft"]}},"value":[{"type":"character","attributes":{},"value":["アンケートデータの加工技術-その1"]},{"type":"character","attributes":{},"value":["A short description of the post.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["あんごう"]},{"type":"character","attributes":{},"value":["about.html"]}]}]},{"type":"character","attributes":{},"value":["04-08-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"logical","attributes":{},"value":[true]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","categories","output","draft"]}},"value":[{"type":"character","attributes":{},"value":["アンケートデータの加工技術-その1"]},{"type":"character","attributes":{},"value":["A short description of the post.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["あんごう"]},{"type":"character","attributes":{},"value":["about.html"]}]}]},{"type":"character","attributes":{},"value":["04-08-2021"]},{"type":"character","attributes":{},"value":["R"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_depth","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"logical","attributes":{},"value":[true]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["layouts.csv","processing-ankertdata_files/bowser-1.9.3/bowser.min.js","processing-ankertdata_files/distill-2.2.21/template.v2.js","processing-ankertdata_files/jquery-1.11.3/jquery.min.js","processing-ankertdata_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["layouts.csv","processing-ankertdata_files/bowser-1.9.3/bowser.min.js","processing-ankertdata_files/distill-2.2.21/template.v2.js","processing-ankertdata_files/header-attrs-2.6/header-attrs.js","processing-ankertdata_files/jquery-1.11.3/jquery.min.js","processing-ankertdata_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -964,6 +964,13 @@
 </div>
 
 <div class="d-article">
+<h3 class="d-toc-header">Table of Contents</h3>
+<nav class="d-toc" id="TOC">
+<ul>
+<li><a href="#アンケートデータの特性">アンケートデータの特性</a></li>
+</ul>
+</nav>
+<hr class="d-toc-separator"/>
 <h1 id="アンケートデータの特性">アンケートデータの特性</h1>
 <p>アンケートデータの一般的な形は以下のデータ形式であることが多い。</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -971,16 +978,16 @@
 # A tibble: 100 x 4
       id   sex   age prefid
    &lt;int&gt; &lt;dbl&gt; &lt;int&gt;  &lt;int&gt;
- 1     1     1    45     45
- 2     2     1    45     36
- 3     3     2    47     37
- 4     4     2    54     11
- 5     5     2    47     15
- 6     6     2    50     31
- 7     7     1    46     31
- 8     8     2    51      1
- 9     9     1    42      2
-10    10     2    52     28
+ 1     1     1    49     22
+ 2     2     1    52     13
+ 3     3     2    46     22
+ 4     4     1    42     36
+ 5     5     2    39     27
+ 6     6     1    52      7
+ 7     7     2    49     15
+ 8     8     2    47     37
+ 9     9     1    50      6
+10    10     2    57     38
 # … with 90 more rows</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
@@ -1043,15 +1050,15 @@
       id variables values variables.lab choices.lab
    &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;fct&gt;         &lt;fct&gt;      
  1     1 sex            1 性別          男性       
- 2     1 age           45 &lt;NA&gt;          &lt;NA&gt;       
- 3     1 prefid        45 都道府県      宮崎県     
+ 2     1 age           49 &lt;NA&gt;          &lt;NA&gt;       
+ 3     1 prefid        22 都道府県      静岡県     
  4     2 sex            1 性別          男性       
- 5     2 age           45 &lt;NA&gt;          &lt;NA&gt;       
- 6     2 prefid        36 都道府県      徳島県     
+ 5     2 age           52 &lt;NA&gt;          &lt;NA&gt;       
+ 6     2 prefid        13 都道府県      東京都     
  7     3 sex            2 性別          女性       
- 8     3 age           47 &lt;NA&gt;          &lt;NA&gt;       
- 9     3 prefid        37 都道府県      香川県     
-10     4 sex            2 性別          女性       
+ 8     3 age           46 &lt;NA&gt;          &lt;NA&gt;       
+ 9     3 prefid        22 都道府県      静岡県     
+10     4 sex            1 性別          男性       
 # … with 290 more rows</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
@@ -1059,16 +1066,16 @@
 # A tibble: 100 x 7
       id values_sex_性別 values_age_NA values_prefid_都…
    &lt;int&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;
- 1     1               1            45               45
- 2     2               1            45               36
- 3     3               2            47               37
- 4     4               2            54               11
- 5     5               2            47               15
- 6     6               2            50               31
- 7     7               1            46               31
- 8     8               2            51                1
- 9     9               1            42                2
-10    10               2            52               28
+ 1     1               1            49               22
+ 2     2               1            52               13
+ 3     3               2            46               22
+ 4     4               1            42               36
+ 5     5               2            39               27
+ 6     6               1            52                7
+ 7     7               2            49               15
+ 8     8               2            47               37
+ 9     9               1            50                6
+10    10               2            57               38
 # … with 90 more rows, and 3 more variables:
 #   choices.lab_sex_性別 &lt;fct&gt;, choices.lab_age_NA &lt;fct&gt;,
 #   choices.lab_prefid_都道府県 &lt;fct&gt;</code></pre>
@@ -1079,15 +1086,15 @@
       id variables.lab values_sex values_age values_prefid
    &lt;int&gt; &lt;fct&gt;              &lt;dbl&gt;      &lt;dbl&gt;         &lt;dbl&gt;
  1     1 性別                   1         NA            NA
- 2     1 &lt;NA&gt;                  NA         45            NA
- 3     1 都道府県              NA         NA            45
+ 2     1 &lt;NA&gt;                  NA         49            NA
+ 3     1 都道府県              NA         NA            22
  4     2 性別                   1         NA            NA
- 5     2 &lt;NA&gt;                  NA         45            NA
- 6     2 都道府県              NA         NA            36
+ 5     2 &lt;NA&gt;                  NA         52            NA
+ 6     2 都道府県              NA         NA            13
  7     3 性別                   2         NA            NA
- 8     3 &lt;NA&gt;                  NA         47            NA
- 9     3 都道府県              NA         NA            37
-10     4 性別                   2         NA            NA
+ 8     3 &lt;NA&gt;                  NA         46            NA
+ 9     3 都道府県              NA         NA            22
+10     4 性別                   1         NA            NA
 # … with 290 more rows, and 3 more variables: choices.lab_sex &lt;fct&gt;,
 #   choices.lab_age &lt;fct&gt;, choices.lab_prefid &lt;fct&gt;</code></pre>
 </div>
@@ -1097,30 +1104,30 @@
       id variables values choices.lab
    &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;fct&gt;      
  1     1 sex            1 男性       
- 2     1 age           45 &lt;NA&gt;       
- 3     1 prefid        45 宮崎県     
+ 2     1 age           49 &lt;NA&gt;       
+ 3     1 prefid        22 静岡県     
  4     2 sex            1 男性       
- 5     2 age           45 &lt;NA&gt;       
- 6     2 prefid        36 徳島県     
+ 5     2 age           52 &lt;NA&gt;       
+ 6     2 prefid        13 東京都     
  7     3 sex            2 女性       
- 8     3 age           47 &lt;NA&gt;       
- 9     3 prefid        37 香川県     
-10     4 sex            2 女性       
+ 8     3 age           46 &lt;NA&gt;       
+ 9     3 prefid        22 静岡県     
+10     4 sex            1 男性       
 # … with 290 more rows</code></pre>
 <pre><code>
 # A tibble: 300 x 4
       id variables values choices.lab
    &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;fct&gt;      
  1     1 sex            1 男性       
- 2     1 age           45 &lt;NA&gt;       
- 3     1 prefid        45 宮崎県     
+ 2     1 age           49 &lt;NA&gt;       
+ 3     1 prefid        22 静岡県     
  4     2 sex            1 男性       
- 5     2 age           45 &lt;NA&gt;       
- 6     2 prefid        36 徳島県     
+ 5     2 age           52 &lt;NA&gt;       
+ 6     2 prefid        13 東京都     
  7     3 sex            2 女性       
- 8     3 age           47 &lt;NA&gt;       
- 9     3 prefid        37 香川県     
-10     4 sex            2 女性       
+ 8     3 age           46 &lt;NA&gt;       
+ 9     3 prefid        22 静岡県     
+10     4 sex            1 男性       
 # … with 290 more rows</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
@@ -1129,30 +1136,30 @@
       id variables values choices.lab
    &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;fct&gt;      
  1     1 sex            1 男性       
- 2     1 age           45 &lt;NA&gt;       
- 3     1 prefid        45 宮崎県     
+ 2     1 age           49 &lt;NA&gt;       
+ 3     1 prefid        22 静岡県     
  4     2 sex            1 男性       
- 5     2 age           45 &lt;NA&gt;       
- 6     2 prefid        36 徳島県     
+ 5     2 age           52 &lt;NA&gt;       
+ 6     2 prefid        13 東京都     
  7     3 sex            2 女性       
- 8     3 age           47 &lt;NA&gt;       
- 9     3 prefid        37 香川県     
-10     4 sex            2 女性       
+ 8     3 age           46 &lt;NA&gt;       
+ 9     3 prefid        22 静岡県     
+10     4 sex            1 男性       
 # … with 290 more rows</code></pre>
 <pre><code>
 # A tibble: 300 x 7
       id   sex   age prefid sex.lab age.lab prefid.lab
    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;     
  1     1     1    NA     NA 男性    &lt;NA&gt;    &lt;NA&gt;      
- 2     1    NA    45     NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      
- 3     1    NA    NA     45 &lt;NA&gt;    &lt;NA&gt;    宮崎県    
+ 2     1    NA    49     NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      
+ 3     1    NA    NA     22 &lt;NA&gt;    &lt;NA&gt;    静岡県    
  4     2     1    NA     NA 男性    &lt;NA&gt;    &lt;NA&gt;      
- 5     2    NA    45     NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      
- 6     2    NA    NA     36 &lt;NA&gt;    &lt;NA&gt;    徳島県    
+ 5     2    NA    52     NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      
+ 6     2    NA    NA     13 &lt;NA&gt;    &lt;NA&gt;    東京都    
  7     3     2    NA     NA 女性    &lt;NA&gt;    &lt;NA&gt;      
- 8     3    NA    47     NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      
- 9     3    NA    NA     37 &lt;NA&gt;    &lt;NA&gt;    香川県    
-10     4     2    NA     NA 女性    &lt;NA&gt;    &lt;NA&gt;      
+ 8     3    NA    46     NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      
+ 9     3    NA    NA     22 &lt;NA&gt;    &lt;NA&gt;    静岡県    
+10     4     1    NA     NA 男性    &lt;NA&gt;    &lt;NA&gt;      
 # … with 290 more rows</code></pre>
 </div>
 <!--radix_placeholder_article_footer-->
