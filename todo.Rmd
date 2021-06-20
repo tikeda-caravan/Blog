@@ -1,0 +1,16 @@
+---
+title: "To do list"
+description: |
+  あんごうのTo Do list
+---
+
+あんごうのTodo-list
+
+# To Do List
+
+1. AWSの勉強
+1. 職務経歴書の完成
+1. 家計簿作成
+1. 標本調査論の勉強
+1. 因果推論の勉強
+1. Blogの更新
