@@ -10,10 +10,10 @@ navbar:
       href: index.html
     - text: "About"
       href: about.html
-    - icon: fab fa-github
-      href: https://github.com/tikeda-caravan
     - text: "To Do list"
       href: todo.html
+    - icon: fab fa-github
+      href: https://github.com/tikeda-caravan
 #    - icon: fab fa-twitter
 #      href: https://twitter.com/
 output: distill::distill_article
