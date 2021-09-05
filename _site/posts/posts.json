@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2021-09-05-example-of-nse/",
+    "title": "NSEを使った自作関数の作り方",
+    "description": "NSEを使った自作関数の作り方",
+    "author": [
+      {
+        "name": "あんごう",
+        "url": "about.html"
+      }
+    ],
+    "date": "2021-09-05",
+    "categories": [],
+    "contents": "\nNSEを使った自作関数の作り方\nやりたいこと\n以下に示していることを自作関数にして実行したい。\n\n\nlibrary(dplyr)\niris %>% \n  group_by(Species, Petal.Width) %>% \n  summarise(target_mean = mean(Sepal.Length))\n\n\n# A tibble: 27 × 3\n# Groups:   Species [3]\n   Species    Petal.Width target_mean\n   <fct>            <dbl>       <dbl>\n 1 setosa             0.1        4.82\n 2 setosa             0.2        4.97\n 3 setosa             0.3        4.97\n 4 setosa             0.4        5.3 \n 5 setosa             0.5        5.1 \n 6 setosa             0.6        5   \n 7 versicolor         1          5.41\n 8 versicolor         1.1        5.4 \n 9 versicolor         1.2        5.78\n10 versicolor         1.3        5.88\n# … with 17 more rows\n\n上記のことを、自作関数にしてみる。\n\n\ncompute_mean <- function(data, groups = ..., target_variables) {\n  groups <- as.list(rlang::enexpr(groups))\n  groups <- if (length(groups) > 1) groups[-1] else groups\n  target_variables <- enquo(target_variables)\n  data %>% \n    group_by(!!!groups) %>% \n    summarise(n = mean(!!target_variables))\n}\n\niris %>% compute_mean(\n  groups = c(Species, Petal.Width),\n  target_variables = Sepal.Length\n  )\n\n\n# A tibble: 27 × 3\n# Groups:   Species [3]\n   Species    Petal.Width     n\n   <fct>            <dbl> <dbl>\n 1 setosa             0.1  4.82\n 2 setosa             0.2  4.97\n 3 setosa             0.3  4.97\n 4 setosa             0.4  5.3 \n 5 setosa             0.5  5.1 \n 6 setosa             0.6  5   \n 7 versicolor         1    5.41\n 8 versicolor         1.1  5.4 \n 9 versicolor         1.2  5.78\n10 versicolor         1.3  5.88\n# … with 17 more rows\n\n無事自作関数を定義することができた!!!\n参考にしたサイト\nusing rlang NSE to group by multiple variables\n5 Dealing with multiple arguments\n他にもためしてみたこと\n\n\ngrouped_mean <- function(.data, .summary_var, groups, ...) {\n  .summary_var <- enquo(.summary_var)\n  \n  .data %>%\n    group_by(...) %>%\n    summarise(mean = mean(!!.summary_var))\n}\n\ngrouped_mean(iris, .summary_var = Sepal.Length, Species, Petal.Width)\n\n\n# A tibble: 22 × 2\n   Petal.Width  mean\n         <dbl> <dbl>\n 1         0.1  4.82\n 2         0.2  4.97\n 3         0.3  4.97\n 4         0.4  5.3 \n 5         0.5  5.1 \n 6         0.6  5   \n 7         1    5.41\n 8         1.1  5.4 \n 9         1.2  5.78\n10         1.3  5.88\n# … with 12 more rows\n\n引数が余分なものがある感じがして気持ち悪い…\nSession Information\n\n\nsessionInfo()\n\n\nR version 4.1.1 (2021-08-10)\nPlatform: x86_64-pc-linux-gnu (64-bit)\nRunning under: Ubuntu 20.04.3 LTS\n\nMatrix products: default\nBLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0\nLAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0\n\nlocale:\n [1] LC_CTYPE=ja_JP.UTF-8       LC_NUMERIC=C              \n [3] LC_TIME=ja_JP.UTF-8        LC_COLLATE=ja_JP.UTF-8    \n [5] LC_MONETARY=ja_JP.UTF-8    LC_MESSAGES=ja_JP.UTF-8   \n [7] LC_PAPER=ja_JP.UTF-8       LC_NAME=C                 \n [9] LC_ADDRESS=C               LC_TELEPHONE=C            \n[11] LC_MEASUREMENT=ja_JP.UTF-8 LC_IDENTIFICATION=C       \n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods  \n[7] base     \n\nother attached packages:\n[1] dplyr_1.0.7\n\nloaded via a namespace (and not attached):\n [1] rstudioapi_0.13   knitr_1.33        magrittr_2.0.1   \n [4] downlit_0.2.1     tidyselect_1.1.1  R6_2.5.0         \n [7] rlang_0.4.11      fansi_0.5.0       stringr_1.4.0    \n[10] tools_4.1.1       xfun_0.25         utf8_1.2.2       \n[13] cli_3.0.1         DBI_1.1.1         htmltools_0.5.1.1\n[16] ellipsis_0.3.2    assertthat_0.2.1  yaml_2.2.1       \n[19] digest_0.6.27     tibble_3.1.3      lifecycle_1.0.0  \n[22] crayon_1.4.1      purrr_0.3.4       vctrs_0.3.8      \n[25] distill_1.2       glue_1.4.2        evaluate_0.14    \n[28] rmarkdown_2.10    stringi_1.7.3     compiler_4.1.1   \n[31] pillar_1.6.2      generics_0.1.0    pkgconfig_2.0.3  \n\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-09-05T21:19:27+09:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/2020-08-13-distill-blog/",
     "title": "distill パッケージ使ってblog記事を作る",
     "description": "Rstudio社が提供するdistill パッケージを使って、Blog記事の作り方の説明",
@@ -15,8 +32,10 @@
       "distill",
       "blog"
     ],
+    "contents": "\nTable of Contents\ndistill パッケージについて\nなぜdistillパッケージを使うか?\nBlogの作り方\n記事の作り方終わりに\n\n\n\n\ndistill パッケージについて\ndistillパッケージは、Rstudio社が提供する?Rパッケージになります。 このパッケージは、Rを使ってBlogやWebサイトを構築できる便利なパッケージです。 このBlog記事も、distillパッケージを使ってBlog記事を書いています。\nなぜdistillパッケージを使うか?\nRでBlogやWebサイトを構築するパッケージには、blogdownパッケージやrmarkdownパッケージがありますが、blogdownはhugoとか使わないといけないし、rmarkdownだと、素っ気ない感じがしてました(cssとか設定がめんどい…)。\nなんでdistillパッケージで書いている記事を見つけた時は、hugoとかもいらないし、rmakdownと違ってスマートな装飾がいいじゃん!!!ってなりました。\nなので、結構お気に入りのパッケージなんですが、公式のサイトしか説明がない…\nということで、最初のBlog記事ということもあり、簡単にdistill パッケージで、 記事を作成する方法について書こうと思います。\nBlogの作り方\nまず、Rにdistillパッケージが入っていないと動かないのでインストールする\n\n\ninstall.packages(\"distill\")\nlibrary(distill)\n\n次に、サイトを作るのに必要なファイルを作ってくれるdistill::create_blog()をRのコンソールに入力する。\n\n\ncreate_blog(\n  dir = \"Blogのディレクトリを作る場所\",\n  title = \"blogのタイトル\"\n)\n\nこれで、Blogのために必要なファイルが作成される。\nRstudioを使っているのであれば、以下の画像のようにGUIの操作でBlogを作成することができる(楽チン)。\n\nすると以下の図のようなファイルができあがる\n\n\n\nそして、以下のコマンド\n\n\nrmarkdown::render_site(encoding = 'UTF-8')\n\nか、Rstuioを使っている人なら、ctrl + shift + B(windows)、もしくは command + shift + B(Mac)を入力するとBlogができる!!! 詳しくは、君たちの目で確かめてね!(時間がある時に更新します…)\n記事の作り方\n記事の作り方も簡単で以下のコマンドを打てば、_post/の下に記事のファイルが作られる。\n\n\ndistill::create_post(\n  title = \"記事のタイトル\",\n  author = \"作成者\",\n  draft =  FALSE, # 下書きかどうかを決める引数 TRUE = 下書き, FALSE = 下書きにしない\n)\n\n終わりに\n自分のためのdistillなので、詳しくは、distillパッケージの本家サイトを見た方が早いです…\n他にも、サイトの構成をいじるTipsがあるのですが、また今度じっくりやります。\nそれでは、また…\n\n\n",
     "preview": "posts/2020-08-13-distill-blog/distill-preview.png",
-    "last_modified": "2020-08-13T23:14:56+09:00"
+    "last_modified": "2020-08-13T23:14:56+09:00",
+    "input_file": {}
   },
   {
     "path": "posts/welcome/",
@@ -30,7 +49,9 @@
     ],
     "date": "2020-08-13",
     "categories": [],
+    "contents": "\nはじめまして、あんごうと言います。\nこのBlogは、あんごうの、あんごうによる、あんごうのためのBlogになります。\n具体的に言うと、あんごうはおバカさんなのですぐ物事を忘れてしまいます。 なので、このBlogをあんごうの暗記メモとして活用していきたいと思います。\nあんごうは、まだ分からないことが多いので、暖かい目で見守っていただけるとうれしいです。\n\n\n",
     "preview": {},
-    "last_modified": "2020-08-13T21:09:45+09:00"
+    "last_modified": "2020-08-13T21:09:45+09:00",
+    "input_file": {}
   }
 ]

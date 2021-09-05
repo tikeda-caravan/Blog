@@ -1,0 +1,73 @@
+---
+title: "NSEを使った自作関数の作り方"
+description: |
+  NSEを使った自作関数の作り方
+author:
+  - name: あんごう
+    url: about.html
+date: 09-05-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+## NSEを使った自作関数の作り方
+
+### やりたいこと
+
+以下に示していることを自作関数にして実行したい。
+
+```{r}
+library(dplyr)
+iris %>% 
+  group_by(Species, Petal.Width) %>% 
+  summarise(target_mean = mean(Sepal.Length))
+```
+
+上記のことを、自作関数にしてみる。
+
+```{r}
+compute_mean <- function(data, groups = ..., target_variables) {
+  groups <- as.list(rlang::enexpr(groups))
+  groups <- if (length(groups) > 1) groups[-1] else groups
+  target_variables <- enquo(target_variables)
+  data %>% 
+    group_by(!!!groups) %>% 
+    summarise(n = mean(!!target_variables))
+}
+
+iris %>% compute_mean(
+  groups = c(Species, Petal.Width),
+  target_variables = Sepal.Length
+  )
+```
+
+無事自作関数を定義することができた!!!
+
+参考にしたサイト
+
+- [using `rlang` NSE to group by multiple variables](https://stackoverflow.com/questions/59553613/using-rlang-nse-to-group-by-multiple-variables)
+- [5 Dealing with multiple arguments](https://tidyeval.tidyverse.org/multiple.html)
+
+## 他にもためしてみたこと
+
+```{r}
+grouped_mean <- function(.data, .summary_var, groups, ...) {
+  .summary_var <- enquo(.summary_var)
+  
+  .data %>%
+    group_by(...) %>%
+    summarise(mean = mean(!!.summary_var))
+}
+
+grouped_mean(iris, .summary_var = Sepal.Length, Species, Petal.Width)
+```
+
+引数が余分なものがある感じがして気持ち悪い...
+
+# Session Information
+
+```{r}
+sessionInfo()
+```
+
