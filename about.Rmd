@@ -1,18 +1,14 @@
 ---
 title: "About this blog"
 description: |
-  Some additional details about the blog
+  統計学や機械学習の勉強メモ, RのTipsを紹介するBlogになります。
 ---
+<center>
+<span style="font-size: 200%; color: red;">はい、ドーン!!!!!!</span>
+</center>
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
+![うちのぬこ](images/tikeda-logo.jpeg)
 
-はじめまして、あんごうと言います。
+ごめんなさい、ただうちのぬこを紹介したかっただけです。。。
 
-このBlogは、あんごうの、あんごうによる、あんごうのためのBlogになります。
-
-具体的に言うと、あんごうはおバカさんなのですぐ物事を忘れてしまいます。
-なので、このBlogをあんごうの暗記メモとして活用していきたいと思います。
-
-あんごうは、まだ分からないことが多いので、暖かい目で見守っていただけるとうれしいです。
+改めてこのブログについてですが、tikeda-caravanの勉強したことやRのTips等を残していくことをメインしたブログになります。。。

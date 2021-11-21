@@ -2,14 +2,14 @@
 title: "distill パッケージ使ってblog記事を作る"
 description: |
   Rstudio社が提供するdistill パッケージを使って、Blog記事の作り方の説明
+preview: https://github.com/rstudio/distill/blob/main/man/figures/logo.png?raw=true
 author:
-  - name: あんごう
+  - name: tikeda-caravan
     url: about.html
 date: 08-13-2020
 categories:
   - R
   - distill
-  - blog
 output:
   distill::distill_article:
     self_contained: true
@@ -19,11 +19,11 @@ draft: false
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
-library(klippy)
+# library(klippy)
 ```
 
 ```{r klippy, echo=FALSE, include=TRUE}
-klippy::klippy()
+# klippy::klippy()
 ```
 
 ## distill パッケージについて

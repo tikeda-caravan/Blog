@@ -3,7 +3,7 @@ title: "アンケートデータの加工技術-その1"
 description: |
   A short description of the post.
 author:
-  - name: あんごう
+  - name: tikeda-caravan
     url: about.html
 date: 04-08-2021
 categories:
@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 ```
 
-# アンケートデータの特性
+## アンケートデータの特性
 
 アンケートデータの一般的な形は以下のデータ形式であることが多い。
 
@@ -103,5 +103,11 @@ answer_wider <- answer_longer %>%
     values_from = "choices.lab"
   ) %>% 
   print
+```
+
+
+
+```{r}
+sessionInfo()
 ```
 
