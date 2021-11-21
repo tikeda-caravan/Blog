@@ -111,7 +111,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["NSEを使った自作関数の作り方"]},{"type":"character","attributes":{},"value":["NSEを使った自作関数の作り方\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["あんごう"]},{"type":"character","attributes":{},"value":["about.html"]}]}]},{"type":"character","attributes":{},"value":["09-05-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","preview","author","date","categories","output"]}},"value":[{"type":"character","attributes":{},"value":["NSEを使った自作関数の作り方"]},{"type":"character","attributes":{},"value":["NSEを使った自作関数の作り方\n"]},{"type":"character","attributes":{},"value":["https://raw.githubusercontent.com/rstudio/hex-stickers/13ed1ab84f92d90be43439c371a6cf2b49d8c373/SVG/tidyverse.svg"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["あんごう"]},{"type":"character","attributes":{},"value":["about.html"]}]}]},{"type":"character","attributes":{},"value":["09-05-2021"]},{"type":"character","attributes":{},"value":["R","tidyeval"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1467,6 +1467,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="d-title">
 <h1>NSEを使った自作関数の作り方</h1>
 <!--radix_placeholder_categories-->
+<div class="dt-tags">
+<div class="dt=tag">R</div>
+<div class="dt=tag">tidyeval</div>
+</div>
 <!--/radix_placeholder_categories-->
 <p><p>NSEを使った自作関数の作り方</p></p>
 </div>
@@ -1514,7 +1518,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <span class='va'>target_variables</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/tidyeval-compat.html'>enquo</a></span><span class='op'>(</span><span class='va'>target_variables</span><span class='op'>)</span>
   <span class='va'>data</span> <span class='op'>%&gt;%</span> 
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='op'>!</span><span class='va'>groups</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>target_variables</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>target_variables</span><span class='op'>)</span>, .groups <span class='op'>=</span> <span class='st'>"drop"</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 <span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>compute_mean</span><span class='op'>(</span>
@@ -1524,7 +1528,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </code></pre>
 </div>
 <pre><code># A tibble: 27 × 3
-# Groups:   Species [3]
    Species    Petal.Width     n
    &lt;fct&gt;            &lt;dbl&gt; &lt;dbl&gt;
  1 setosa             0.1  4.82
@@ -1553,7 +1556,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   
   <span class='va'>.data</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>mean <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>.summary_var</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>mean <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>.summary_var</span><span class='op'>)</span>, .groups <span class='op'>=</span> <span class='st'>"drop"</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 <span class='fu'>grouped_mean</span><span class='op'>(</span><span class='va'>iris</span>, .summary_var <span class='op'>=</span> <span class='va'>Sepal.Length</span>, <span class='va'>Species</span>, <span class='va'>Petal.Width</span><span class='op'>)</span>
@@ -1581,7 +1584,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>R version 4.1.1 (2021-08-10)
+<pre><code>R version 4.1.2 (2021-11-01)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: Ubuntu 20.04.3 LTS
 
@@ -1608,13 +1611,13 @@ loaded via a namespace (and not attached):
  [1] rstudioapi_0.13   knitr_1.33        magrittr_2.0.1   
  [4] downlit_0.2.1     tidyselect_1.1.1  R6_2.5.0         
  [7] rlang_0.4.11      fansi_0.5.0       stringr_1.4.0    
-[10] tools_4.1.1       xfun_0.25         utf8_1.2.2       
+[10] tools_4.1.2       xfun_0.25         utf8_1.2.2       
 [13] cli_3.0.1         DBI_1.1.1         htmltools_0.5.1.1
 [16] ellipsis_0.3.2    assertthat_0.2.1  yaml_2.2.1       
 [19] digest_0.6.27     tibble_3.1.3      lifecycle_1.0.0  
 [22] crayon_1.4.1      purrr_0.3.4       vctrs_0.3.8      
 [25] distill_1.2       glue_1.4.2        evaluate_0.14    
-[28] rmarkdown_2.10    stringi_1.7.3     compiler_4.1.1   
+[28] rmarkdown_2.10    stringi_1.7.3     compiler_4.1.2   
 [31] pillar_1.6.2      generics_0.1.0    pkgconfig_2.0.3  </code></pre>
 </div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>

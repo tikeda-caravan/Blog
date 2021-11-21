@@ -3,17 +3,17 @@
     {
       "path": "about.html",
       "title": "About this blog",
-      "description": "Some additional details about the blog",
+      "description": "統計学や機械学習の勉強メモ, RのTipsを紹介するBlogになります。",
       "author": [],
-      "contents": "\nはじめまして、あんごうと言います。\nこのBlogは、あんごうの、あんごうによる、あんごうのためのBlogになります。\n具体的に言うと、あんごうはおバカさんなのですぐ物事を忘れてしまいます。 なので、このBlogをあんごうの暗記メモとして活用していきたいと思います。\nあんごうは、まだ分からないことが多いので、暖かい目で見守っていただけるとうれしいです。\n\n\n\n",
-      "last_modified": "2021-09-05T21:19:50+09:00"
+      "contents": "\n\nはい、ドーン!!!!!!\n\nうちのぬこごめんなさい、ただうちのぬこを紹介したかっただけです。。。\n改めてこのブログについてですが、tikeda-caravanの勉強したことやRのTips等を残していくことをメインしたブログになります。。。\n\n\n\n",
+      "last_modified": "2021-11-21T15:05:44+09:00"
     },
     {
       "path": "index.html",
       "title": "あんごうの経験",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2021-09-05T21:19:50+09:00"
+      "last_modified": "2021-11-21T15:05:45+09:00"
     },
     {
       "path": "todo.html",
@@ -21,7 +21,7 @@
       "description": "あんごうのTo Do list",
       "author": [],
       "contents": "\nあんごうのTodo-list\nTo Do List\nAWSの勉強\n職務経歴書の完成\n家計簿作成\n標本調査論の勉強\n因果推論の勉強\nBlogの更新\n\n\n\n",
-      "last_modified": "2021-09-05T21:19:50+09:00"
+      "last_modified": "2021-11-21T15:05:45+09:00"
     }
   ],
   "collections": ["posts/posts.json"]

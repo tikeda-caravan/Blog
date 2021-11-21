@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
+  <url>
+    <loc>https://ango-blog.netlify.app/about.html</loc>
+    <lastmod>2021-11-21T14:55:32+09:00</lastmod>
+  </url>
+  <url>
+    <loc>https://ango-blog.netlify.app/</loc>
+    <lastmod>2021-11-20T19:06:33+09:00</lastmod>
+  </url>
+  <url>
+    <loc>https://ango-blog.netlify.app/todo.html</loc>
+    <lastmod>2021-11-20T19:06:33+09:00</lastmod>
+  </url>
+  <url>
+    <loc>https://ango-blog.netlify.app/posts/2021-09-05-example-of-nse/</loc>
+    <lastmod>2021-11-21T14:32:30+09:00</lastmod>
+  </url>
+  <url>
+    <loc>https://ango-blog.netlify.app/posts/2020-08-13-distill-blog/</loc>
+    <lastmod>2021-11-21T14:40:48+09:00</lastmod>
+  </url>
+  <url>
+    <loc>https://ango-blog.netlify.app/posts/welcome/</loc>
+    <lastmod>2021-11-21T15:02:29+09:00</lastmod>
+  </url>
+</urlset>

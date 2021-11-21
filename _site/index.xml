@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>あんごうの経験</title>
+    <link>https://ango-blog.netlify.app</link>
+    <atom:link href="https://ango-blog.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
+    <description>自由気ままにRのこと(その他)を書いてくブログ
+</description>
+    <image>
+      <title>あんごうの経験</title>
+      <url>https://ango-blog.netlify.app/images/tikeda-logo.jpeg</url>
+      <link>https://ango-blog.netlify.app</link>
+    </image>
+    <generator>Distill</generator>
+    <lastBuildDate>Sun, 05 Sep 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>NSEを使った自作関数の作り方</title>
+      <dc:creator>あんごう</dc:creator>
+      <link>https://ango-blog.netlify.app/posts/2021-09-05-example-of-nse</link>
+      <description>NSEを使った自作関数の作り方</description>
+      <category>R</category>
+      <category>tidyeval</category>
+      <guid>https://ango-blog.netlify.app/posts/2021-09-05-example-of-nse</guid>
+      <pubDate>Sun, 05 Sep 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://raw.githubusercontent.com/rstudio/hex-stickers/13ed1ab84f92d90be43439c371a6cf2b49d8c373/SVG/tidyverse.svg" medium="image" type="image/svg+xml"/>
+    </item>
+    <item>
+      <title>distill パッケージ使ってblog記事を作る</title>
+      <dc:creator>あんごう</dc:creator>
+      <link>https://ango-blog.netlify.app/posts/2020-08-13-distill-blog</link>
+      <description>Rstudio社が提供するdistill パッケージを使って、Blog記事の作り方の説明</description>
+      <category>R</category>
+      <category>distill</category>
+      <guid>https://ango-blog.netlify.app/posts/2020-08-13-distill-blog</guid>
+      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
+      <media:content url="https://github.com/rstudio/distill/blob/main/man/figures/logo.png?raw=true" medium="image" type="text/plain"/>
+    </item>
+    <item>
+      <title>Welcome to あんごうの経験</title>
+      <dc:creator>tikeda-caravan</dc:creator>
+      <link>https://ango-blog.netlify.app/posts/welcome</link>
+      <description>はじめまして！！！！！！！</description>
+      <guid>https://ango-blog.netlify.app/posts/welcome</guid>
+      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
+      <media:content url="https://ango-blog.netlify.app/posts/welcome/tikeda-logo.jpeg" medium="image" type="image/jpeg"/>
+    </item>
+  </channel>
+</rss>

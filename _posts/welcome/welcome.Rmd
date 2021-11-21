@@ -1,10 +1,10 @@
 ---
 title: "Welcome to あんごうの経験"
 description: |
-  Welcome to our new blog, あんごうの経験. We hope you enjoy 
-  reading what we have to say!
+  はじめまして！！！！！！！
+preview: tikeda-logo.jpeg
 author:
-  - name: あんごう
+  - name: tikeda-caravan
     url: about.html
 date: 08-13-2020
 output:
@@ -12,16 +12,24 @@ output:
     self_contained: false
 ---
 
+はじめまして、tikeda-caravanと申します。
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+まずはじめに、簡単に自分の経歴をお話しますと、1994年に日本の中国地方のとある田舎で誕生しました。
 
-# Learn more about creating blogs with Distill at:
-# https://rstudio.github.io/distill/blog.html
+大学・大学院生では、主に心理統計学という分野を専攻しておりました。
 
-```
+現在は、大学時代に学んだ統計学を活かして端くれですがデータサイエンティストを名乗っております。。。
 
-はじめまして、あんごうです。
+経歴の通り統計学を少しかじっていますが、まだまだ勉強が足りないと思っている今日この頃。。。
 
-このBlogについては、[ここ](about.html)をご覧ください。
+かつ覚えることが苦手な自分が何か備忘録として残すことを考えた結果の末、ブログに書けばいいやーという短絡的な志向に基づいて今回このブログを立ち上げました。
 
+自分のことを、データサイエンティストと呼ぶのもおこがましいですがこのBlogで成長記録を残していこうと思います。
+
+さて、このブログが作られた経緯を見ればわかりますが、このBlogのコンセプトは、tikeda-caravanの、tikeda-caravanによる、tikeda-caravanのためのBlogになります。
+
+なので、メモ書きみたいな殴り書きみたいな記事あって読みづらいことがあると思いますが、どうかご容赦ください...
+
+また、初めてのブログなので自分の言葉でうまく表現できているか分からないですが、温かい目で見守ってください orz
+
+それでは、よろしくおねがいしまぁぁぁぁす!!!!!

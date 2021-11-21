@@ -2,10 +2,14 @@
 title: "NSEを使った自作関数の作り方"
 description: |
   NSEを使った自作関数の作り方
+preview: https://raw.githubusercontent.com/rstudio/hex-stickers/13ed1ab84f92d90be43439c371a6cf2b49d8c373/SVG/tidyverse.svg
 author:
   - name: あんごう
     url: about.html
 date: 09-05-2021
+categories:
+  - R
+  - tidyeval
 output:
   distill::distill_article:
     self_contained: false
@@ -33,7 +37,7 @@ compute_mean <- function(data, groups = ..., target_variables) {
   target_variables <- enquo(target_variables)
   data %>% 
     group_by(!!!groups) %>% 
-    summarise(n = mean(!!target_variables))
+    summarise(n = mean(!!target_variables), .groups = "drop")
 }
 
 iris %>% compute_mean(
@@ -57,7 +61,7 @@ grouped_mean <- function(.data, .summary_var, groups, ...) {
   
   .data %>%
     group_by(...) %>%
-    summarise(mean = mean(!!.summary_var))
+    summarise(mean = mean(!!.summary_var), .groups = "drop")
 }
 
 grouped_mean(iris, .summary_var = Sepal.Length, Species, Petal.Width)
@@ -70,4 +74,3 @@ grouped_mean(iris, .summary_var = Sepal.Length, Species, Petal.Width)
 ```{r}
 sessionInfo()
 ```
-
