@@ -1,0 +1,41 @@
+---
+title: "Tips"
+description: |
+  URLだけのTips集
+author:
+  - name: tikeda-caravan
+    url: about.html
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+## R
+
+## hoai
+
+## Causal Inference
+
+## Git
+
+## hugo
+
+## MariaDB
+
+## Mermaid
+
+## Docker
+
+## LaTeX
+
+## AWS
+
+## samba
+
+## Various
+
+## 自作PC関連
+
+## Python
+
+## 統計検定
+
