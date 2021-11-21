@@ -16,6 +16,20 @@
       "last_modified": "2021-11-21T15:05:45+09:00"
     },
     {
+      "path": "tips.html",
+      "title": "Tips",
+      "description": "URLだけのTips集\n",
+      "author": [
+        {
+          "name": "tikeda-caravan",
+          "url": "about.html"
+        }
+      ],
+      "date": "`r Sys.Date()`",
+      "contents": "\n\nfind / -name brave 2>/dev/null\n\n\n\nlibrary(tidyverse)\nknitr::include_url(\"bookmarks_2021_11_21.html\", height = \"10000px\")\n\n\n\n\n\n\nbookmark <- rvest::read_html(\"bookmarks_2021_11_21.html\") %>%\n  rvest::html_nodes(\"dt\")\n\nbookmark %>% purrr::map(print)\n\nbookmark_df <- dplyr::tibble(\n  # h3 = rvest::html_text(bookmark),\n  h3 = rvest::html_node(bookmark, \"h3\") %>% rvest::html_text(),\n  text = rvest::html_node(bookmark, \"a\") %>% rvest::html_text(bookmark),\n  href = rvest::html_node(bookmark, \"a\") %>% rvest::html_attr(\"href\")\n) %>% \n  print\n  dplyr::mutate(text = list()) %>% \n  dplyr::mutate())\n\nlibrary(rvest)\nbookmark %>% html_node(\"a\")\n\nbookmark_df\n\na <- rvest::read_html(\"bookmarks_2021_11_21.html\") %>% \n  rvest::html_children() %>% \n  rvest::html_children() %>% \n  rvest::html_children() %>% \n  print\n  \n\nhoge <- dplyr::tibble(hoge = list(rvest::read_html(\"bookmarks_2021_11_21.html\"))) %>% \n  dplyr::mutate(jimi = purrr::map_chr(hoge, ~rvest::html_node(.x, \"h1\") %>% rvest::html_text())) %>% \n  print\n\nR\nhoai\nCausal Inference\nGit\nhugo\nMariaDB\nMermaid\nDocker\nLaTeX\nAWS\nsamba\nVarious\n自作PC関連\nPython\n統計検定\n\n\n\n",
+      "last_modified": "2021-11-21T16:50:45+09:00"
+    },
+    {
       "path": "todo.html",
       "title": "To do list",
       "description": "あんごうのTo Do list",
