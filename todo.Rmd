@@ -6,11 +6,16 @@ description: |
 
 あんごうのTodo-list
 
-# To Do List
+## To Do List
 
+1. 統計検定2級の勉強
 1. AWSの勉強
 1. 職務経歴書の完成
-1. 家計簿作成
+1. 家計簿
 1. 標本調査論の勉強
 1. 因果推論の勉強
 1. Blogの更新
+1. Bookmarkの整理
+  - Brave
+  - Chrome
+1. HDDの整理
