@@ -20,6 +20,8 @@ navbar:
       href: about.html
     - text: "To Do list"
       href: todo.html
+    - text: "Books"
+      href: books.html
 #     - icon: fab fa-github
 #       href: 
 #     - icon: fab fa-twitter
