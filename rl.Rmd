@@ -1,0 +1,415 @@
+---
+title: "RL"
+output: 
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+---
+
+```{r, echo=FALSE}
+library(xaringanExtra)
+xaringanExtra::use_clipboard()
+```
+
+
+- [ロケットリーグ おすすめカスタムトレーニング](https://embrems-game.com/gamememo/12/)
+
+## エアドリ
+
+<details>
+
+- [【ロケットリーグ】エアドリ完全攻略［入門用］3stepでエアドリブルというテクニックを習得しよう !!【Rocket League】](https://youtu.be/7_6F8O2zVgo)
+- カスタムコード
+
+```
+802E-AEB5-CA24-DD1C
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7_6F8O2zVgo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+- [【ロケットリーグ】エアドリ カスタムトレーニング](https://youtu.be/Y8IpgCDn1l8)
+- カスタムコード
+
+```
+DFAF-A119-60F9-927C
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Y8IpgCDn1l8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [【ロケットリーグ】エアドリ完全攻略２［実践用］エアドリブルのチャンスを自ら作ろう！【Rocket League】](https://youtu.be/VjZ6pmTkjBE)
+- カスタムコード
+```
+58C9-7BC4-ABB1-2DF7
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VjZ6pmTkjBE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [【RocketLeague】エアドリとかの切り離しのコツ教えたる【弁護士】](https://youtu.be/aXoLsRQPBr4)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aXoLsRQPBr4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+- [【解説】エアドリのマジでちょっとしたコツ【RocketLeague】](https://youtu.be/aOQ1-PLq-8E)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aOQ1-PLq-8E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+- [【中級者向け】実戦でエアドリを使えるようになるためには【RocketLeague】](https://youtu.be/C0ylcjpqNwQ)
+- カスタムコード
+```
+BC0B-D18F-75AB-58D0
+```
+<iframe width="560" height="315" src="https://www.youtube.com/embed/C0ylcjpqNwQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+## 頭乗せ
+
+<details>
+
+- [【ロケットリーグ】初心者用頭乗せトレーニング　誰でも頭乗せが出来るカスタムトレーニングを用意した‼︎【Rocket League】](https://youtu.be/1_ywhUhrwvg)
+- カスタムトレーニングコード<br>
+```
+1148-61A7-BABB-A6BA
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1_ywhUhrwvg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [【ロケットリーグ講座】頭乗せシュートの打ち方【初心者向け】](https://youtu.be/WmiY_PNYeS0)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WmiY_PNYeS0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [2021年最新【ロケットリーグ】一人でボールを運べ！頭乗せドリブルの基本【解説】](https://youtu.be/k_ghZhJVgPo)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/k_ghZhJVgPo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+
+## スピードフリップ
+
+<details>
+
+- [【ロケットリーグ】ファーストタッチの基礎知識！運ゲーにしない為のテクニック！（スピードフリップ含む）【Rocket League】](https://youtu.be/4AjKjHA6-0s)
+- カスタムコード
+```
+10C9-EEE3-1B03-5FB0
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4AjKjHA6-0s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+## トラップ
+
+<details>
+
+- [【ロケットリーグ】トラップトレーニング　不利な状況にしないためのテクニック‼︎【Rocket League】](https://youtu.be/opxISPGdByU)
+- カスタムコード
+```
+C262-24F7-8693-1D55
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/opxISPGdByU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+## ゴールディフェンス
+
+<details>
+
+- [【Yuhiのロケットリーグ講座 Part 2】目指すは鉄壁！ゴールディフェンス編](https://youtu.be/BYODm6Fp-AE)
+- カスタムコード
+```
+0327-ABF1-E8BB-EEC1
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BYODm6Fp-AE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+- [ランクアップするディフェンス練習【ロケットリーグ】](https://youtu.be/J1rCO8L7Uro)
+- カスタムコード
+```
+5CB2-6D82-1B54-47B7
+```
+<iframe width="560" height="315" src="https://www.youtube.com/embed/J1rCO8L7Uro" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+- [【ロケットリーグ】シャドウディフェンスのコツを授ける。](https://youtu.be/0LwOZY5RmjA)
+- カスタムコード
+```
+5CCE-FB29-7B05-A0B1
+```
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0LwOZY5RmjA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+- [ランクアップするディフェンス練習2【ロケットリーグ】](https://youtu.be/638v5voviFc)
+- カスタムコード
+```
+79EC-EC65-CA31-4561
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/638v5voviFc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+## Wall
+
+<details>
+
+- [【ロケットリーグ】初心者用壁打ちトレーニング　壁から離れたボールにも対応するテクニック‼︎【Rocket League】＃](https://youtu.be/EGredZgRrdA)
+- カスタムコード: 
+```
+E286-7381-024E-5793
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EGredZgRrdA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [壁が苦手な方へ カスタムトレーニング](https://youtu.be/jPFdIlSh0wY)
+- カスタムコード
+```
+BA11-B5F8-5283-C658
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jPFdIlSh0wY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+- [壁が苦手な方へ➁　壁打ちカスタムトレーニング](https://youtu.be/lPNUxpcGx7U)
+- カスタムコード
+```
+E163-0062-3BB9-AB61
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lPNUxpcGx7U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [【ロケットリーグ】壁の基本をマスターしよう](https://youtu.be/Cf6iG-yaYHw)
+- カスタムコード
+```
+3CBA-47A1-95E1-217D
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Cf6iG-yaYHw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+- [壁クリア練習参考動画](https://youtu.be/eb0AAwBdn00)
+- カスタムコード
+```
+F752-1470-BA42-1ED3
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eb0AAwBdn00" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [Nunkiのカストレ攻略室#4　～壁着地を活かしたボールコントロール～](https://youtu.be/5ndGBY-STGk)
+- カスタムコード
+```
+DBB9-6F02-3934-F01C
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5ndGBY-STGk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+## 背面
+
+<details>
+
+- [【ロケットリーグ】初心者用背面空中トレーニング　背面は地道に覚えるものだ‼︎【Rocket League】](https://youtu.be/ILa48mO_0Fw)
+- カスタムトレーニングコード: ```4AC6-447E-7202-D15E```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ILa48mO_0Fw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+## エアリアル
+
+<details>
+
+- [【ロケットリーグ】初心者用空中トレーニング　これでエアリアルを身に付けよう‼︎【Rocket League】]()
+- カスタムコード
+```
+353D-795C-1BEF-9EB2
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UW3EeU-sIAI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+- [【Yuhiのロケットリーグ講座 Part 3】華麗に空を飛ぼう！エアリアル・基礎編](https://youtu.be/BkmQ1MR6sYk)
+- カスタムコード
+```
+9A77-9A1C-456D-6723
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BkmQ1MR6sYk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [Rocket League 中級者エアリアル講座](https://youtu.be/D4KiDHTcDd4)
+- カスタムコード
+```
+35F4-E028-4008-18F4
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/D4KiDHTcDd4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+## ダブルタッチ
+
+<details>
+
+- [Rocket League　-How to Double Touch-](https://youtu.be/lDq847L8frs)
+- カスタムコード
+```
+3534-02B8-CDD3-29D8
+```
+```
+0CB0-16C8-DAAD-B578
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lDq847L8frs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [【初中級者向け】空中トレーニング解説！【DETONATOR】【ロケットリーグ】](https://youtu.be/Zv_71KQ93To)
+- カスタムコード
+```
+B70D-49C6-C3CF-A4F2
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Zv_71KQ93To" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+## シーリングショット
+
+<details>
+
+- [【ロケットリーグ】シーリングショットを4ステップに分けてマスターしよう！【解説】（カストレコードあり）](https://youtu.be/OXhaaGm1iMM)
+- カスタムコード
+```
+F34E-2C68-AD8E-A71C
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OXhaaGm1iMM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+## トルネードスピン・エアロール
+
+<details>
+
+- [【ロケットリーグ】トルネードスピンを5STEPで完全攻略！効率的な練習方法](https://youtu.be/Il4Sg_rmPlo)
+- 静止ボールタッチ
+
+```
+A3E1-92C2-8757-4195
+```
+
+- 動く空中ボールタッチ
+
+```
+FA24-B2B7-2E8E-193B
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Il4Sg_rmPlo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [【RocketLeague】マジで世界一簡単なエアロール解説【フリースタイル】](https://youtu.be/uQni7kdnePI)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uQni7kdnePI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [【解説】エアロール難民の君へ【RocketLeague】](https://youtu.be/_1640Gl2hLg)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_1640Gl2hLg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [【ロケットリーグ】フリースタイル入門　ひたすらくるくる回ってみよう！！！](https://youtu.be/zN7nRPM8X2g)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zN7nRPM8X2g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+- [エアロール解説](https://youtu.be/HH7hYzfaxn4)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HH7hYzfaxn4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+- [【ロケットリーグ】図解解説！ フリースタイルを始める前に知っておこう！ ボタンエアロールの知識と空中制御 ～左エアロールから見た世界～【Rocket League】](https://youtu.be/4MfMNgIxYjY)
+
+- ワークショップ
+- Speed Jump: Rings 2 - By dmc
+- https://steamcommunity.com/sharedfile...
+
+- Speed Jump: Trials 1
+- https://steamcommunity.com/sharedfile...
+
+- Lethamyr's Giant Rings Map
+- https://steamcommunity.com/sharedfile...
+
+- Lethamyr's Lava Rings
+- https://steamcommunity.com/sharedfile...
+
+- Lethamyr's Neon Heights Rings
+- https://steamcommunity.com/sharedfile...
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4MfMNgIxYjY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+- [＜ロケットリーグ＞ PS4GCが「上手い人は何故くるくる回りながら飛ぶの？」という疑問に答えてみた 「トルネードスピンについて」](https://youtu.be/WpEovBiPUMs)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WpEovBiPUMs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+## Other
+
+<details>
+
+- [【ロケットリーグ】初心者の人がやるべき練習をランクごとに解説!!!!O](https://youtu.be/_6WjToy6kf0)
+- カスタムコード
+```
+641C-4D0B-858A-485E
+```
+
+```
+3835-AFBA-7551-B77C
+```
+
+- 最速ジャンプ
+
+```
+E04E-C48A-B662-8841
+```
+
+```
+F6D6-E749-4D17-484D
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_6WjToy6kf0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+## 立ち回り
+
+<details>
+
+- [【Waveのコーチング#2】立ち回りで強くなるために！敵の動きを観察せよ！！【ロケットリーグ】【ダイヤモンド帯】](https://youtu.be/qadppr88qYw)
+- カスタムコード
+```
+6D70-7B8F-805D-8C5B
+```
+```
+1068-7BE9-7B9E-E23C
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qadppr88qYw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
+## 用語集
+
+<details>
+
+- [【ロケットリーグ】超重要用語集2021【ランク別】](https://youtu.be/yk48AORuqZY)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yk48AORuqZY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</details>
+
