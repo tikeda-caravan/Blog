@@ -3,28 +3,8 @@ title: "About this blog"
 description: |
   統計学や機械学習の勉強メモ, RのTipsを紹介するBlogになります。
 ---
-<center>
-<span style="font-size: 200%; color: red;">はい、ドーン!!!!!!</span>
-</center>
 
 ![うちのぬこ](images/tikeda-logo.jpeg)
 
-ごめんなさい、ただうちのぬこを紹介したかっただけです。。。
-
-改めてこのブログについてですが、tikeda-caravanの勉強したことやRのTips等を残していくことをメインしたブログになります。。。
-
-## PCスペック
-
-### CPU
-
-インテル® Core™ i7-11700K プロセッサー^[https://www.intel.co.jp/content/www/jp/ja/products/sku/212047/intel-core-i711700k-processor-16m-cache-up-to-5-00-ghz/specifications.html]
-
-### マザーボード
-
-TUF GAMING B560M-PLUS^[https://www.asus.com/jp/Motherboards-Components/Motherboards/TUF-Gaming/TUF-GAMING-B560M-PLUS/]
-
-
-### 電源
-
-Xseries SS-460FL^[https://kakaku.com/item/K0000257155/%3E/]
+改めてこのブログについてですが、tikeda-caravanの勉強したことやRのTips等を残していくことをメインしたブログになります。
 
