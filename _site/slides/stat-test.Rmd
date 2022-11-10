@@ -1,0 +1,920 @@
+---
+title: "stat test cheet sheet"
+author: 
+  - "Takahisa Ikeda"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    css: [xaringan-themer.css, extra.css]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      slideNumberFormat: "%current%/%total%"
+      countIncrementalSlides: true
+      navigation:
+        scroll: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width = 9, fig.height = 3.5, fig.retina = 3,
+  fig.align = "center",
+  out.width = "100%",
+  cache = FALSE,
+  echo = FALSE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringanExtra setting, echo=FALSE}
+xaringanExtra::use_tile_view()
+xaringanExtra::use_panelset()
+xaringanExtra::use_progress_bar(color = "#0051BA", location = "bottom")
+xaringanExtra::use_webcam()
+# xaringanExtra::use_clipboard()
+# htmltools::tagList(
+#   xaringanExtra::use_clipboard(
+#     button_text = "<i class=\"fa fa-clipboard\"></i>",
+#     success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+#     error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+#   ),
+#   rmarkdown::html_dependency_font_awesome()
+# )
+```
+
+```{r xaringanthemer setting, include=FALSE}
+library(xaringanthemer)
+
+# create xarignan-themer.css
+style_mono_accent(
+  base_color = "#0052a4",
+  text_font_family = "YuGothic",
+  header_font_family = "YuGothic",
+  text_bold_color = "#FF0066",
+  text_font_size = "24px"
+)
+
+# create custom.css
+extra_css <- list(
+  ".small" = list("font-size" = "15px"),
+  ".xsmall" = list("font-size" = "70%"),
+  ".scroll-box-12" = list("height" = "12em", "overflow-y" = "scroll"),
+  ".scroll-box-14" = list("height" = "14em", "overflow-y" = "scroll"),
+  ".scroll-box-16" = list("height" = "16em", "overflow-y" = "scroll"),
+  ".scroll-box-18" = list("height" = "18em", "overflow-y" = "scroll"),
+  ".scroll-box-20" = list("height" = "20em", "overflow-y" = "scroll"),
+  ".scroll-output" = list("height" = "90%", "overflow-y" = "scroll"),
+  ".left-col" = list(
+    "width" = "29%",
+  "text-align" = "left",
+  "padding-left" = "20px",
+  "padding-right" = "20px",
+  "float" = "left"
+),
+  ".center-col" = list(
+  "width" = "29%",
+  "text-align" = "left",
+  "padding-left" = "20px",
+  "padding-right" = "20px",
+  "float" = "left"
+),
+
+".right-col" = list(
+  "width" = "29%",
+  "text-align" = "left",
+  "padding-left" = "20px",
+  "padding-right" = "20px",
+  "float" = "left"
+))
+
+# write `custom_css`
+xaringanthemer::style_extra_css(
+  css = extra_css,
+  outfile = "./extra.css", append = FALSE
+  )
+```
+
+```{r, echo=FALSE}
+library(tidyverse)
+```
+
+
+# 目次
+
+### [1変数, 2変数の記述統計の分野](#chap1)
+### [データ収集, 確率, 分布の分野](#chap2)
+### [推定，検定, 線形モデルの分野](#chap3)
+
+---
+name: chap1
+class: middle center
+
+# 1変数, 2変数の記述統計
+
+---
+Q. ジニ係数とは何か答えろ
+
+--
+
+(0, 0) と (1, 1)を結ぶ線分 (完全平等線) とローレンツ曲線で囲まれた部分の面積の2倍の値
+
+--
+
+Q. 分散 $S^2_x$ の公式を答えろ
+
+--
+
+$$S_x^2=\frac{1}{n} \sum_{i=1}^n\left(x_i-\bar{x}\right)^2=\frac{\left(x_1-\bar{x}\right)^2+\left(x_2-\bar{x}\right)^2+\cdots+\left(x_n-\bar{x}\right)^2}{n}$$
+
+--
+
+Q. データの平均 $\bar{x}$ から、分散を求める公式を答えろ
+
+--
+
+$$S_x^2=\frac{1}{n} \sum_{i=1}^n x_i^2-\bar{x}^2$$
+
+---
+
+Q. データの変動係数の公式を答えろ
+
+標準偏差 $S_x$ と 平均 $\bar{x}$ を用いること
+
+--
+
+$$\frac{\bar{x}}{S_x}$$
+
+--
+
+Q. データ $x_i$ の標準化得点の公式を答えろ
+
+データ $x_i$ , 平均( $\bar{x}$ ), 標準偏差 $S_x$ を用いて答えろ
+
+--
+
+$$ z_i = \frac{x_i - \bar{x}}{S_x} $$
+
+---
+
+Q. データ $(x_i, y_i)$ の共分散 $S_{xy}$ を答えろ
+
+--
+
+$$S_{xy} = \frac{1}{n}\sum^{n}_{i=1}(x_i-\bar{x})(y_i-\bar{y})$$
+
+--
+Q. $x_i, y_i$ の平均( $\bar{x}, \bar{y}$ )を用いて、共分散を求める式を答えろ
+
+--
+
+$$S_{xy} = \frac{1}{n}\sum^{n}_{i=1}x_iy_i - \bar{x} \cdot \bar{y}$$
+
+---
+Q. 分布が以下のような場合の時、歪度はどのような値をとるか答えろ
+
+- データの分布が **右** に裾が長いとき
+- データの分布が **左** に裾が長いとき
+- 左右対称
+
+---
+
+Q. 分布が以下のような場合の時、歪度はどのような値をとるか答えろ
+
+- データの分布が **右** に裾が長いとき: 歪度は正の値
+- データの分布が **左** に裾が長いとき: 歪度は負の値
+- 左右対称: 0になる
+
+--
+
+Q. 正規分布の尖度の値は、いくつか答えろ
+
+--
+
+正規分布の尖度が3 or 0 の場合があるので注意
+
+尖度が大きいほど、分布の山が尖っている
+
+---
+
+Q. 3項移動平均の式を答えろ
+
+--
+
+$$ \frac{1月 + 2月 + 3月}{3}$$
+
+--
+
+
+Q. 4項移動平均の式を答えろ
+
+--
+
+$$ \frac{1月 \times 0.5 + 2月 + 3月 + 4月 + 5月 \times 0.5}{4}$$
+
+---
+
+Q. 変化率を答えろ
+
+--
+
+$$ \frac{比較時 - 基準時}{基準時} \times 100$$
+
+--
+
+Q. 以下のことから、平均変化率の公式を求めろ
+
+- 基準となる時期の値が $a$
+- その $n$ 期後の比較対象の時期の値が $b$
+- このとき、次の式を満たす $r$ or $100 \space r$ を平均変化率を答えろ
+
+--
+
+$$ a \times (1+r)^n = b$$
+
+---
+
+Q. 以下の表を用いて、ラスパイレス指数とパーシェ指数を答えろ
+
+|        | 財X      |          | 財Y      |          |
+|--------|----------|----------|----------|----------|
+|        | 購入数量 | 平均価格 | 購入数量 | 平均価格 |
+| 基準年 | $Q_X$    | $P_X$    | $Q_Y$    | $P_Y$    |
+| 比較年 | $Q'_X$   | $P'_X$   | $Q'_Y$   | $P'_Y$   |
+
+--
+
+.pull-left[
+- ラスパイレス指数
+
+$$\frac{P_X^{\prime} Q_X+P_Y^{\prime} Q_Y}{P_X Q_X+P_Y Q_Y} \times 100$$
+]
+.pull-right[
+
+- パーシェ指数
+
+$$\frac{P_X^{\prime} Q_X^{\prime}+P_Y^{\prime} Q_Y^{\prime}}{P_X Q_X^{\prime}+P_Y Q_Y^{\prime}} \times 100$$
+]
+
+---
+name: chap2
+class: middle center
+# データ収集, 確率, 分布の分野
+
+
+---
+
+Q. フィッシャーの3 原則を答えろ
+
+--
+
+- 局所管理: ブロック（狭い範囲）内で均一な条件を実現する
+- 無作為化: 処理をランダムに割り付ける
+- 繰り返し: 同じ処理を何度も行う
+
+---
+
+Q. 以下の問に答えろ
+
+事象Aが起こる確率をP(A)と表します。
+
+- 試行:
+- 事象:
+- 排反:
+
+---
+
+Q. 以下の問に答えろ
+
+事象Aが起こる確率をP(A)と表します。
+
+- 試行: 確率的な実験（例）サイコロを投げる
+- 事象: 確率的に起きた事がら（例）１の目が出る
+- 排反: 一方の事象が起これば，もう一方の事象は起こらない関係のこと
+
+--
+
+Q. 排反事象が成り立つ場合は、どのような公式が導けるか 事象 $P(A)$ と事象 $P(B)$ を用いて答えろ
+
+--
+
+事象Aと事象Bが互いに排反であるときには次の式が成り立ちます。
+
+$$P(A \cup B) = P(A) + P(B)$$
+
+--
+
+Q. 事象 $P(A)$ と事象 $P(B)$ が独立である場合、どのような公式が導けるか答えろ
+
+--
+
+また，次の式が成り立つことを，２つの事象A，Bは独立であると言います。
+
+$$P(A \cap B) = P(A)P(B)$$
+
+
+---
+Q. 条件付き確率の公式を事象 $P(A)$ と事象 $P(B)$ を用いて答えろ
+
+
+--
+
+事象Bが起きたという条件のもとでの事象Aの起きる確率であり，次の式で求めます。
+
+$$P(A|B) =\frac{P(A \cap B)}{P(B)}$$
+
+--
+
+Q. ベイズの定理の公式を答えろ
+
+--
+
+$$P(B_k|A) = \frac{P(A|B_k) \times P(B_k)}{\sum^n_{i=1}P(A|B_k) \times P(B_k)}$$
+
+--
+
+Q. 累積分布関数 $F$ を $P$ を使って表せ
+
+--
+
+$$F(x) = P(X \leq x)$$
+
+---
+
+Q. 確率変数 $X, Y$ の期待値($E(X), E(Y)$)について、以下の等式を満たせ
+
+$$ E(X+Y)$$
+
+---
+
+Q. 確率変数 $X, Y$ の期待値( $E(X), E(Y)$ )について、以下の等式を満たせ
+
+
+$$ E(X+Y) = E(X) + E(Y) $$
+
+---
+
+Q. 以下の式の場合、展開するとどうなるか答えろ
+
+
+$$ E(aX+b)$$
+
+---
+
+Q. 以下の式の場合、展開するとどうなるか答えろ
+
+
+$$ E(aX+b) = aE(X) + b $$
+
+---
+
+Q. 分散を求める式を2つ答えろ
+
+--
+
+$$ V(X) = E[(X - E(X))^2]$$
+$$ V(X) = \sum^n_{i=1}p_i(x_i - E(X))^2$$
+
+---
+
+Q. 以下の分散の式を展開しろ
+
+$$V(aX+b)$$
+
+---
+
+Q. 以下の分散の式を展開しろ
+
+$$V(aX+b) = a^2V(X)$$
+
+---
+
+Q. 確率変数 $X$ と $Y$ が独立ならば、分散についての公式を述べよ
+
+$$V(X+Y)$$
+
+---
+
+Q. 確率変数 $X$ と $Y$ が独立ならば、分散についての公式を述べよ
+
+$$V(X+Y) = V(X) + V(Y)$$
+
+---
+
+Q. 確率変数 $X$ の期待値と分散について次の公式が成り立ちます。
+
+$\{E(X)\}^2$, $E(X^2)$ を用いて答えろ
+
+---
+
+Q. 確率変数 $X$ の期待値と分散について次の公式が成り立ちます。
+
+$\{E(X)\}^2$, $E(X^2)$ を用いて答えろ
+
+$$V(X) = E(X^2) - \{E(X)\}^2$$
+
+---
+
+Q. 共分散と相関係数
+
+共分散の算出式を、 $E(XY), E(X), E(Y)$ を使って示せ
+
+--
+
+$$Cov(X,Y) = E(XY) - E(X)E(Y)$$
+--
+
+Q. この時、確率変数 $X$ と $Y$ が独立ならば共分散はどのような数値になるか
+
+--
+
+答えは、0
+
+---
+
+
+Q. 共分散の一般化した式を答えろ
+
+$$ V(X \pm Y) = V(X) \pm 2Cov(X,Y) + V(Y)$$
+
+---
+
+
+Q. 確率変数の組 $(X, Y)$ を次のように $(S, T)$ におきかえる一次変換がある場合の、共分散を答えろ
+
+$S=aX+b, T=cY+d$ 
+
+--
+
+$Cov(S, T) = acCov(X,Y)$
+
+--
+
+Q. またこの時の、相関係数の値 $\rho(X,Y)$ の正負を答えろ
+
+--
+
+$ac>0$ ならば $\rho(X,Y)$
+
+$ac<0$ ならば $-\rho(X,Y)$
+
+---
+
+Q. 連続型確率変数の式を答えろ
+
+$$P(a\leq X \leq b)$$
+
+$$E(X)$$
+
+$$V(X)$$
+
+---
+
+Q. 連続型確率変数の式を答えろ
+
+$$P(a\leq X \leq b) = \int_{a}^{b}f(x)dx$$
+
+$$E(X) = \int^{\infty}_{-^\infty}xf(x)dx$$
+
+$$V(X)=P(X \leq x)$$
+
+---
+
+Q. 一様分布の確率密度関数と期待値を求めろ
+
+\begin{equation}
+f(x)=
+\end{equation}
+
+$$E(X)$$
+
+---
+
+Q. 一様分布の確率密度関数と期待値を求めろ
+
+\begin{equation}
+f(x)=\left\{\begin{array}{l}
+0(x<a) \\
+\frac{1}{b-a}(a \leq x \leq b) \\
+0(x>b)
+\end{array}\right.
+\end{equation}
+
+$$E(X) = \frac{a+b}{2}$$
+
+---
+
+Q. ベルヌーイ分布の期待値、分散を答えろ
+
+確率は $p$ を用いてください
+
+$$E(X)$$
+
+$$V(X)$$
+
+---
+
+Q. ベルヌーイ分布の期待値、分散を答えろ
+
+確率は $p$ を用いてください
+
+$$E(X)=p$$
+
+$$V(X)=p(1-p)$$
+
+---
+
+Q. 二項分布の確率密度関数・期待値・分散を答えろ
+
+$$P(X=x)$$
+
+$$E(X)$$
+
+$$V(X)$$
+
+---
+
+Q. 二項分布の確率密度関数・期待値・分散を答えろ
+
+$$P(X=x)=\frac{n!}{x!(n-x)!}p^x(1-p)^{n-x}$$
+
+$$E(X)=np$$
+
+$$V(X)=np(1-p)$$
+
+$n$ が大きい場合は、正規分布で近似が可能
+
+$$B(n,p) ~ N(np, np(1-p))$$
+
+---
+
+Q. ポアソン分布の確率密度関数を答えろ
+
+$$P(X=x)$$
+
+$$E(X)$$
+
+$$V(X)$$
+
+---
+
+Q. ポアソン分布の確率密度関数を答えろ
+
+$$P(X=x)=\frac{e^{-\lambda} \cdot \lambda^x}{x!}(x=0,1,\cdots)$$
+
+$$E(X)=\lambda$$
+
+$$V(X)=\lambda$$
+
+---
+
+Q. 幾何分布の確率密度関数・期待値・分散を答えろ
+
+$$P(X=x)$$
+
+$$E(X)$$
+
+$$V(X)$$
+
+---
+
+Q. 幾何分布の確率密度関数・期待値・分散を答えろ
+
+$$P(X=x)=p(1-p)^{x-1}(x=1,2,\cdots)$$
+
+$$E(X)=\frac{1}{p}$$
+
+$$V(X)=\frac{1-p}{p^2}$$
+
+---
+name: chap3
+class: middle center
+
+# 推定，検定, 線形モデルの分野
+
+---
+
+区間推定
+
+標本平均を $\bar{X}$, 不偏分散を $U^2$ サンプルサイズ $n$ を用いて、以下の問いに答えろ
+
+--
+
+Q. 母平均の推定(母分散**既知**の場合)の信頼度95%
+
+--
+
+$$\bar{X}-1.96 \times \frac{\sigma}{\sqrt{n}} \leq \mu \leq \bar{X}+1.96 \times \frac{\sigma}{\sqrt{n}}$$
+
+--
+
+Q. 母平均の推定(母分散**未知**, 小標本場合)
+
+--
+
+$$\bar{X}-t_{0.025}(n-1) \times \frac{\sigma}{\sqrt{n}} \leq \mu \leq \bar{X}+t_{0.025}(n-1) \times \frac{\sigma}{\sqrt{n}}$$
+
+--
+
+Q. 母平均の推定(母分散**未知**, 大標本の場合)
+
+--
+
+$$\bar{X}- 1.96 \times \frac{U}{\sqrt{n}} \leq \mu \leq \bar{X}+1.96 \times \frac{U}{\sqrt{n}}$$
+
+---
+
+区間推定
+
+標本平均を $\bar{X}$, 不偏分散を $U^2$ を用いて、以下の問いに答えろ
+
+Q. 母分散の推定(母平均未知)の場合
+
+--
+
+$$\frac{(n-1)U^2}{\chi^2_{0.025}(n-1)} \leq \sigma^2 \leq \frac{(n-1)U^2}{\chi^2_{0.975}(n-1)}$$
+
+--
+
+Q. 母比率の推定（大標本）の場合
+
+--
+
+$$\frac{X}{n}-1.96 \times \sqrt{\frac{X/n(1-X/n)}{n}} \leq p \leq \frac{X}{n}+1.96 \times \sqrt{\frac{X/n(1-X/n)}{n}}$$
+
+---
+Q. 以下の空欄を埋めろ
+
+- 第一種の誤り（第一種の過誤）: 
+- 第二種の誤り（第二種の過誤）: 
+- 検出力:
+- P値:
+
+
+---
+Q. 以下の空欄を埋めろ
+
+- 第一種の誤り（第一種の過誤）: 帰無仮説が正しいとき，正しいはずの帰無仮説を棄却してしまう誤り
+- 第二種の誤り（第二種の過誤）: 対立仮説が正しいとき，正しくないはずの帰無仮説を受容してしまう誤り
+- 検出力: 対立仮説が正しいとき，帰無仮説を棄却できる確率
+- P値: 検定統計量の値よりも極端な値をとる確率
+
+
+---
+Q. 母平均の仮説検定
+
+この時の検定統計量を答えろ
+
+--
+
+$$Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}}$$
+
+--
+
+Q. 母平均の仮説検定（母分散未知，小標本）の場合
+
+この時の検定統計量を答えろ
+
+--
+
+$$t = \frac{\bar{X} - \mu}{U / \sqrt{n}}$$
+
+--
+
+Q. 母平均の仮説検定（母分散未知，大標本）の場合
+
+この時の検定統計量を答えろ
+
+--
+
+$$Z = \frac{\bar{X} - \mu}{U / \sqrt{n}}$$
+
+---
+
+Q. 母比率の検定（大標本）の場合
+
+母比率が $p$ であるという帰無仮説のもとで，標本の大きさが $n$ のとき，標本比率を $X/n$ として，次の検定統計量が標準正規分布に従うことを利用します。
+
+$$Z=\frac{\frac{X}{n}-p}{\sqrt{\frac{p(1-p)}{n}}}$$
+
+
+---
+
+Q. 母比率の差の検定（大標本）の場合
+
+２群の母比率に差がないという帰無仮説のもとで，標本の大きさをそれぞれ $n_1, n_2$, 標本比率をそれぞれ $X_1/n_1, X_2/n_2$ とする。
+
+この時の検定統計量を答えろ
+
+--
+
+$$Z=\frac{\frac{X_1}{n_1}-\frac{X_2}{n_2}}{\sqrt{\left(\frac{1}{n_1}+\frac{1}{n_2}\right) \frac{X_1+X_2}{n_1+n_2}\left(1-\frac{X_1+X_2}{n_1+n_2}\right)}}$$
+
+---
+
+Q. 母平均の差の検定(対応のある２群の場合)
+
+大きさ $n$ の対応するデータに対して，母集団が正規分布に従っていて，差の標本平均を $X_{diff}$ , 差の不偏分散を $U^2$ とするときの検定統計量を答えろ
+
+またこの時の自由度も合わせて答えろ
+
+$$T=\frac{\bar{X}}{U/\sqrt{n}}$$
+
+A. 自由度 $n-1$ の $t$ 分布に従う
+
+---
+
+Q. 母平均の差の検定(対応のない２群で，母分散既知の場合)
+
+母集団がそれぞれ正規分布に従っていて，母分散が $σ_1^2，σ_2^2$ , 標本の大きさが $n_1, n_2$ のときの検定統計量を答えろ
+
+--
+
+$$\frac{\bar{X} - \bar{Y}}{\sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma^2_2}{n_2}}}$$
+
+
+---
+
+Q. 母平均の差の検定(対応のない２群で，母分散未知（大標本）の場合)
+
+不偏分散を $U_1，U_2$ , 標本の大きさをそれぞれ $n_1, n_2$ とすると，次の検定統計量を答えろ
+
+--
+
+$$\frac{\bar{X}-\bar{Y}}{\sqrt{\frac{U^2_1}{n_1}+\frac{U^2_2}{n_2}}}$$
+
+---
+Q. 母平均の差の検定(対応のない２群で，母分散未知（小標本，等分散）の場合)
+
+母集団がそれぞれ正規分布に従っていて，２つの母分散が等しいとき，標本の大きさをそれぞれ $n_1, n_2$ とするときの検定統計量を答えろ
+
+--
+
+$$\frac{\bar{X}-\bar{Y}}{\sqrt{\hat{U}^2}(\frac{U^2_1}{n_1}+\frac{U^2_2}{n_2})}$$
+
+$$\hat{U}^2=\frac{\sum_{k=1}^{n_1}\left(X_k-\bar{X}\right)^2+\sum_{k=1}^{n_2}\left(Y_k-\bar{Y}\right)^2}{n_1+n_2-2}$$
+
+---
+Q. 等分散仮説の検定
+
+２つの正規母集団の無作為標本（標本の大きさはそれぞれ $n_A, n_B$ ）から求められる不偏分散をそれぞれ $U_A^2, U_B^2$ とし，これらが独立であるものとします。２群の母分散が等しいという帰無仮説のもとで，次の検定統計量を答えろ。またその時の自由度も答えろ
+
+--
+
+$$F=\frac{U_A^2}{U_B^2}$$
+
+自由度は、 $F(n_B-1, n_A-1)$ 
+
+---
+Q. 適合度検定
+
+どのようなときに用いる検定か答えろ
+
+--
+
+A. データの分布が特定の理論にあっていないことを示すための検定
+
+この時の、帰無仮説と対立仮説を答えろ
+
+--
+
+- 帰無仮説：実験結果が仮定した理論に適合する
+- 対立仮説：実験結果が仮定した理論に適合しない
+
+観測度数を $X_1, X_2, \cdots, X_k$ , 全度数を $n$ とするときの期待度数を求めろ
+
+--
+
+$$ np_1, np_2, \cdots, np_k$$
+
+
+この時の検定統計量を答えろ。またその時の自由度も答えろ
+
+--
+
+$$\sum_{i=1}^k = \frac{(X_i-np_i)^2}{np_i}$$
+
+---
+Q. 独立性の検定は、どのようなときに行う検定か答えろ
+
+--
+
+A. $k$ 行 $l$ 列のクロス集計表において，2つの要因が独立ではないことを示すために用います。
+
+また、この時の帰無仮説と対立仮説を答えろ
+
+--
+
+- 帰無仮説：行と列の要因は独立である
+- 対立仮説：行と列の要因は独立でない
+
+また、この時の期待度数を求めろ
+
+--
+
+A. 期待度数は周辺度数の積を全度数で割って求められます。
+
+$$\frac{X_{i.} \times X_{.j}}{n}$$
+
+この時の検定統計量を答えろ
+
+--
+
+$$\sum_{i=1}^k \sum_{j=1}^l \frac{\left(X_{i j}-\frac{X_{i \cdot X_{\cdot j}}^n}{n}\right)^2}{\frac{X_{i \cdot X_{\cdot j}}^n}{n}}$$
+
+---
+Q. 分散分析
+
+以下の値を算出する式を答えろ
+
+- 水準間平均平方: 
+- 残差平均平方: 
+- F値: 
+
+---
+
+Q. 分散分析
+
+以下の値を算出する式を答えろ
+
+- 水準間平均平方: $水準間平方和 \div 自由度$
+- 残差平均平方: $残差平方和 \div 自由度$
+- F値: $水準間平均平方 \div 残差平均平方$
+
+また、この時の検定統計量が従う分布の自由度を答えろ。また、この時の検定は何側検定か
+
+--
+
+- 第1自由度: $水準の数 - 1$
+- 第2自由度: $すべての水準の標本の大きさの合計 - 水準の数$
+- 右側検定
+
+
+---
+
+Q. 単回帰分析
+
+回帰係数の検定は、何検定か答えろ。またこの時の帰無仮説・対立仮説を、偏回帰係数 $\beta$ を用いて、答えなさい。
+
+--
+
+- t検定
+- 帰無仮説: $b = 0$, 対立仮説: $b \neq 0 $
+
+この時の検定統計量の自由度は、いくつか答えろ(サンプルサイズ $n$ を用いてよい)
+
+--
+
+自由度: $n - 2$
+
+この時のt値を、回帰係数 $\beta$ と標準誤差 $se$ を使って求めろ
+
+--
+
+$$ \beta \div se$$
+
+Q. 残差平方和とは何か答えろ
+
+--
+
+残差平方和: 各標本について、予測値と観測地の差の2乗和
+
+残差平方和を自由度の $n-2$ で割ったものが誤差項の分散の不偏推定量になります。
+
+
+---
+
+Q 重回帰分析
+
+回帰係数の検定は、何検定か答えろ。またこの時の帰無仮説・対立仮説を、偏回帰係数 $\beta_i$ を用いて、答えなさい。
+
+
+- t検定
+- 帰無仮説: $b_i = 0$, 対立仮説: $b \neq 0 \space(i=1,2, \cdots, p)$
+
+この時の回帰係数の検定統計量の自由度は、いくつか答えろ(サンプルサイズ $n$ を用いてよい)
+
+--
+
+自由度: $n - p - 1$
+
+この検定で有意であることが示せると，回帰係数の中に０でないものが１つ以上あることになり，重回帰モデルに意味があることになります。
+
+この時のt値を、回帰係数 $\beta$ と標準誤差 $se$ を使って求めろ
+
+--
+
+$$ \beta \div se$$
+
+---
+## 参考にしたサイト
+
+- <a href="https://terashim.com/posts/renv-docker-patterns/" target="_blank" rel="noopener noreferrer">renv と Docker の相互運用パターン</a>
+
+
