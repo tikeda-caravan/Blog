@@ -1,7 +1,7 @@
 ---
 title: "stat test cheet sheet"
 author: 
-  - "Takahisa Ikeda"
+  - "Ango"
 date: '`r Sys.Date()`'
 output:
   xaringan::moon_reader:
