@@ -1400,9 +1400,7 @@ border-bottom: 1px solid #ddd;
 th, td {
 padding: 5px;
 }
-.remark-slide table:not(.table-unshaded) thead,
-.remark-slide table:not(.table-unshaded) tfoot,
-.remark-slide table:not(.table-unshaded) tr:nth-child(even) {
+.remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even) {
 background: #CCDCEC;
 }
 table.dataTable tbody {
@@ -1556,15 +1554,9 @@ float: left;
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-.title[
 # stat test cheet sheet
-]
-.author[
 ### Ango
-]
-.date[
 ### 2022-11-12
-]
 
 ---
 
@@ -2175,13 +2167,13 @@ Q. 以下の表を埋めろ
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style=&quot;text-align:left;&quot;&gt; 検定の結果 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 帰無仮説を棄却しない\n（対立仮説が正しいとは言えない） &lt;/td&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 帰無仮説を棄却しない&lt;br&gt;（対立仮説が正しいとは言えない） &lt;/td&gt;
    &lt;td style=&quot;text-align:left;&quot;&gt;  &lt;/td&gt;
    &lt;td style=&quot;text-align:left;&quot;&gt;  &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style=&quot;text-align:left;&quot;&gt;  &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 帰無仮説を棄却する\n（対立仮説が正しい） &lt;/td&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 帰無仮説を棄却する&lt;br&gt;（対立仮説が正しい） &lt;/td&gt;
    &lt;td style=&quot;text-align:left;&quot;&gt;  &lt;/td&gt;
    &lt;td style=&quot;text-align:left;&quot;&gt;  &lt;/td&gt;
   &lt;/tr&gt;
@@ -2207,34 +2199,15 @@ Q. 以下の表を埋めろ
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style=&quot;text-align:left;&quot;&gt; 検定の結果 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 帰無仮説を棄却しない\n（対立仮説が正しいとは言えない） &lt;/td&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 帰無仮説を棄却しない&lt;br&gt;（対立仮説が正しいとは言えない） &lt;/td&gt;
    &lt;td style=&quot;text-align:left;&quot;&gt; 正しい &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 第2種の過誤($\beta$) &lt;/td&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 第2種の過誤(β) &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style=&quot;text-align:left;&quot;&gt;  &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 帰無仮説を棄却する\n（対立仮説が正しい） &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 第1種の過誤($\alpha$) &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 正しい($1-\beta$) &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; col1 &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; col2 &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; a &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; \makecell[l]{one\\two} &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; b &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; \makecell[c]{three\\four} &lt;/td&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 帰無仮説を棄却する&lt;br&gt;（対立仮説が正しい） &lt;/td&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 第1種の過誤(α) &lt;/td&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 正しい(1-β) &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -2557,19 +2530,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
-// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
-// screen reader (see PR #262)
-(function(d) {
-  let res = {};
-  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
-    const t = tr.querySelector('td:nth-child(2)').innerText;
-    tr.querySelectorAll('td:first-child .key').forEach(key => {
-      const k = key.innerText;
-      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
-    });
-  });
-  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
-})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
@@ -2615,9 +2575,9 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })(document);</script>
 <script>(function(data, token) {
   // data is an object of the form { path: base64 data }; we need to move base64
-  // data back to HTML nodes (e.g., into the 'src' attribute of <img>, <audio>, <video>, <source>)
+  // data back to HTML nodes (e.g., into the 'src' attribute of <img>)
   var i, s, d, el, els;
-  els = document.querySelectorAll(['img', 'audio', 'video', 'source'].map(x => x + '[src^="' + token + '"]').join(','));
+  els = document.querySelectorAll('img[src^="' + token + '"]');
   for (i = 0; i < els.length; i++) {
     el = els[i]; s = el.src.replace(token, ''); d = data[s];
     if (d) el.src = d;

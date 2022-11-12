@@ -16,7 +16,7 @@ output:
       navigation:
         scroll: false
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -682,8 +682,9 @@ tbls_qes <- readr::read_csv(file = here::here("data/tbls1_qes.csv"),
 
 tbls_qes %>% 
   tidyr::replace_na(replace = list("...1" = "", "...2" = "", "...3" = "", "...4" = "")) %>% 
-  kableExtra::kbl(col.names = c("", "", "帰無仮説が正しい", "対立仮説が正しい")) %>% 
-  kable_styling() %>% 
+  kableExtra::kbl(col.names = c("", "", "帰無仮説が正しい", "対立仮説が正しい"),
+                  escape = FALSE, format = "html") %>% 
+  kableExtra::kable_styling() %>% 
   kableExtra::kable_paper(full_width = F) %>% 
   kableExtra::add_header_above(c(" " = 2, "真実" = 2)) %>%
   kableExtra::collapse_rows(columns = 1, valign = "top")
@@ -693,23 +694,18 @@ tbls_qes %>%
 Q. 以下の表を埋めろ
 
 ```{r}
+library(dplyr)
 library(kableExtra)
 library(readr)
 library(here)
 tbls_ans <- readr::read_csv(file = here::here("data/tbls1_ans.csv"), na = "NA")
 
 tbls_ans %>% 
-  dplyr::mutate(...2 = linebreak(...2)) %>% 
-  kableExtra::kbl(col.names = c("", "", "帰無仮説が正しい", "対立仮説が正しい"), escape = F, format = "html") %>% 
+  kableExtra::kbl(col.names = c("", "", "帰無仮説が正しい", "対立仮説が正しい"),
+                  escape = FALSE, format = "html") %>% 
   kableExtra::kable_styling() %>% 
   kableExtra::kable_paper(full_width = F) %>% 
   kableExtra::add_header_above(c(" " = 2, "真実" = 2))
-```
-
-```{r cars}
-library(kableExtra)
-knitr::kable(data.frame(col1 = c("a", "b"), col2 = linebreak(c("one\ntwo", "three\nfour"))),
-             escape = FALSE)
 ```
 
 ---
