@@ -1,0 +1,18 @@
+version: '3'
+services:
+  rstudio:
+    image: blog:latest
+    container_name: blog_cntnr
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - PASSWORD=password
+      - DISABLE_AUTH=true
+      - TZ=Asia/Tokyo
+    ports:
+      - 8787:8787
+    volumes:
+      - ./:/home/rstudio
+    tty: true
+    stdin_open: true
