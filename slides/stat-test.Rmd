@@ -16,7 +16,7 @@ output:
       navigation:
         scroll: false
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
@@ -668,32 +668,63 @@ Q. 以下の空欄を埋めろ
 ---
 Q. 以下の表を埋めろ
 
-```{r, eval=FALSE}
-library(gt)
-tbls <- readr::read_csv(file = here::here("data/tbls1.csv"))
-
-gt(tbls) %>% 
-  gt::sub_missing(columns = NA...1,rows = 1,missing_text = "") %>% 
-  gt::sub_missing(columns = NA...1,rows = 3,missing_text = "") %>% 
-  gt::sub_missing(columns = NA...2,rows = 1,missing_text = "") %>% 
-  gt::tab_spanner(label = "真実", columns = c(NA...3, NA...4)) %>% 
-  gt::cols_label(NA...1 = "", NA...2 = "", NA...3 = "", NA...4 = "") %>% 
-  print
-
+```{r}
 library(kableExtra)
+library(readr)
+library(tidyr)
+library(here)
+tbls_qes <- readr::read_csv(file = here::here("data/tbls1_qes.csv"),
+                            na = "NA",
+                            col_types = cols(...1 = col_character(),
+                                             ...2 = col_character(),
+                                             ...3 = col_character(),
+                                             ...4 = col_character()))
+
+tbls_qes %>% 
+  tidyr::replace_na(replace = list("...1" = "", "...2" = "", "...3" = "", "...4" = "")) %>% 
+  kableExtra::kbl(col.names = c("", "", "帰無仮説が正しい", "対立仮説が正しい")) %>% 
+  kable_styling() %>% 
+  kableExtra::kable_paper(full_width = F) %>% 
+  kableExtra::add_header_above(c(" " = 2, "真実" = 2)) %>%
+  kableExtra::collapse_rows(columns = 1, valign = "top")
 ```
 
-\begin{table}
-\begin{tabular}{|c|l|l|l|}
-  \hline
-           &  & \multicolumn{2}{c|}{真実}\\ \hline
-           &  & 帰無仮説が正しい & 対立仮説が正しい \\ \hline
-\multirow{2}{}{検定の結果} & \begin{tabular}{c}帰無仮説を棄却しない \\ （対立仮説が正しいとは言えない） \end{tabular} & 正しい & 第2種の過誤($\beta$) \\ \hline
-           & \begin{tabular}{c}帰無仮説を棄却する \\ （対立仮説が正しい）\end{tabular} & 第1種の過誤($\alpha$) & 正しい($1-\beta$) \\ \hline
-\end{tabular}
-\end{table}
+---
+Q. 以下の表を埋めろ
 
+```{r}
+library(kableExtra)
+library(readr)
+library(here)
+tbls_ans <- readr::read_csv(file = here::here("data/tbls1_ans.csv"), na = "NA")
 
+tbls_ans %>% 
+  dplyr::mutate(...2 = linebreak(...2)) %>% 
+  kableExtra::kbl(col.names = c("", "", "帰無仮説が正しい", "対立仮説が正しい"), escape = F, format = "html") %>% 
+  kableExtra::kable_styling() %>% 
+  kableExtra::kable_paper(full_width = F) %>% 
+  kableExtra::add_header_above(c(" " = 2, "真実" = 2))
+```
+
+```{r cars}
+library(kableExtra)
+knitr::kable(data.frame(col1 = c("a", "b"), col2 = linebreak(c("one\ntwo", "three\nfour"))),
+             escape = FALSE)
+```
+
+---
+Q. 以下の画像の空白部分を埋めろ
+
+![](../images/que.jpg)
+
+.footnote[[出典元サイト](https://a-m-zyozo.hatenablog.com/entry/2020/09/10/132204)]
+
+---
+Q. 以下の画像の空白部分を埋めろ
+
+![](../images/ans.jpg)
+
+.footnote[[出典元サイト](https://a-m-zyozo.hatenablog.com/entry/2020/09/10/132204)]
 
 ---
 Q. 母平均の仮説検定
