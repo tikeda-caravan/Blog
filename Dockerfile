@@ -20,5 +20,4 @@ FROM rocker/tidyverse:4.1.2
 #   fonts-noto-cjk
 
 # Install packages
-# RUN install2.r "devtools"
-# RUN R -e 'devtools::install_github("kazutan/tubeplayR")'
+RUN install2.r "distill"
