@@ -27,3 +27,4 @@ navbar:
 #     - icon: fab fa-twitter
 #       href: https://twitter.com/
 output: distill::distill_article
+exclude: ["data", "docker-compose.yml", "Dockerfile"]

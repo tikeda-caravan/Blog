@@ -1,0 +1,4 @@
+A,平方和,自由度,平均平方,F値
+要因,\(S_a = \bar{x}_g - \bar{x}_t\),\(df_a = g-1\),\(V_a = S_a/df_a\),\(F=V_a/V_e\)
+残差,\(S_e = x_i - \bar{x}_g\),\(df_e = n-g\),\(V_e = S_e/df_e\),-
+全体,\(S_t = x_i - \bar{x}_t\),\(df_t = n-1\),\(V_t = S_t/df_t\)),-
