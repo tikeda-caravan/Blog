@@ -665,6 +665,35 @@ Q. 以下の空欄を埋めろ
 - 検出力: 対立仮説が正しいとき，帰無仮説を棄却できる確率
 - P値: 検定統計量の値よりも極端な値をとる確率
 
+---
+Q. 以下の表を埋めろ
+
+```{r, eval=FALSE}
+library(gt)
+tbls <- readr::read_csv(file = here::here("data/tbls1.csv"))
+
+gt(tbls) %>% 
+  gt::sub_missing(columns = NA...1,rows = 1,missing_text = "") %>% 
+  gt::sub_missing(columns = NA...1,rows = 3,missing_text = "") %>% 
+  gt::sub_missing(columns = NA...2,rows = 1,missing_text = "") %>% 
+  gt::tab_spanner(label = "真実", columns = c(NA...3, NA...4)) %>% 
+  gt::cols_label(NA...1 = "", NA...2 = "", NA...3 = "", NA...4 = "") %>% 
+  print
+
+library(kableExtra)
+```
+
+\begin{table}
+\begin{tabular}{|c|l|l|l|}
+  \hline
+           &  & \multicolumn{2}{c|}{真実}\\ \hline
+           &  & 帰無仮説が正しい & 対立仮説が正しい \\ \hline
+\multirow{2}{}{検定の結果} & \begin{tabular}{c}帰無仮説を棄却しない \\ （対立仮説が正しいとは言えない） \end{tabular} & 正しい & 第2種の過誤($\beta$) \\ \hline
+           & \begin{tabular}{c}帰無仮説を棄却する \\ （対立仮説が正しい）\end{tabular} & 第1種の過誤($\alpha$) & 正しい($1-\beta$) \\ \hline
+\end{tabular}
+\end{table}
+
+
 
 ---
 Q. 母平均の仮説検定
@@ -913,7 +942,7 @@ Q 重回帰分析
 $$ \beta \div se$$
 
 ---
-## 参考にしたサイト
+# 参考にしたサイト
 
 - <a href="https://terashim.com/posts/renv-docker-patterns/" target="_blank" rel="noopener noreferrer">renv と Docker の相互運用パターン</a>
 

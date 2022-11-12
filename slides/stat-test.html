@@ -4,7 +4,7 @@
     <title>stat test cheet sheet</title>
     <meta charset="utf-8" />
     <meta name="author" content="Ango" />
-    <meta name="date" content="2022-11-10" />
+    <meta name="date" content="2022-11-12" />
     <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
 document.addEventListener('DOMContentLoaded', function(e) {
@@ -1339,7 +1339,7 @@ class: center, middle, inverse, title-slide
 ### Ango
 ]
 .date[
-### 2022-11-10
+### 2022-11-12
 ]
 
 ---
@@ -1755,9 +1755,9 @@ Q. 連続型確率変数の式を答えろ
 
 Q. 一様分布の確率密度関数と期待値を求めろ
 
-`\begin{equation}
+\begin{equation}
 f(x)=
-\end{equation}`
+\end{equation}
 
 `$$E(X)$$`
 
@@ -1765,13 +1765,13 @@ f(x)=
 
 Q. 一様分布の確率密度関数と期待値を求めろ
 
-`\begin{equation}
+\begin{equation}
 f(x)=\left\{\begin{array}{l}
 0(x&lt;a) \\
 \frac{1}{b-a}(a \leq x \leq b) \\
 0(x&gt;b)
 \end{array}\right.
-\end{equation}`
+\end{equation}
 
 `$$E(X) = \frac{a+b}{2}$$`
 
@@ -1931,6 +1931,22 @@ Q. 以下の空欄を埋めろ
 - 第二種の誤り（第二種の過誤）: 対立仮説が正しいとき，正しくないはずの帰無仮説を受容してしまう誤り
 - 検出力: 対立仮説が正しいとき，帰無仮説を棄却できる確率
 - P値: 検定統計量の値よりも極端な値をとる確率
+
+---
+Q. 以下の表を埋めろ
+
+
+
+\begin{table}
+\begin{tabular}{|c|l|l|l|}
+  \hline
+           &amp;  &amp; \multicolumn{2}{c|}{真実}\\ \hline
+           &amp;  &amp; 帰無仮説が正しい &amp; 対立仮説が正しい \\ \hline
+\multirow{2}{}{検定の結果} &amp; \begin{tabular}{c}帰無仮説を棄却しない \\ （対立仮説が正しいとは言えない） \end{tabular} &amp; 正しい &amp; 第2種の過誤($\beta$) \\ \hline
+           &amp; \begin{tabular}{c}帰無仮説を棄却する \\ （対立仮説が正しい）\end{tabular} &amp; 第1種の過誤($\alpha$) &amp; 正しい($1-\beta$) \\ \hline
+\end{tabular}
+\end{table}
+
 
 
 ---
@@ -2180,7 +2196,7 @@ Q 重回帰分析
 $$ \beta \div se$$
 
 ---
-## 参考にしたサイト
+# 参考にしたサイト
 
 - &lt;a href=&quot;https://terashim.com/posts/renv-docker-patterns/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;renv と Docker の相互運用パターン&lt;/a&gt;
 
