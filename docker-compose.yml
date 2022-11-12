@@ -13,6 +13,6 @@ services:
     ports:
       - 8787:8787
     volumes:
-      - ./:/home/rstudio
+      - ./:/home/rstudio/Blog/
     tty: true
     stdin_open: true
