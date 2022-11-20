@@ -598,7 +598,7 @@ $$\bar{X}- 1.96 \times \frac{U}{\sqrt{n}} \leq \mu \leq \bar{X}+1.96 \times \fra
 ---
 標本平均を $\bar{X}$, 不偏分散を $U^2$ , サンプルサイズ $n$ を用いて、以下の問いに答えろ
 
-Q. 母分散の推定(母平均未知)を求める公式を答えろ<sup>*</sup>
+Q. 母分散 $\sigma^2$ の推定(母平均未知)を求める公式を答えろ<sup>*</sup>
 
 --
 
@@ -607,7 +607,7 @@ $$\frac{(n-1)U^2}{\chi^2_{0.025}(n-1)} \leq \sigma^2 \leq \frac{(n-1)U^2}{\chi^2
 ---
 標本平均を $\bar{X}$, 不偏分散を $U^2$ サンプルサイズ $n$ を用いて、以下の問いに答えろ
 
-Q. 母比率の推定（大標本）を求める公式を答えろ
+Q. 母比率 $p$ の推定（大標本）を求める公式を答えろ ( $X/n$ )
 
 --
 
@@ -622,11 +622,13 @@ Q. 信頼区間の幅を $x$ 以下にする場合に必要なサンプルサイ
 $$ 2 \times z_{\frac{1-\alpha}{2}} \times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \leq \frac{x}{100}$$
 
 - 「信頼区間の幅が $\pm$ 95% 以下となるために必要なサンプルサイズ」の場合、  
-  もしくは、「標本誤差をx%以内にするために必要なサンプルサイズ」を求める場合
+  もしくは、「標本誤差を $x$ %以内にするために必要なサンプルサイズ」を求める場合
 
 $$1.96 \times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \leq \frac{x}{100}$$
 
 - （「2×」の部分は不要）
+
+.footnote[<a href="https://bellcurve.jp/statistics/course/9129.html" target="_blank" rel="noopener noreferrer">参考サイト</a>]
 
 ---
 Q. 以下の表を埋めろ
@@ -680,6 +682,8 @@ tbls_ans %>%
 - 第二種の過誤: 対立仮説が正しいとき，正しくないはずの帰無仮説を受容してしまう誤り
 - 検出力: 対立仮説が正しいとき，帰無仮説を棄却できる確率
 - P値: 検定統計量の値よりも極端な値をとる確率
+
+.footnote[<a href="https://bellcurve.jp/statistics/course/9315.html" target="_blank" rel="noopener noreferrer">参考サイト</a>]
 
 ---
 Q. 以下の画像の空白部分を埋めろ
