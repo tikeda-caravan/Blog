@@ -4,7 +4,7 @@
     <title>stat test cheet sheet</title>
     <meta charset="utf-8" />
     <meta name="author" content="Ango" />
-    <meta name="date" content="2022-11-20" />
+    <meta name="date" content="2022-11-23" />
     <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
 document.addEventListener('DOMContentLoaded', function(e) {
@@ -1556,7 +1556,7 @@ class: center, middle, inverse, title-slide
 
 # stat test cheet sheet
 ### Ango
-### 2022-11-20
+### 2022-11-23
 
 ---
 
@@ -2088,13 +2088,11 @@ Q. 母分散 `\(\sigma^2\)` の推定(母平均未知)を求める公式を答�
 `$$\frac{(n-1)U^2}{\chi^2_{0.025}(n-1)} \leq \sigma^2 \leq \frac{(n-1)U^2}{\chi^2_{0.975}(n-1)}$$`
 
 ---
-標本平均を `\(\bar{X}\)`, 不偏分散を `\(U^2\)` サンプルサイズ `\(n\)` を用いて、以下の問いに答えろ
-
-Q. 母比率 `\(p\)` の推定（大標本）を求める公式を答えろ ( `\(X/n\)` )
+Q. 母比率 `\(p\)` の推定（大標本）を求める公式を答えろ (標本比率は `\(\hat{p}\)` とする)
 
 --
 
-`$$\frac{X}{n}-1.96 \times \sqrt{\frac{X/n(1-X/n)}{n}} \leq p \leq \frac{X}{n}+1.96 \times \sqrt{\frac{X/n(1-X/n)}{n}}$$`
+`$$\hat{p}-1.96 \times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \leq p \leq \hat{p}+1.96 \times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$$`
 
 --
 
@@ -2104,14 +2102,12 @@ Q. 信頼区間の幅を `\(x\)` 以下にする場合に必要なサンプル�
 
 $$ 2 \times z_{\frac{1-\alpha}{2}} \times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \leq \frac{x}{100}$$
 
-- 「信頼区間の幅が `\(\pm\)` 95% 以下となるために必要なサンプルサイズ」の場合、  
-  もしくは、「標本誤差を `\(x\)` %以内にするために必要なサンプルサイズ」を求める場合
+- 「信頼区間の幅が** `\(\pm x\)` %以下**となるために必要なサンプルサイズ」の場合、  
+  もしくは、「標本誤差を** `\(x\)` %以内**にするために必要なサンプルサイズ」を求める場合&lt;sup&gt;\*&lt;/sup&gt;
 
-`$$1.96 \times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \leq \frac{x}{100}$$`
+`$$z_{\frac{1-\alpha}{2}} \times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \leq \frac{x}{100}$$`
 
-- （「2×」の部分は不要）
-
-.footnote[&lt;a href=&quot;https://bellcurve.jp/statistics/course/9129.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;参考サイト&lt;/a&gt;]
+.footnote[&lt;sup&gt;*&lt;/sup&gt; 「2×」の部分は不要, &lt;a href=&quot;https://bellcurve.jp/statistics/course/9129.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;参考サイト&lt;/a&gt;]
 
 ---
 Q. 以下の表を埋めろ
@@ -2261,7 +2257,7 @@ Q. 母平均の差の検定(対応のない２群で，母分散既知の場合)
 
 --
 
-`$$\frac{X_{diff}}{\sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma^2_2}{n_2}}}$$`
+`$$Z=\frac{X_{diff}}{\sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma^2_2}{n_2}}}$$`
 
 
 ---
@@ -2270,7 +2266,7 @@ Q. 母平均の差の検定(対応のない２群で，母分散未知（大標�
 
 --
 
-`$$\frac{X_{diff}}{\sqrt{\frac{U^2_1}{n_1}+\frac{U^2_2}{n_2}}}$$`
+`$$Z=\frac{X_{diff}}{\sqrt{\frac{U^2_1}{n_1}+\frac{U^2_2}{n_2}}}$$`
 
 --
 Q. 母平均の差の検定(対応のない２群で，母分散未知（小標本，等分散）の場合)
@@ -2280,7 +2276,7 @@ Q. 母平均の差の検定(対応のない２群で，母分散未知（小標�
 --
 
 .pull-left[
-`$$\frac{X_{diff}}{\sqrt{U_p^2(\frac{U^2_1}{n_1}+\frac{U^2_2}{n_2})}}$$`
+`$$t=\frac{X_{diff}}{\sqrt{U_p^2(\frac{U^2_1}{n_1}+\frac{U^2_2}{n_2})}}$$`
 ]
 
 .pull-right[
@@ -2299,18 +2295,16 @@ Q. 等分散仮説の検定
 自由度は、 `\(F(n_B-1, n_A-1)\)` 
 
 ---
-Q. 適合度検定とは、どのようなときに用いる検定か答えろ
+Q. 適合度検定とは、どのようなときに用いる検定か答えろ。またこの時の、帰無仮説と対立仮説を答えろ
 
 --
 
 A. データの分布が特定の理論にあっていないことを示すための検定
 
-Q. この時の、帰無仮説と対立仮説を答えろ
-
---
-
 - 帰無仮説：実験結果が仮定した理論に適合する
 - 対立仮説：実験結果が仮定した理論に適合しない
+
+--
 
 Q. 観測度数を `\(X_1, X_2, \cdots, X_k\)` , 期待確率を `\(p_1, p_2, \cdots, p_k\)` , 全度数を `\(n\)` とするときの期待度数を求めろ
 
@@ -2333,26 +2327,20 @@ Q. この時の検定統計量を答えろ。またその時の自由度も答�
 .footnote[&lt;a href=&quot;https://bellcurve.jp/statistics/course/9494.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;参考サイト&lt;/a&gt;]
 
 ---
-Q. 独立性の検定は、どのようなときに行う検定か答えろ
+Q. 独立性の検定は、どのような検定か答えろ。また、この時の帰無仮説と対立仮説を答えろ
 
 --
 
 A. `\(k\)` 行 `\(l\)` 列のクロス集計表において，2つの要因が独立ではないことを示すために用います。
 
-Q. また、この時の帰無仮説と対立仮説を答えろ
-
---
-
 - 帰無仮説：行と列の要因は独立である
 - 対立仮説：行と列の要因は独立でない
 
----
+--
 
 Q. また、この時の期待度数 `\(p_{ij}\)` を求めろ
 
 --
-
-A. 期待度数 `\(p_{ij}\)` は周辺度数の積を全度数で割って求められます。
 
 `$$p_{ij}=\frac{X_{i.} \times X_{.j}}{n}$$`
 
@@ -2382,68 +2370,33 @@ Q. 分散分析表を完成させろ。また、この時の検定は何側検�
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style=&quot;text-align:center;&quot;&gt;  &lt;/th&gt;
-   &lt;th style=&quot;text-align:center;&quot;&gt; 偏差平方和 &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 偏差平方和(平方和) &lt;/th&gt;
    &lt;th style=&quot;text-align:center;&quot;&gt; 自由度 &lt;/th&gt;
-   &lt;th style=&quot;text-align:center;&quot;&gt; 分散 &lt;/th&gt;
-   &lt;th style=&quot;text-align:center;&quot;&gt; 分散比 &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 分散(平均平方) &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 分散比(F値) &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; 群間変動 &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 群間変動(要因) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; \(S_a\) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; \(df_a\) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; \(V_a\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; NA &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; 郡内変動 &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 郡内変動(残差) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; \(S_e\) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; \(df_e\) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; \(V_e\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; NA &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; 全体変動 &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 全体変動(全体) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; \(S_t\) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; \(df_t\) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; \(V_t\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:center;&quot;&gt;  &lt;/th&gt;
-   &lt;th style=&quot;text-align:center;&quot;&gt; 平方和 &lt;/th&gt;
-   &lt;th style=&quot;text-align:center;&quot;&gt; 自由度 &lt;/th&gt;
-   &lt;th style=&quot;text-align:center;&quot;&gt; 平均平方 &lt;/th&gt;
-   &lt;th style=&quot;text-align:center;&quot;&gt; F値 &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; 要因 &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; \(S_a\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; \(df_a\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; \(V_a\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; 残差 &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; \(S_e\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; \(df_e\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; \(V_e\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; 全体 &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; \(S_t\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; \(df_t\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; \(V_t\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; NA &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -2457,68 +2410,33 @@ Q. 分散分析表を完成させろ。また、この時の検定は何側検�
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style=&quot;text-align:center;&quot;&gt;  &lt;/th&gt;
-   &lt;th style=&quot;text-align:center;&quot;&gt; 偏差平方和 &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 偏差平方和(平方和) &lt;/th&gt;
    &lt;th style=&quot;text-align:center;&quot;&gt; 自由度 &lt;/th&gt;
-   &lt;th style=&quot;text-align:center;&quot;&gt; 分散 &lt;/th&gt;
-   &lt;th style=&quot;text-align:center;&quot;&gt; 分散比 &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 分散(平均平方) &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 分散比(F値) &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; 群間変動 &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; 群間偏差平方和(\(S_a\)) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; \(df_a=群数-1\) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 群間変動(要因) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 群間偏差平方和&lt;br&gt;\(S_a = \sum \bar{x}_g - \bar{x}_t\) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; \(df_a=g(群数)-1\) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; 群間分散(\(V_a=S_a/f_a\)) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; \(F=V_a/V_e\) &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; 郡内変動 &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; 郡内偏差平方和(\(S_e\)) &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; \(df_e=n-群数\) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 郡内変動(残差) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 郡内偏差平方和&lt;br&gt;\(S_e = \sum x_i - \bar{x}_g\) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; \(df_e=n-g(群数)\) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; 郡内分散(\(V_e=S_e/f_e\)) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; - &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; 全体変動 &lt;/td&gt;
-   &lt;td style=&quot;text-align:center;&quot;&gt; 全体偏差平方和(\(S_t\)) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 全体変動(全体) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 全体偏差平方和&lt;br&gt;\(S_t = \sum x_i - \bar{x}_t\) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; \(df_t=n-1\) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; 全体分散(\(V_t=S_t/f_t\)) &lt;/td&gt;
    &lt;td style=&quot;text-align:center;&quot;&gt; - &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt;  &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; 平方和 &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; 自由度 &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; 平均平方 &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; F値 &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 要因 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; \(S_a = \sum \bar{x}_g - \bar{x}_t\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; \(df_a = g-1\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; \(V_a = S_a/df_a\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; \(F=V_a/V_e\) &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 残差 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; \(S_e = \sum x_i - \bar{x}_g\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; \(df_e = n-g\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; \(V_e = S_e/df_e\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; - &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 全体 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; \(S_t = \sum x_i - \bar{x}_t\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; \(df_t = n-1\) &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; \(V_t = S_t/df_t\)) &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; - &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -2547,12 +2465,12 @@ Q. この時の `\(t\)` 値を、回帰係数 `\(\beta\)` と標準誤差 `\(se\
 
 $$ \beta \div se$$
 
-Q. 残差平方和とは何か答えろ
+Q. 残差平方和(residual sum of squares, `\(RSS\)` ) を 予測値 `\(\hat{y_i}\)` と 観測値 `\(y_{i}\)` を用いて答えろ
 
 --
 
-- 残差平方和: 各標本について、予測値と観測値の差の2乗和
-- 残差平方和を自由度の `\(n-2\)` で割ったものが誤差項の分散の不偏推定量になります。
+- A. `\(RSS =  \sum^n_{i=1}\epsilon^2_i = \sum^n_{i=1}(\hat{y_i} - y_{i})^2 = \sum^n_{i=1}(\hat{y_i} - (\alpha + \beta x_{i}))^2\)`
+- 残差平方和を自由度の `\(n-2\)` で割ったものが誤差項( `\(\epsilon\)` )の分散の不偏推定量になります。
 
 .footnote[&lt;a href=&quot;https://bellcurve.jp/statistics/course/9700.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;単回帰分析&lt;/a&gt;]
 
@@ -2575,6 +2493,8 @@ A. 回帰直線は `\((\bar{x}, \bar{y})\)` を通る
 ---
 Q. 重回帰分析の回帰係数の検定は、何検定か答えろ。またこの時の帰無仮説・対立仮説を、偏回帰係数 `\(\beta_i\)` を用いて、答えなさい。
 
+--
+
 - `\(t\)` 検定
 - 帰無仮説: `\(b_i = 0\)`, 対立仮説: `\(b \neq 0 \space(i=1,2, \cdots, p)\)`
 
@@ -2595,13 +2515,17 @@ $$ \beta \div se$$
 .footnote[&lt;a href=&quot;https://bellcurve.jp/statistics/course/9702.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;重回帰分析&lt;/a&gt;]
 
 ---
-Q. 回帰係数 `\(\beta\)` の信頼区間を 標準誤差 `\(se\)` 求めよ
+Q. 回帰係数 `\(\beta\)` の信頼区間を 標準誤差 `\(se (\hat{\beta_i})\)` 求めよ
+
+--
 
 `$$\widehat{\beta}_i-t_{\frac{\alpha}{2}}(n-k-1) \times s e\left(\widehat{\beta}_i\right) \leq \beta_i \leq \widehat{\beta}_i+t_{\frac{\alpha}{2}}(n-k-1) \times \operatorname{se}\left(\widehat{\beta}_i\right)$$`
 
 --
 
 Q. 決定係数とは何か答えろ
+
+--
 
 A. 決定係数はデータに対する、推定された回帰式の当てはまりの良さ（度合い）を表します。決定係数は一般に `\(R^2\)` で示され、0から1までの値をとります。1に近いほど、回帰式が実際のデータに当てはまっていることを表しており、説明変数が目的変数をよく説明していると言えます。
 
@@ -2640,9 +2564,86 @@ Q. 残差の性質を2つ答えろ
 ]
 
 .pull-right[
-- 説明変数と残差の積和は0である（この式は、説明変数と残差との間には相関がない（＝無相関である）ということを表します）
+- 説明変数と残差の積和は0である（この式は、説明変数と残差との間には相関がない（＝無相関である）ということを表す）
   $$ \sum x_ie_i = 0$$
 ]
+
+---
+Q. 以下の分散分析表を埋めろ
+
+&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; 要因 &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 偏差平方和(平方和) &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 自由度 &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 分散(平均平方) &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 分散比(F値) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 回帰変動(要因) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 残差変動(残差) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 全体変動(全体) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+Q. 以下の分散分析表を埋めろ
+
+&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; 要因 &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 偏差平方和(平方和) &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 自由度 &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 分散(平均平方) &lt;/th&gt;
+   &lt;th style=&quot;text-align:center;&quot;&gt; 分散比(F値) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 回帰変動(要因) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 回帰変動の平方和&lt;br&gt;\(SSR = \sum (\hat{y_i} - \bar{y})^2\) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; \(p\) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 回帰変動の平均平方&lt;br&gt;\(MSR= \frac{SSR}{p}\) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; \(F= \frac{MSR}{MSE}\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 残差変動(残差) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 残差変動の平方和&lt;br&gt;\(SSE = \sum (y_i - \hat{y_i})^2\) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; \(n-p-1\) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 残差変動の平均平方&lt;br&gt;\(MSE= \frac{SSE}{n-p-1}\) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; - &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;text-align:left;&quot;&gt; 全体変動(全体) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; 全変動の平方和  &lt;br&gt;\(SST = \sum (y_i - \bar{y})^2\) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; \(n-1\) &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; - &lt;/td&gt;
+   &lt;td style=&quot;text-align:center;&quot;&gt; - &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
 
 ---
 # 参考にしたサイト
