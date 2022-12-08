@@ -227,7 +227,7 @@ $$ \frac{1月 \times 0.5 + 2月 + 3月 + 4月 + 5月 \times 0.5}{4}$$
 
 ---
 
-Q. 変化率を答えろ
+Q. 変化率を答えろ (比較時, 基準時を用いてもよい)
 
 --
 
@@ -430,7 +430,7 @@ $$V(X \pm Y) = V(X) \pm 2Cov(X,Y) + V(Y)$$
 
 --
 
-Q. 確率変数の組 $(X, Y)$ を次のように $(S, T)$ におきかえる一次変換がある場合の、共分散 $Cov(S, T)$ を答えろ<sup>*</sup>
+Q. 確率変数の組 $(X, Y)$ を次のように $(S, T)$ におきかえる一次変換 $ S = aX+b, T=cY + d $ がある場合の、共分散 $Cov(S, T)$ を答えろ<sup>*</sup>
 
 --
 
@@ -489,7 +489,7 @@ f(x)=\left\{\begin{array}{l}
 $$E(X) = \frac{a+b}{2}$$
 
 ---
-Q. ベルヌーイ分布の期待値、分散を確率は $p$ を用いて答えろ
+Q. ベルヌーイ分布の期待値 $E(X)$ 、分散 $V(X)$ を確率 $p$ を用いて答えろ
 
 $E(X)$
 
@@ -542,7 +542,7 @@ $E(X)=\lambda$
 
 $V(X)=\lambda$
 
-- ポアソン分布は、 $\lambda$ が大きくなるにつれて正規分布に近づく( $n$ が10くらいでも正規分布<sup>3</sup>
+- ポアソン分布は、 $\lambda$ が大きくなるにつれて正規分布に近づく( $n$ が10くらいで、正規分布に近似する<sup>3</sup>
 
 .footnote[<sup>3<sup><a href="https://www.hello-statisticians.com/toukei-kentei-2-kakomon-cat/201611-2.html" target="_blank" rel="noopener noreferrer">参考サイト</a>]
 
@@ -569,6 +569,24 @@ name: chap3
 class: middle center
 
 # 推定，検定, 線形モデルの分野
+
+---
+それぞれの用語を説明せよ
+
+- 不偏推定量
+- 一致推定量
+- 大数の法則
+- 中心極限定理
+
+---
+それぞれの用語を説明せよ
+
+- 不偏推定量: 期待値が母数に等しくなる推定量
+- 一致推定量: 極限が母数に等しくなる推定量
+- 大数の法則: 標本の大きさを大きくしていくと，標本平均は母平均にいくらでも近づくこと
+- 中心極限定理: 母集団分布がどんなものであっても，標本の大きさが十分に大きいとき，標本平均は近似的に正規分布に従うこと
+
+<a href="https://bellcurve.jp/statistics/course/8612.html" target="_blank" rel="noopener noreferrer">参考サイト</a>
 
 ---
 標本平均 $\bar{X}$ , 母分散 $\sigma^2$ , 不偏分散 $U^2$ , サンプルサイズ $n$ を用いて、以下の問いに答えろ
@@ -777,7 +795,7 @@ $$Z=\frac{X_{diff}}{\sqrt{\frac{U^2_1}{n_1}+\frac{U^2_2}{n_2}}}$$
 
 Q. 母平均の差の検定(**対応のない２群**で，**母分散未知（小標本，等分散）**の場合)
 
-母集団がそれぞれ正規分布に従っていて，２つの母分散が等しいとき，標本の大きさをそれぞれ $n_1, n_2$ とするときの検定統計量を答えろ
+母集団がそれぞれ正規分布に従っていて，２つの母分散が等しいとき，標本の大きさをそれぞれ $n_1, n_2$ とするときの検定統計量を答えろ。また、この時の自由度も答えろ
 
 --
 
@@ -787,6 +805,8 @@ $$t=\frac{X_{diff}}{\sqrt{U_p^2(\frac{U^2_1}{n_1}+\frac{U^2_2}{n_2})}}$$
 
 .pull-right[
 $$U_p^2=\frac{\sum_{k=1}^{n_1}\left(X_k-\bar{X}\right)^2+\sum_{k=1}^{n_2}\left(Y_k-\bar{Y}\right)^2}{n_1+n_2-2}$$
+
+$$ t(n_1 - n_2 - 2)$$
 ]
 
 ---
@@ -938,14 +958,14 @@ Q. この時の $t$ 値を、回帰係数 $\beta$ と標準誤差 $se$ を使っ
 
 --
 
-$$ \beta \div se$$
+$$ t = \beta \div se$$
 
 Q. 残差平方和(residual sum of squares, $RSS$ ) を 予測値 $\hat{y_i}$ と 観測値 $y_{i}$ を用いて答えろ
 
 --
 
-- A. $RSS =  \sum^n_{i=1}\epsilon^2_i = \sum^n_{i=1}(\hat{y_i} - y_{i})^2 = \sum^n_{i=1}(\hat{y_i} - (\alpha + \beta x_{i}))^2$
-- 残差平方和を自由度の $n-2$ で割ったものが誤差項( $\epsilon$ )の分散の不偏推定量になります。
+- A. $RSS =  \sum^n_{i=1}e^2_i = \sum^n_{i=1}(y_i - \hat{y_i})^2 = \sum^n_{i=1}(y_i - (\alpha + \beta x_{i}))^2$
+- 残差平方和を自由度の $n-2$ で割ったもの ( $\frac{1}{n-2}\sum e_i$ ) が誤差項( $e$ )の分散の不偏推定量
 
 .footnote[<a href="https://bellcurve.jp/statistics/course/9700.html" target="_blank" rel="noopener noreferrer">単回帰分析</a>]
 
@@ -954,7 +974,7 @@ Q. 推定値の平均 $\bar{\hat{y}}$ は何と等しいか答えろ
 
 --
 
-A. 推定値の平均値 $\bar{\hat{y}}$ は、実際の観測値の平均 $\bar{y_{i}}$ と等しい
+A. 推定値の平均値 $\bar{\hat{y}}$ は、実際の観測値の平均 $\bar{y}$ と等しい
 
 --
 
@@ -971,7 +991,7 @@ Q. 重回帰分析の回帰係数の検定は、何検定か答えろ。また�
 --
 
 - $t$ 検定
-- 帰無仮説: $\beta_i = 0$, 対立仮説: $\beta \neq 0 \space(i=1,2, \cdots, k)$
+- 帰無仮説: $\beta_i = 0$, 対立仮説: $\beta_i \neq 0 \space(i=1,2, \cdots, k)$
 
 Q. この時の回帰係数の検定統計量の自由度は、いくつか答えろ(サンプルサイズ $n$ を用いてよい)
 
@@ -985,12 +1005,12 @@ Q. この時の $t$ 値を、回帰係数 $\beta$ と標準誤差 $se$ を使っ
 
 --
 
-$$ \beta \div se$$
+$$ t = \beta_i \div se_i$$
 
 .footnote[<a href="https://bellcurve.jp/statistics/course/9702.html" target="_blank" rel="noopener noreferrer">重回帰分析</a>]
 
 ---
-Q. 回帰係数 $\beta$ の信頼区間を 標準誤差 $se (\hat{\beta_i})$ 求めよ
+Q. 回帰係数 $\beta$ の信頼区間を標準誤差 $se (\hat{\beta_i})$ を使って、求めよ
 
 --
 
@@ -1045,7 +1065,7 @@ Q. 残差の性質を2つ答えろ
 ]
 
 ---
-Q. 以下の分散分析表を埋めろ
+Q. 以下の分散分析表を埋めろ (ヒント: $y_i, \hat{y_{i}}, \bar{y}$ )
 
 ```{r}
 library(readr)
@@ -1058,7 +1078,7 @@ kableExtra::kbl(tbl3_qes, escape = FALSE, format = "html", align = "lcccc") %>%
 ```
 
 ---
-Q. 以下の分散分析表を埋めろ
+Q. 以下の分散分析表を埋めろ  (ヒント: $y_i, \hat{y_{i}}, \bar{y}$ )
 
 ```{r}
 library(readr)
