@@ -50,16 +50,17 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  { color: #00769e; background-color: #f1f3f5; }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span { color: #00769e; } /* Normal */
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { } /* Attribute */
+code span.at { color: #657422; } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #007ba5; } /* ControlFlow */
+code span.cf { color: #00769e; } /* ControlFlow */
 code span.ch { color: #20794d; } /* Char */
 code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #5e5e5e; } /* Comment */
@@ -73,9 +74,9 @@ code span.fl { color: #ad0000; } /* Float */
 code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #007ba5; } /* Keyword */
+code span.kw { color: #00769e; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #007ba5; } /* Other */
+code span.ot { color: #00769e; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
 code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
@@ -786,6 +787,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-article table.gt_table td,
   d-article table.gt_table th {
     border-bottom: none;
+    font-size: 100%;
   }
 
   .html-widget {
@@ -1027,10 +1029,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     position: relative;
     margin-bottom: 2.5em;
     margin-top: 1.5em;
-  }
-
-  .figure img {
-    width: 100%;
   }
 
   .figure .caption {
@@ -1862,9 +1860,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
-          return "<p>" + $('#ref-' + ref).html() + "</p>";
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
         }).join("\n");
         window.tippy(this, {
           allowHTML: true,
@@ -1876,6 +1886,31 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
           placement: 'bottom-start'
         });
       });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
 
       // clear polling timer
       clearInterval(tid);
@@ -1975,6 +2010,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
       var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
       if ($(this).attr('data-layout') !== "l-body") {
         figures.css('width', '100%');
       } else {
@@ -1997,7 +2034,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
       $('.distill-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
       });
     }
 
@@ -2036,7 +2073,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
   <script src="site_libs/clipboard-2.0.6/clipboard.min.js"></script>
   <link href="site_libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
   <script src="site_libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
@@ -2103,23 +2140,22 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#シュート">シュート</a></li>
-<li><a href="#エアドリ">エアドリ</a></li>
-<li><a href="#頭乗せ">頭乗せ</a></li>
-<li><a href="#スピードフリップ">スピードフリップ</a></li>
-<li><a href="#トラップ">トラップ</a></li>
-<li><a href="#ゴールディフェンス">ゴールディフェンス</a></li>
-<li><a href="#wall">Wall</a></li>
-<li><a href="#背面">背面</a></li>
-<li><a href="#エアリアル">エアリアル</a></li>
-<li><a href="#ダブルタッチ">ダブルタッチ</a></li>
-<li><a href="#シーリングショット">シーリングショット</a></li>
-<li><a
-href="#トルネードスピンエアロール">トルネードスピン・エアロール</a></li>
-<li><a href="#フリップリセット">フリップリセット</a></li>
-<li><a href="#立ち回り">立ち回り</a></li>
-<li><a href="#用語集">用語集</a></li>
-<li><a href="#other">Other</a></li>
+<li><a href="#シュート" id="toc-シュート">シュート</a></li>
+<li><a href="#エアドリ" id="toc-エアドリ">エアドリ</a></li>
+<li><a href="#頭乗せ" id="toc-頭乗せ">頭乗せ</a></li>
+<li><a href="#スピードフリップ" id="toc-スピードフリップ">スピードフリップ</a></li>
+<li><a href="#トラップ" id="toc-トラップ">トラップ</a></li>
+<li><a href="#ゴールディフェンス" id="toc-ゴールディフェンス">ゴールディフェンス</a></li>
+<li><a href="#wall" id="toc-wall">Wall</a></li>
+<li><a href="#背面" id="toc-背面">背面</a></li>
+<li><a href="#エアリアル" id="toc-エアリアル">エアリアル</a></li>
+<li><a href="#ダブルタッチ" id="toc-ダブルタッチ">ダブルタッチ</a></li>
+<li><a href="#シーリングショット" id="toc-シーリングショット">シーリングショット</a></li>
+<li><a href="#トルネードスピンエアロール" id="toc-トルネードスピンエアロール">トルネードスピン・エアロール</a></li>
+<li><a href="#フリップリセット" id="toc-フリップリセット">フリップリセット</a></li>
+<li><a href="#立ち回り" id="toc-立ち回り">立ち回り</a></li>
+<li><a href="#用語集" id="toc-用語集">用語集</a></li>
+<li><a href="#other" id="toc-other">Other</a></li>
 </ul>
 </nav>
 </div>
@@ -2127,14 +2163,12 @@ href="#トルネードスピンエアロール">トルネードスピン・エ�
 
 </div>
 <ul>
-<li><a href="https://embrems-game.com/gamememo/12/">ロケットリーグ
-おすすめカスタムトレーニング</a></li>
+<li><a href="https://embrems-game.com/gamememo/12/">ロケットリーグ おすすめカスタムトレーニング</a></li>
 </ul>
 <h2 id="シュート">シュート</h2>
 <details>
 <ul>
-<li><a href="https://youtu.be/xf6UJ7Tkziw">【Yuhiのロケットリーグ講座
-Part 1】鋭く強く！シュートの打ち方 地上編</a></li>
+<li><a href="https://youtu.be/xf6UJ7Tkziw">【Yuhiのロケットリーグ講座 Part 1】鋭く強く！シュートの打ち方 地上編</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/xf6UJ7Tkziw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2142,54 +2176,45 @@ Part 1】鋭く強く！シュートの打ち方 地上編</a></li>
 <h2 id="エアドリ">エアドリ</h2>
 <details>
 <ul>
-<li><a
-href="https://youtu.be/7_6F8O2zVgo">【ロケットリーグ】エアドリ完全攻略［入門用］3stepでエアドリブルというテクニックを習得しよう
-!!【Rocket League】</a></li>
+<li><a href="https://youtu.be/7_6F8O2zVgo">【ロケットリーグ】エアドリ完全攻略［入門用］3stepでエアドリブルというテクニックを習得しよう !!【Rocket League】</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>802E-AEB5-CA24-DD1C</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/7_6F8O2zVgo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/Y8IpgCDn1l8">【ロケットリーグ】エアドリ
-カスタムトレーニング</a></li>
+<li><a href="https://youtu.be/Y8IpgCDn1l8">【ロケットリーグ】エアドリ カスタムトレーニング</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>DFAF-A119-60F9-927C</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Y8IpgCDn1l8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/VjZ6pmTkjBE">【ロケットリーグ】エアドリ完全攻略２［実践用］エアドリブルのチャンスを自ら作ろう！【Rocket
-League】</a></li>
+<li><a href="https://youtu.be/VjZ6pmTkjBE">【ロケットリーグ】エアドリ完全攻略２［実践用］エアドリブルのチャンスを自ら作ろう！【Rocket League】</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>58C9-7BC4-ABB1-2DF7</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/VjZ6pmTkjBE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/aXoLsRQPBr4">【RocketLeague】エアドリとかの切り離しのコツ教えたる【弁護士】</a></li>
+<li><a href="https://youtu.be/aXoLsRQPBr4">【RocketLeague】エアドリとかの切り離しのコツ教えたる【弁護士】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/aXoLsRQPBr4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/aOQ1-PLq-8E">【解説】エアドリのマジでちょっとしたコツ【RocketLeague】</a></li>
+<li><a href="https://youtu.be/aOQ1-PLq-8E">【解説】エアドリのマジでちょっとしたコツ【RocketLeague】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/aOQ1-PLq-8E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/C0ylcjpqNwQ">【中級者向け】実戦でエアドリを使えるようになるためには【RocketLeague】</a></li>
+<li><a href="https://youtu.be/C0ylcjpqNwQ">【中級者向け】実戦でエアドリを使えるようになるためには【RocketLeague】</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>BC0B-D18F-75AB-58D0</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/C0ylcjpqNwQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/DLn8BHSRC1k">【ロケットリーグ(Rocket
-League)】苦しんで覚えるエアドリブル(タッチ編)</a></li>
+<li><a href="https://youtu.be/DLn8BHSRC1k">【ロケットリーグ(Rocket League)】苦しんで覚えるエアドリブル(タッチ編)</a></li>
 </ul>
 <pre><code>612C-D235-018F-2456</code></pre>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/DLn8BHSRC1k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
@@ -2198,23 +2223,19 @@ League)】苦しんで覚えるエアドリブル(タッチ編)</a></li>
 <h2 id="頭乗せ">頭乗せ</h2>
 <details>
 <ul>
-<li><a
-href="https://youtu.be/1_ywhUhrwvg">【ロケットリーグ】初心者用頭乗せトレーニング　誰でも頭乗せが出来るカスタムトレーニングを用意した‼︎【Rocket
-League】</a></li>
+<li><a href="https://youtu.be/1_ywhUhrwvg">【ロケットリーグ】初心者用頭乗せトレーニング　誰でも頭乗せが出来るカスタムトレーニングを用意した‼︎【Rocket League】</a></li>
 <li>カスタムトレーニングコード<br></li>
 </ul>
 <pre><code>1148-61A7-BABB-A6BA</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/1_ywhUhrwvg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/WmiY_PNYeS0">【ロケットリーグ講座】頭乗せシュートの打ち方【初心者向け】</a></li>
+<li><a href="https://youtu.be/WmiY_PNYeS0">【ロケットリーグ講座】頭乗せシュートの打ち方【初心者向け】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WmiY_PNYeS0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/k_ghZhJVgPo">2021年最新【ロケットリーグ】一人でボールを運べ！頭乗せドリブルの基本【解説】</a></li>
+<li><a href="https://youtu.be/k_ghZhJVgPo">2021年最新【ロケットリーグ】一人でボールを運べ！頭乗せドリブルの基本【解説】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/k_ghZhJVgPo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2222,23 +2243,19 @@ href="https://youtu.be/k_ghZhJVgPo">2021年最新【ロケットリーグ】一�
 <h2 id="スピードフリップ">スピードフリップ</h2>
 <details>
 <ul>
-<li><a
-href="https://youtu.be/4AjKjHA6-0s">【ロケットリーグ】ファーストタッチの基礎知識！運ゲーにしない為のテクニック！（スピードフリップ含む）【Rocket
-League】</a></li>
+<li><a href="https://youtu.be/4AjKjHA6-0s">【ロケットリーグ】ファーストタッチの基礎知識！運ゲーにしない為のテクニック！（スピードフリップ含む）【Rocket League】</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>10C9-EEE3-1B03-5FB0</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/4AjKjHA6-0s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/YhtxK1RyOEY">【ロケットリーグ】ファーストタッチ講座(１部)【初-中級者向け】</a></li>
+<li><a href="https://youtu.be/YhtxK1RyOEY">【ロケットリーグ】ファーストタッチ講座(１部)【初-中級者向け】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/YhtxK1RyOEY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/W0494Cf6WCU">BEST SPEEDFLIP TUTORIAL
-(2021)</a></li>
+<li><a href="https://youtu.be/W0494Cf6WCU">BEST SPEEDFLIP TUTORIAL (2021)</a></li>
 </ul>
 <pre><code>A503-264C-A7EB-D282</code></pre>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/W0494Cf6WCU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
@@ -2247,9 +2264,7 @@ href="https://youtu.be/YhtxK1RyOEY">【ロケットリーグ】ファースト�
 <h2 id="トラップ">トラップ</h2>
 <details>
 <ul>
-<li><a
-href="https://youtu.be/opxISPGdByU">【ロケットリーグ】トラップトレーニング　不利な状況にしないためのテクニック‼︎【Rocket
-League】</a></li>
+<li><a href="https://youtu.be/opxISPGdByU">【ロケットリーグ】トラップトレーニング　不利な状況にしないためのテクニック‼︎【Rocket League】</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>C262-24F7-8693-1D55</code></pre>
@@ -2259,40 +2274,35 @@ League】</a></li>
 <h2 id="ゴールディフェンス">ゴールディフェンス</h2>
 <details>
 <ul>
-<li><a href="https://youtu.be/BYODm6Fp-AE">【Yuhiのロケットリーグ講座
-Part 2】目指すは鉄壁！ゴールディフェンス編</a></li>
+<li><a href="https://youtu.be/BYODm6Fp-AE">【Yuhiのロケットリーグ講座 Part 2】目指すは鉄壁！ゴールディフェンス編</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>0327-ABF1-E8BB-EEC1</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/BYODm6Fp-AE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/0LwOZY5RmjA">【ロケットリーグ】シャドウディフェンスのコツを授ける。</a></li>
+<li><a href="https://youtu.be/0LwOZY5RmjA">【ロケットリーグ】シャドウディフェンスのコツを授ける。</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>5CCE-FB29-7B05-A0B1</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/0LwOZY5RmjA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/J1rCO8L7Uro">ランクアップするディフェンス練習【ロケットリーグ】</a></li>
+<li><a href="https://youtu.be/J1rCO8L7Uro">ランクアップするディフェンス練習【ロケットリーグ】</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>5CB2-6D82-1B54-47B7</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/J1rCO8L7Uro" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/638v5voviFc">ランクアップするディフェンス練習2【ロケットリーグ】</a></li>
+<li><a href="https://youtu.be/638v5voviFc">ランクアップするディフェンス練習2【ロケットリーグ】</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>79EC-EC65-CA31-4561</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/638v5voviFc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/SKASgRhGrZs">【ロケットリーグ】バックボードディフェンスの基本</a></li>
+<li><a href="https://youtu.be/SKASgRhGrZs">【ロケットリーグ】バックボードディフェンスの基本</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/SKASgRhGrZs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2300,33 +2310,28 @@ href="https://youtu.be/SKASgRhGrZs">【ロケットリーグ】バックボー�
 <h2 id="wall">Wall</h2>
 <details>
 <ul>
-<li><a
-href="https://youtu.be/EGredZgRrdA">【ロケットリーグ】初心者用壁打ちトレーニング　壁から離れたボールにも対応するテクニック‼︎【Rocket
-League】＃</a></li>
+<li><a href="https://youtu.be/EGredZgRrdA">【ロケットリーグ】初心者用壁打ちトレーニング　壁から離れたボールにも対応するテクニック‼︎【Rocket League】＃</a></li>
 <li>カスタムコード:</li>
 </ul>
 <pre><code>E286-7381-024E-5793</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/EGredZgRrdA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/jPFdIlSh0wY">壁が苦手な方へ
-カスタムトレーニング</a></li>
+<li><a href="https://youtu.be/jPFdIlSh0wY">壁が苦手な方へ カスタムトレーニング</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>BA11-B5F8-5283-C658</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jPFdIlSh0wY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/lPNUxpcGx7U">壁が苦手な方へ➁　壁打ちカスタムトレーニング</a></li>
+<li><a href="https://youtu.be/lPNUxpcGx7U">壁が苦手な方へ➁　壁打ちカスタムトレーニング</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>E163-0062-3BB9-AB61</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/lPNUxpcGx7U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/Cf6iG-yaYHw">【ロケットリーグ】壁の基本をマスターしよう</a></li>
+<li><a href="https://youtu.be/Cf6iG-yaYHw">【ロケットリーグ】壁の基本をマスターしよう</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>3CBA-47A1-95E1-217D</code></pre>
@@ -2340,29 +2345,25 @@ href="https://youtu.be/Cf6iG-yaYHw">【ロケットリーグ】壁の基本を�
 <iframe width="560" height="315" src="https://www.youtube.com/embed/eb0AAwBdn00" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/5ndGBY-STGk">Nunkiのカストレ攻略室#4　～壁着地を活かしたボールコントロール～</a></li>
+<li><a href="https://youtu.be/5ndGBY-STGk">Nunkiのカストレ攻略室#4　～壁着地を活かしたボールコントロール～</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>DBB9-6F02-3934-F01C</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/5ndGBY-STGk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/zMh8CHq5ZfQ">【ロケットリーグ】出来たら強い！壁エアリアルを習得しよう</a></li>
+<li><a href="https://youtu.be/zMh8CHq5ZfQ">【ロケットリーグ】出来たら強い！壁エアリアルを習得しよう</a></li>
 </ul>
 <pre><code>26E9-3921-AD26-C31A</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zMh8CHq5ZfQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/8SaNfPHS0Kc">【ロケットリーグ】汎用性抜群！主に壁から使える最強のフリップをマスターしよう。</a></li>
+<li><a href="https://youtu.be/8SaNfPHS0Kc">【ロケットリーグ】汎用性抜群！主に壁から使える最強のフリップをマスターしよう。</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/8SaNfPHS0Kc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/W8vFjiS-Hrg">【ロケットリーグ(Rocket
-League)】 猫でもわかるWall Angle Shot (= Doomsee Dish)</a></li>
+<li><a href="https://youtu.be/W8vFjiS-Hrg">【ロケットリーグ(Rocket League)】 猫でもわかるWall Angle Shot (= Doomsee Dish)</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/W8vFjiS-Hrg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2370,9 +2371,7 @@ League)】 猫でもわかるWall Angle Shot (= Doomsee Dish)</a></li>
 <h2 id="背面">背面</h2>
 <details>
 <ul>
-<li><a
-href="https://youtu.be/ILa48mO_0Fw">【ロケットリーグ】初心者用背面空中トレーニング　背面は地道に覚えるものだ‼︎【Rocket
-League】</a></li>
+<li><a href="https://youtu.be/ILa48mO_0Fw">【ロケットリーグ】初心者用背面空中トレーニング　背面は地道に覚えるものだ‼︎【Rocket League】</a></li>
 <li>カスタムトレーニングコード: <code>4AC6-447E-7202-D15E</code></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ILa48mO_0Fw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
@@ -2381,39 +2380,33 @@ League】</a></li>
 <h2 id="エアリアル">エアリアル</h2>
 <details>
 <ul>
-<li><a
-href="">【ロケットリーグ】初心者用空中トレーニング　これでエアリアルを身に付けよう‼︎【Rocket
-League】</a></li>
+<li><a href="">【ロケットリーグ】初心者用空中トレーニング　これでエアリアルを身に付けよう‼︎【Rocket League】</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>353D-795C-1BEF-9EB2</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/UW3EeU-sIAI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/BkmQ1MR6sYk">【Yuhiのロケットリーグ講座
-Part 3】華麗に空を飛ぼう！エアリアル・基礎編</a></li>
+<li><a href="https://youtu.be/BkmQ1MR6sYk">【Yuhiのロケットリーグ講座 Part 3】華麗に空を飛ぼう！エアリアル・基礎編</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>9A77-9A1C-456D-6723</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/BkmQ1MR6sYk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/D4KiDHTcDd4">Rocket League
-中級者エアリアル講座</a></li>
+<li><a href="https://youtu.be/D4KiDHTcDd4">Rocket League 中級者エアリアル講座</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>35F4-E028-4008-18F4</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/D4KiDHTcDd4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/NMrpJNreG2M">【ロケットリーグ】空中制御講座【初中級者向け】</a></li>
+<li><a href="https://youtu.be/NMrpJNreG2M">【ロケットリーグ】空中制御講座【初中級者向け】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/NMrpJNreG2M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/upmpcde_krE">Rings Map 2 | 100% Freestyle!
-| Rocket League</a></li>
+<li><a href="https://youtu.be/upmpcde_krE">Rings Map 2 | 100% Freestyle! | Rocket League</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/upmpcde_krE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2421,8 +2414,7 @@ href="https://youtu.be/NMrpJNreG2M">【ロケットリーグ】空中制御講�
 <h2 id="ダブルタッチ">ダブルタッチ</h2>
 <details>
 <ul>
-<li><a href="https://youtu.be/lDq847L8frs">Rocket League　-How to Double
-Touch-</a></li>
+<li><a href="https://youtu.be/lDq847L8frs">Rocket League　-How to Double Touch-</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>3534-02B8-CDD3-29D8</code></pre>
@@ -2430,16 +2422,14 @@ Touch-</a></li>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/lDq847L8frs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/Zv_71KQ93To">【初中級者向け】空中トレーニング解説！【DETONATOR】【ロケットリーグ】</a></li>
+<li><a href="https://youtu.be/Zv_71KQ93To">【初中級者向け】空中トレーニング解説！【DETONATOR】【ロケットリーグ】</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>B70D-49C6-C3CF-A4F2</code></pre>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Zv_71KQ93To" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/PDY-YIH-RJk">【ロケットリーグ】ダブルタッチ講座【中級者向け】</a></li>
+<li><a href="https://youtu.be/PDY-YIH-RJk">【ロケットリーグ】ダブルタッチ講座【中級者向け】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/PDY-YIH-RJk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2447,8 +2437,7 @@ href="https://youtu.be/PDY-YIH-RJk">【ロケットリーグ】ダブルタッ�
 <h2 id="シーリングショット">シーリングショット</h2>
 <details>
 <ul>
-<li><a
-href="https://youtu.be/OXhaaGm1iMM">【ロケットリーグ】シーリングショットを4ステップに分けてマスターしよう！【解説】（カストレコードあり）</a></li>
+<li><a href="https://youtu.be/OXhaaGm1iMM">【ロケットリーグ】シーリングショットを4ステップに分けてマスターしよう！【解説】（カストレコードあり）</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>F34E-2C68-AD8E-A71C</code></pre>
@@ -2458,8 +2447,7 @@ href="https://youtu.be/OXhaaGm1iMM">【ロケットリーグ】シーリング�
 <h2 id="トルネードスピンエアロール">トルネードスピン・エアロール</h2>
 <details>
 <ul>
-<li><a
-href="https://youtu.be/Il4Sg_rmPlo">【ロケットリーグ】トルネードスピンを5STEPで完全攻略！効率的な練習方法</a></li>
+<li><a href="https://youtu.be/Il4Sg_rmPlo">【ロケットリーグ】トルネードスピンを5STEPで完全攻略！効率的な練習方法</a></li>
 <li>静止ボールタッチ</li>
 </ul>
 <pre><code>A3E1-92C2-8757-4195</code></pre>
@@ -2470,20 +2458,17 @@ href="https://youtu.be/Il4Sg_rmPlo">【ロケットリーグ】トルネード�
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Il4Sg_rmPlo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/uQni7kdnePI">【RocketLeague】マジで世界一簡単なエアロール解説【フリースタイル】</a></li>
+<li><a href="https://youtu.be/uQni7kdnePI">【RocketLeague】マジで世界一簡単なエアロール解説【フリースタイル】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/uQni7kdnePI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/_1640Gl2hLg">【解説】エアロール難民の君へ【RocketLeague】</a></li>
+<li><a href="https://youtu.be/_1640Gl2hLg">【解説】エアロール難民の君へ【RocketLeague】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/_1640Gl2hLg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/zN7nRPM8X2g">【ロケットリーグ】フリースタイル入門　ひたすらくるくる回ってみよう！！！</a></li>
+<li><a href="https://youtu.be/zN7nRPM8X2g">【ロケットリーグ】フリースタイル入門　ひたすらくるくる回ってみよう！！！</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zN7nRPM8X2g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2493,40 +2478,28 @@ href="https://youtu.be/zN7nRPM8X2g">【ロケットリーグ】フリースタ�
 <iframe width="560" height="315" src="https://www.youtube.com/embed/HH7hYzfaxn4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><p><a
-href="https://youtu.be/4MfMNgIxYjY">【ロケットリーグ】図解解説！
-フリースタイルを始める前に知っておこう！
-ボタンエアロールの知識と空中制御 ～左エアロールから見た世界～【Rocket
-League】</a></p></li>
+<li><p><a href="https://youtu.be/4MfMNgIxYjY">【ロケットリーグ】図解解説！ フリースタイルを始める前に知っておこう！ ボタンエアロールの知識と空中制御 ～左エアロールから見た世界～【Rocket League】</a></p></li>
 <li><p>ワークショップ</p></li>
 <li><p>Speed Jump: Rings 2 - By dmc</p></li>
-<li><p><a href="https://steamcommunity.com/sharedfile"
-class="uri">https://steamcommunity.com/sharedfile</a>…</p></li>
+<li><p><a href="https://steamcommunity.com/sharedfile" class="uri">https://steamcommunity.com/sharedfile</a>…</p></li>
 <li><p>Speed Jump: Trials 1</p></li>
-<li><p><a href="https://steamcommunity.com/sharedfile"
-class="uri">https://steamcommunity.com/sharedfile</a>…</p></li>
+<li><p><a href="https://steamcommunity.com/sharedfile" class="uri">https://steamcommunity.com/sharedfile</a>…</p></li>
 <li><p>Lethamyr’s Giant Rings Map</p></li>
-<li><p><a href="https://steamcommunity.com/sharedfile"
-class="uri">https://steamcommunity.com/sharedfile</a>…</p></li>
+<li><p><a href="https://steamcommunity.com/sharedfile" class="uri">https://steamcommunity.com/sharedfile</a>…</p></li>
 <li><p>Lethamyr’s Lava Rings</p></li>
-<li><p><a href="https://steamcommunity.com/sharedfile"
-class="uri">https://steamcommunity.com/sharedfile</a>…</p></li>
+<li><p><a href="https://steamcommunity.com/sharedfile" class="uri">https://steamcommunity.com/sharedfile</a>…</p></li>
 <li><p>Lethamyr’s Neon Heights Rings</p></li>
-<li><p><a href="https://steamcommunity.com/sharedfile"
-class="uri">https://steamcommunity.com/sharedfile</a>…</p></li>
+<li><p><a href="https://steamcommunity.com/sharedfile" class="uri">https://steamcommunity.com/sharedfile</a>…</p></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/4MfMNgIxYjY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/WpEovBiPUMs">＜ロケットリーグ＞
-PS4GCが「上手い人は何故くるくる回りながら飛ぶの？」という疑問に答えてみた
-「トルネードスピンについて」</a></li>
+<li><a href="https://youtu.be/WpEovBiPUMs">＜ロケットリーグ＞ PS4GCが「上手い人は何故くるくる回りながら飛ぶの？」という疑問に答えてみた 「トルネードスピンについて」</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WpEovBiPUMs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/BavM1hzoeP8">【ロケットリーグ】空中でのボールコントロールをマスターしよう</a></li>
+<li><a href="https://youtu.be/BavM1hzoeP8">【ロケットリーグ】空中でのボールコントロールをマスターしよう</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/BavM1hzoeP8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2534,8 +2507,7 @@ href="https://youtu.be/BavM1hzoeP8">【ロケットリーグ】空中でのボ�
 <h2 id="フリップリセット">フリップリセット</h2>
 <details>
 <ul>
-<li><a
-href="https://youtu.be/yMRI59l4k5Q">背面ができる人は簡単にできる！フリップリセットのカスタムトレーニング　12BC-7A98-2C95-40E6</a></li>
+<li><a href="https://youtu.be/yMRI59l4k5Q">背面ができる人は簡単にできる！フリップリセットのカスタムトレーニング　12BC-7A98-2C95-40E6</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yMRI59l4k5Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2543,8 +2515,7 @@ href="https://youtu.be/yMRI59l4k5Q">背面ができる人は簡単にできる�
 <h2 id="立ち回り">立ち回り</h2>
 <details>
 <ul>
-<li><a
-href="https://youtu.be/qadppr88qYw">【Waveのコーチング#2】立ち回りで強くなるために！敵の動きを観察せよ！！【ロケットリーグ】【ダイヤモンド帯】</a></li>
+<li><a href="https://youtu.be/qadppr88qYw">【Waveのコーチング#2】立ち回りで強くなるために！敵の動きを観察せよ！！【ロケットリーグ】【ダイヤモンド帯】</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>6D70-7B8F-805D-8C5B</code></pre>
@@ -2552,39 +2523,32 @@ href="https://youtu.be/qadppr88qYw">【Waveのコーチング#2】立ち回り�
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qadppr88qYw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/STvaPSeXHCs">【RLCS解説】世界一のチーム
-BDS の「逃げない」戦い方とは？【ロケットリーグ】</a></li>
+<li><a href="https://youtu.be/STvaPSeXHCs">【RLCS解説】世界一のチーム BDS の「逃げない」戦い方とは？【ロケットリーグ】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/STvaPSeXHCs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/FuiuhTKWHd4">【ロケットリーグ解説】ダブルスの極意【ガチ勢向け】</a></li>
+<li><a href="https://youtu.be/FuiuhTKWHd4">【ロケットリーグ解説】ダブルスの極意【ガチ勢向け】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/FuiuhTKWHd4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/TxR0jn3J6sg">【ロケットリーグ解説】スタンダードで勝つ方法【初・中・上級者向け】</a></li>
+<li><a href="https://youtu.be/TxR0jn3J6sg">【ロケットリーグ解説】スタンダードで勝つ方法【初・中・上級者向け】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/TxR0jn3J6sg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/Zl3E7xYTbdo">【ロケットリーグ】スタンダード(3V)各ランク帯テクニックまとめ：ブロンズ帯～チャンプ帯【Rocket
-League】</a></li>
+<li><a href="https://youtu.be/Zl3E7xYTbdo">【ロケットリーグ】スタンダード(3V)各ランク帯テクニックまとめ：ブロンズ帯～チャンプ帯【Rocket League】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Zl3E7xYTbdo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/Loft2LJq4Bk">【ロケットリーグ】|
-アジアチャンピオンによる3v3の立ち回り解説 part1　【上級者向け】</a></li>
+<li><a href="https://youtu.be/Loft2LJq4Bk">【ロケットリーグ】| アジアチャンピオンによる3v3の立ち回り解説 part1　【上級者向け】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Loft2LJq4Bk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/G0Auq8aooFk">【ロケットリーグ】1v解説Part3【ダイヤ2】</a></li>
+<li><a href="https://youtu.be/G0Auq8aooFk">【ロケットリーグ】1v解説Part3【ダイヤ2】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/G0Auq8aooFk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2592,8 +2556,7 @@ href="https://youtu.be/G0Auq8aooFk">【ロケットリーグ】1v解説Part3【�
 <h2 id="用語集">用語集</h2>
 <details>
 <ul>
-<li><a
-href="https://youtu.be/yk48AORuqZY">【ロケットリーグ】超重要用語集2021【ランク別】</a></li>
+<li><a href="https://youtu.be/yk48AORuqZY">【ロケットリーグ】超重要用語集2021【ランク別】</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yk48AORuqZY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2601,8 +2564,7 @@ href="https://youtu.be/yk48AORuqZY">【ロケットリーグ】超重要用語�
 <h2 id="other">Other</h2>
 <details>
 <ul>
-<li><a
-href="https://youtu.be/_6WjToy6kf0">【ロケットリーグ】初心者の人がやるべき練習をランクごとに解説!!!!O</a></li>
+<li><a href="https://youtu.be/_6WjToy6kf0">【ロケットリーグ】初心者の人がやるべき練習をランクごとに解説!!!!O</a></li>
 <li>カスタムコード</li>
 </ul>
 <pre><code>641C-4D0B-858A-485E</code></pre>
@@ -2615,8 +2577,7 @@ href="https://youtu.be/_6WjToy6kf0">【ロケットリーグ】初心者の人�
 <iframe width="560" height="315" src="https://www.youtube.com/embed/_6WjToy6kf0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><p><a
-href="https://youtu.be/DAfWSpi96K0">ロケットリーグ｜小技解説｜part7｜できて当然！？いいえ、これからでも間に合う。</a></p>
+<li><p><a href="https://youtu.be/DAfWSpi96K0">ロケットリーグ｜小技解説｜part7｜できて当然！？いいえ、これからでも間に合う。</a></p>
 <ul>
 <li>最速ジャンプ</li>
 <li>フィフティ</li>
@@ -2626,35 +2587,27 @@ href="https://youtu.be/DAfWSpi96K0">ロケットリーグ｜小技解説｜part7
 <iframe width="560" height="315" src="https://www.youtube.com/embed/DAfWSpi96K0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/JzYBuQtcZ6E">【ロケットリーグ】ドリフトを使った切り返しのテクニック</a></li>
+<li><a href="https://youtu.be/JzYBuQtcZ6E">【ロケットリーグ】ドリフトを使った切り返しのテクニック</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JzYBuQtcZ6E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/j-cYvVqDU-4">フリップの変なミスをなくそう！<sub>フリップの仕組み紹介(初級編)</sub><span
-class="math display">\[Rocket League\]</span></a></li>
+<li><a href="https://youtu.be/j-cYvVqDU-4">フリップの変なミスをなくそう！<sub>フリップの仕組み紹介(初級編)</sub><span class="math display">\[Rocket League\]</span></a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/j-cYvVqDU-4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/Mvb0r7pTUUA">超連続フリップをしよう！
-<sub>ウェーブダッシュの仲間達</sub> <span
-class="math display">\[ロケットリーグ\]</span></a></li>
+<li><a href="https://youtu.be/Mvb0r7pTUUA">超連続フリップをしよう！ <sub>ウェーブダッシュの仲間達</sub> <span class="math display">\[ロケットリーグ\]</span></a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Mvb0r7pTUUA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a
-href="https://youtu.be/jcs8T-ZuPts">地面でフリップリセット！？～ヘルジャンプのやり方～<span
-class="math display">\[Rocket League\]</span></a></li>
+<li><a href="https://youtu.be/jcs8T-ZuPts">地面でフリップリセット！？～ヘルジャンプのやり方～<span class="math display">\[Rocket League\]</span></a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jcs8T-ZuPts" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://youtu.be/cokFQ5aE750">5 BEST TRAINING PACKS FOR ANY
-ROCKET LEAGUE RANK/PLATFORM!</a></li>
+<li><a href="https://youtu.be/cokFQ5aE750">5 BEST TRAINING PACKS FOR ANY ROCKET LEAGUE RANK/PLATFORM!</a></li>
 </ul>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/cokFQ5aE750" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2679,8 +2632,7 @@ ROCKET LEAGUE RANK/PLATFORM!</a></li>
 </ul>
 <pre><code>FA24-B2B7-2E8E-193B</code></pre>
 </details>
-<div class="sourceCode" id="cb41"><pre
-class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

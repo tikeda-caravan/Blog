@@ -4,7 +4,7 @@
     <title>stat test cheet sheet</title>
     <meta charset="utf-8" />
     <meta name="author" content="Ango" />
-    <meta name="date" content="2022-12-11" />
+    <meta name="date" content="2022-12-12" />
     <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
 document.addEventListener('DOMContentLoaded', function(e) {
@@ -1400,7 +1400,9 @@ border-bottom: 1px solid #ddd;
 th, td {
 padding: 5px;
 }
-.remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even) {
+.remark-slide table:not(.table-unshaded) thead,
+.remark-slide table:not(.table-unshaded) tfoot,
+.remark-slide table:not(.table-unshaded) tr:nth-child(even) {
 background: #CCDCEC;
 }
 table.dataTable tbody {
@@ -1554,9 +1556,15 @@ float: left;
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # stat test cheet sheet
+]
+.author[
 ### Ango
-### 2022-12-11
+]
+.date[
+### 2022-12-12
+]
 
 ---
 
@@ -1798,6 +1806,14 @@ Q. 排反事象が成り立つ場合、事象 `\(P(A)\)` と事象 `\(P(B)\)` �
 .footnote[&lt;sup&gt;1&lt;/sup&gt;&lt;a href=&quot;https://kou.benesse.co.jp/nigate/math/a14m0513.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;参考サイト&lt;/a&gt;]
 
 `$$P(A \cup B) = P(A) + P(B)$$`
+
+--
+
+Q. 事象Aと事象Bが互いに排反ではない場合は、どのような公式が成り立つか
+
+--
+
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B) $$
 
 --
 
@@ -2735,6 +2751,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
@@ -2780,9 +2809,9 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })(document);</script>
 <script>(function(data, token) {
   // data is an object of the form { path: base64 data }; we need to move base64
-  // data back to HTML nodes (e.g., into the 'src' attribute of <img>)
+  // data back to HTML nodes (e.g., into the 'src' attribute of <img>, <audio>, <video>, <source>)
   var i, s, d, el, els;
-  els = document.querySelectorAll('img[src^="' + token + '"]');
+  els = document.querySelectorAll(['img', 'audio', 'video', 'source'].map(x => x + '[src^="' + token + '"]').join(','));
   for (i = 0; i < els.length; i++) {
     el = els[i]; s = el.src.replace(token, ''); d = data[s];
     if (d) el.src = d;
