@@ -1400,9 +1400,7 @@ border-bottom: 1px solid #ddd;
 th, td {
 padding: 5px;
 }
-.remark-slide table:not(.table-unshaded) thead,
-.remark-slide table:not(.table-unshaded) tfoot,
-.remark-slide table:not(.table-unshaded) tr:nth-child(even) {
+.remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even) {
 background: #CCDCEC;
 }
 table.dataTable tbody {
@@ -1556,15 +1554,9 @@ float: left;
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-.title[
 # stat test cheet sheet
-]
-.author[
 ### Ango
-]
-.date[
 ### 2022-12-13
-]
 
 ---
 
@@ -2012,7 +2004,7 @@ Q. ベルヌーイ分布の期待値 `\(E(X)\)` 、分散 `\(V(X)\)` を確率 `
 `\(V(X)\)`
 
 ---
-Q. ベルヌーイ分布の期待値、分散を確率は `\(p\)` を用いて答えろ
+Q. ベルヌーイ分布の期待値 `\(E(X)\)` 、分散 `\(V(X)\)` を確率 `\(p\)` を用いて答えろ
 
 `\(E(X)=p\)`
 
@@ -2038,7 +2030,7 @@ Q. 二項分布の確率密度関数・期待値・分散を答えろ(確率は 
 
 `\(n\)` が大きい場合は、正規分布で近似が可能
 
-`$$B(n,p) ~ N(np, np(1-p))$$`
+`$$B(n,p) \sim N(np, np(1-p))$$`
 
 ---
 Q. ポアソン分布の確率密度関数を答えろ
@@ -2349,7 +2341,7 @@ $$ t(n_1 - n_2 - 2)$$
 ---
 Q. 等分散仮説の検定
 
-２つの正規母集団の無作為標本（標本の大きさはそれぞれ `\(n_A, n_B\)` ）から求められる不偏分散をそれぞれ `\(U_A^2, U_B^2\)` とし，これらが独立であるものとします。２群の母分散が等しいという帰無仮説のもとで，次の検定統計量を答えろ。&lt;u&gt;またその時の自由度も答えろ&lt;/u&gt;
+２つの正規母集団の無作為標本（標本の大きさはそれぞれ `\(n_A, n_B, (n_B &lt; n_A)\)` ）から求められる不偏分散をそれぞれ `\(U_A^2, U_B^2\)` とし，これらが独立であるものとします。２群の母分散が等しいという帰無仮説のもとで，次の検定統計量を答えろ。&lt;u&gt;またその時の自由度も答えろ&lt;/u&gt;
 
 --
 
@@ -2364,6 +2356,11 @@ Q. 等分散仮説の検定
 `\(F(n_B-1, n_A-1)\)` 
 
 ]
+
+- 2つの分散のうち、大きな値の方を分子にします。
+- 両側検定の場合の棄却ルールの決め方は、上側 `\(F(n_A, n_B)\)`, 下側 `\(1/F(n_B, n_A)\)` と決める。
+
+&lt;a href=&quot;https://bellcurve.jp/statistics/course/9934.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;参考サイト&lt;/a&gt;
 
 ---
 Q. 適合度検定とは、どのようなときに用いる検定か答えろ。またこの時の、帰無仮説と対立仮説を答えろ
@@ -2768,19 +2765,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
-// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
-// screen reader (see PR #262)
-(function(d) {
-  let res = {};
-  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
-    const t = tr.querySelector('td:nth-child(2)').innerText;
-    tr.querySelectorAll('td:first-child .key').forEach(key => {
-      const k = key.innerText;
-      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
-    });
-  });
-  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
-})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
@@ -2826,9 +2810,9 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })(document);</script>
 <script>(function(data, token) {
   // data is an object of the form { path: base64 data }; we need to move base64
-  // data back to HTML nodes (e.g., into the 'src' attribute of <img>, <audio>, <video>, <source>)
+  // data back to HTML nodes (e.g., into the 'src' attribute of <img>)
   var i, s, d, el, els;
-  els = document.querySelectorAll(['img', 'audio', 'video', 'source'].map(x => x + '[src^="' + token + '"]').join(','));
+  els = document.querySelectorAll('img[src^="' + token + '"]');
   for (i = 0; i < els.length; i++) {
     el = els[i]; s = el.src.replace(token, ''); d = data[s];
     if (d) el.src = d;

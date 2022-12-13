@@ -50,17 +50,16 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { color: #00769e; background-color: #f1f3f5; }
+  {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span { color: #00769e; } /* Normal */
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { color: #657422; } /* Attribute */
+code span.at { } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #00769e; } /* ControlFlow */
+code span.cf { color: #007ba5; } /* ControlFlow */
 code span.ch { color: #20794d; } /* Char */
 code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #5e5e5e; } /* Comment */
@@ -74,9 +73,9 @@ code span.fl { color: #ad0000; } /* Float */
 code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #00769e; } /* Keyword */
+code span.kw { color: #007ba5; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #00769e; } /* Other */
+code span.ot { color: #007ba5; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
 code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
@@ -794,7 +793,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-article table.gt_table td,
   d-article table.gt_table th {
     border-bottom: none;
-    font-size: 100%;
   }
 
   .html-widget {
@@ -1036,6 +1034,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     position: relative;
     margin-bottom: 2.5em;
     margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
   }
 
   .figure .caption {
@@ -1867,21 +1869,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        const citeChild = $(this).children()[0]
-        // Do not process if @xyz has been used without escaping and without bibliography activated
-        // https://github.com/rstudio/distill/issues/466
-        if (citeChild === undefined) return true
-
-        if (citeChild.nodeName == "D-FOOTNOTE") {
-          var fn = citeChild
-          $(this).html(fn.shadowRoot.querySelector("sup"))
-          $(this).id = fn.id
-          fn.remove()
-        }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
-          // Could use CSS.escape too here, we insure backward compatibility in navigator
-          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
+          return "<p>" + $('#ref-' + ref).html() + "</p>";
         }).join("\n");
         window.tippy(this, {
           allowHTML: true,
@@ -1893,31 +1883,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
           placement: 'bottom-start'
         });
       });
-
-      // fix footnotes in tables (#411)
-      // replacing broken distill.pub feature
-      $('table d-footnote').each(function() {
-        // we replace internal showAtNode methode which is triggered when hovering a footnote
-        this.hoverBox.showAtNode = function(node) {
-          // ported from https://github.com/distillpub/template/pull/105/files
-          calcOffset = function(elem) {
-              let x = elem.offsetLeft;
-              let y = elem.offsetTop;
-              // Traverse upwards until an `absolute` element is found or `elem`
-              // becomes null.
-              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
-                  x += elem.offsetLeft;
-                  y += elem.offsetTop;
-              }
-
-              return { left: x, top: y };
-          }
-          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
-          const bbox = node.getBoundingClientRect();
-          const offset = calcOffset(node);
-          this.show([offset.left + bbox.width, offset.top + bbox.height]);
-        }
-      })
 
       // clear polling timer
       clearInterval(tid);
@@ -2017,8 +1982,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
       var figures = $(this).find('img, .html-widget');
-      // ignore leaflet img layers (#106)
-      figures = figures.filter(':not(img[class*="leaflet"])')
       if ($(this).attr('data-layout') !== "l-body") {
         figures.css('width', '100%');
       } else {
@@ -2041,7 +2004,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
       $('.distill-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
       });
     }
 
@@ -2080,7 +2043,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2145,34 +2108,37 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-name</span> brave <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-name</span> brave <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rvest.tidyverse.org/'>rvest</a></span><span class='op'>)</span></span>
-<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/include_url.html'>include_url</a></span><span class='op'>(</span><span class='st'>"bookmarks_2021_11_21.html"</span>, height <span class='op'>=</span> <span class='st'>"10000px"</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rvest.tidyverse.org/'>rvest</a></span><span class='op'>)</span>
+<span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/include_url.html'>include_url</a></span><span class='op'>(</span><span class='st'>"bookmarks_2021_11_21.html"</span>, height <span class='op'>=</span> <span class='st'>"10000px"</span><span class='op'>)</span>
+</code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>bookmark</span> <span class='op'>&lt;-</span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span></span>
-<span>  <span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"bookmarks_2021_11_21.html"</span><span class='op'>)</span></span>
-<span>  <span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_nodes</a></span><span class='op'>(</span><span class='st'>"dt"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>bookmark_df</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span></span>
-<span>  h3 <span class='op'>=</span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_node</a></span><span class='op'>(</span><span class='va'>bookmark</span>, <span class='st'>"h3"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
-<span>  text <span class='op'>=</span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_node</a></span><span class='op'>(</span><span class='va'>bookmark</span>, <span class='st'>"a"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
-<span>  href <span class='op'>=</span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_node</a></span><span class='op'>(</span><span class='va'>bookmark</span>, <span class='st'>"a"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_attr.html'>html_attr</a></span><span class='op'>(</span><span class='st'>"href"</span><span class='op'>)</span></span>
-<span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
-<span>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>markdown <span class='op'>=</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_c.html'>str_c</a></span><span class='op'>(</span><span class='st'>"- ["</span>, <span class='va'>text</span>, <span class='st'>"]("</span>, <span class='va'>href</span>, <span class='st'>")"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/utils/write.table.html'>write.csv</a></span><span class='op'>(</span></span>
-<span>  <span class='va'>bookmark_df</span>,</span>
-<span>  file <span class='op'>=</span> <span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"brave_bookmarks_2021_11_21.csv"</span><span class='op'>)</span>,</span>
-<span>  row.names <span class='op'>=</span> <span class='cn'>FALSE</span>, fileEncoding <span class='op'>=</span> <span class='st'>"UTF-8"</span></span>
-<span>  <span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>bookmark</span> <span class='op'>&lt;-</span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span>
+  <span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"bookmarks_2021_11_21.html"</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_nodes</a></span><span class='op'>(</span><span class='st'>"dt"</span><span class='op'>)</span>
+
+<span class='va'>bookmark_df</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+  h3 <span class='op'>=</span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_node</a></span><span class='op'>(</span><span class='va'>bookmark</span>, <span class='st'>"h3"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text</a></span><span class='op'>(</span><span class='op'>)</span>,
+  text <span class='op'>=</span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_node</a></span><span class='op'>(</span><span class='va'>bookmark</span>, <span class='st'>"a"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text</a></span><span class='op'>(</span><span class='op'>)</span>,
+  href <span class='op'>=</span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_node</a></span><span class='op'>(</span><span class='va'>bookmark</span>, <span class='st'>"a"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_attr.html'>html_attr</a></span><span class='op'>(</span><span class='st'>"href"</span><span class='op'>)</span>
+<span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>markdown <span class='op'>=</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_c.html'>str_c</a></span><span class='op'>(</span><span class='st'>"- ["</span>, <span class='va'>text</span>, <span class='st'>"]("</span>, <span class='va'>href</span>, <span class='st'>")"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/utils/write.table.html'>write.csv</a></span><span class='op'>(</span>
+  <span class='va'>bookmark_df</span>,
+  file <span class='op'>=</span> <span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"brave_bookmarks_2021_11_21.csv"</span><span class='op'>)</span>,
+  row.names <span class='op'>=</span> <span class='cn'>FALSE</span>, fileEncoding <span class='op'>=</span> <span class='st'>"UTF-8"</span>
+  <span class='op'>)</span>
+</code></pre>
 </div>
 </div>
 <h2 id="r">R</h2>
@@ -2191,237 +2157,569 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="python">Python</h2>
 <h2 id="統計検定">統計検定</h2>
 <ul>
-<li><a href="https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/">Tidyverse</a></li>
-<li><a href="https://dplyr.tidyverse.org/reference/summarise.html">Summarise each group to fewer rows — summarise • dplyr</a></li>
-<li><a href="https://www.jaysong.net/dplyr_intro/">dplyr入門 (新版)</a></li>
-<li><a href="https://www.dummies.com/programming/r/how-to-check-quantiles-in-r/">How to Check Quantiles in R</a></li>
-<li><a href="https://qiita.com/hoxo_m/items/9d2f91008335b03bf082">dplyr でグループごとに複数カラムを追加したい #rstatsj - Qiita</a></li>
-<li><a href="https://rpubs.com/kazutan/d_quant">RPubs - dplyrでgroup_byした後にquantilesする関数</a></li>
-<li><a href="https://stackoverflow.com/questions/34860535/how-to-use-dplyr-to-generate-a-frequency-table">r - How to use dplyr to generate a frequency table - Stack Overflow</a></li>
-<li><a href="https://www.google.com/search?q=ggplot+%E8%A6%81%E7%B4%84%E7%B5%B1%E8%A8%88&amp;oq=ggplot+%E8%A6%81%E7%B4%84%E7%B5%B1%E8%A8%88&amp;aqs=chrome..69i57.6703j0j1&amp;sourceid=chrome&amp;ie=UTF-8">ggplot 要約統計 - Google 検索</a></li>
-<li><a href="https://www.rdocumentation.org/packages/gmodels/versions/2.18.1/topics/CrossTable">CrossTable function | R Documentation</a></li>
-<li><a href="http://analyticswithr.com/contingencytables.html">analyticswithr.com/contingencytables.html</a></li>
-<li><a href="https://cran.r-project.org/web/packages/qwraps2/vignettes/summary-statistics.html">Formatted Summary Statistics and Data Summary Tables with qwraps2</a></li>
-<li><a href="https://cran.r-project.org/web/packages/broom/vignettes/broom.html">Introduction to broom</a></li>
-<li><a href="https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html">Skimrの使用</a></li>
-<li><a href="https://bookdown.org/jonander99/Intermediate_Data_Wrangling/summary-statistics-for-one-variable.html">Chapter 6 Summary Statistics For One Variable | Intermediate Data Wrangling</a></li>
-<li><a href="https://bookdown.org/jonander99/Intermediate_Data_Wrangling/">Intermediate Data Wrangling</a></li>
-<li><a href="https://qiita.com/shunido113/items/701844f03163ec413eb8">dplyr Version 1.0.0 新機能 2 列操作 : across - Qiita</a></li>
-<li><a href="https://qiita.com/arsley/items/7768f6998014bddb5e3b">R Markdown 環境構築 &amp; トラブルシューティング - Qiita</a></li>
-<li><a href="https://bookdown.org/yihui/bookdown/tables.html">2.5テーブル| ブックダウン：Rマークダウンを使用した書籍および技術文書の作成</a></li>
-<li><a href="https://rubenfcasal.github.io/bookdown_intro/archivos-de-configuracion.html">Escritura de libros con bookdown</a></li>
-<li><a href="https://github.com/rstudio/bookdown/tree/master/inst/examples">bookdown/inst/examples at master · rstudio/bookdown</a></li>
+<li><a
+href="https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/">Tidyverse</a></li>
+<li><a
+href="https://dplyr.tidyverse.org/reference/summarise.html">Summarise
+each group to fewer rows — summarise • dplyr</a></li>
+<li><a href="https://www.jaysong.net/dplyr_intro/">dplyr入門
+(新版)</a></li>
+<li><a
+href="https://www.dummies.com/programming/r/how-to-check-quantiles-in-r/">How
+to Check Quantiles in R</a></li>
+<li><a href="https://qiita.com/hoxo_m/items/9d2f91008335b03bf082">dplyr
+でグループごとに複数カラムを追加したい #rstatsj - Qiita</a></li>
+<li><a href="https://rpubs.com/kazutan/d_quant">RPubs -
+dplyrでgroup_byした後にquantilesする関数</a></li>
+<li><a
+href="https://stackoverflow.com/questions/34860535/how-to-use-dplyr-to-generate-a-frequency-table">r
+- How to use dplyr to generate a frequency table - Stack
+Overflow</a></li>
+<li><a
+href="https://www.google.com/search?q=ggplot+%E8%A6%81%E7%B4%84%E7%B5%B1%E8%A8%88&amp;oq=ggplot+%E8%A6%81%E7%B4%84%E7%B5%B1%E8%A8%88&amp;aqs=chrome..69i57.6703j0j1&amp;sourceid=chrome&amp;ie=UTF-8">ggplot
+要約統計 - Google 検索</a></li>
+<li><a
+href="https://www.rdocumentation.org/packages/gmodels/versions/2.18.1/topics/CrossTable">CrossTable
+function | R Documentation</a></li>
+<li><a
+href="http://analyticswithr.com/contingencytables.html">analyticswithr.com/contingencytables.html</a></li>
+<li><a
+href="https://cran.r-project.org/web/packages/qwraps2/vignettes/summary-statistics.html">Formatted
+Summary Statistics and Data Summary Tables with qwraps2</a></li>
+<li><a
+href="https://cran.r-project.org/web/packages/broom/vignettes/broom.html">Introduction
+to broom</a></li>
+<li><a
+href="https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html">Skimrの使用</a></li>
+<li><a
+href="https://bookdown.org/jonander99/Intermediate_Data_Wrangling/summary-statistics-for-one-variable.html">Chapter
+6 Summary Statistics For One Variable | Intermediate Data
+Wrangling</a></li>
+<li><a
+href="https://bookdown.org/jonander99/Intermediate_Data_Wrangling/">Intermediate
+Data Wrangling</a></li>
+<li><a
+href="https://qiita.com/shunido113/items/701844f03163ec413eb8">dplyr
+Version 1.0.0 新機能 2 列操作 : across - Qiita</a></li>
+<li><a href="https://qiita.com/arsley/items/7768f6998014bddb5e3b">R
+Markdown 環境構築 &amp; トラブルシューティング - Qiita</a></li>
+<li><a
+href="https://bookdown.org/yihui/bookdown/tables.html">2.5テーブル|
+ブックダウン：Rマークダウンを使用した書籍および技術文書の作成</a></li>
+<li><a
+href="https://rubenfcasal.github.io/bookdown_intro/archivos-de-configuracion.html">Escritura
+de libros con bookdown</a></li>
+<li><a
+href="https://github.com/rstudio/bookdown/tree/master/inst/examples">bookdown/inst/examples
+at master · rstudio/bookdown</a></li>
 <li><a href="https://bookdown.org/">Home | Bookdown</a></li>
-<li><a href="https://bookdown.org/yihui/bookdown/github.html">6.2 GitHub | bookdown: Authoring Books and Technical Documents with R Markdown</a></li>
-<li><a href="https://bookdown.org/yihui/bookdown/">bookdown: Authoring Books and Technical Documents with R Markdown</a></li>
+<li><a href="https://bookdown.org/yihui/bookdown/github.html">6.2 GitHub
+| bookdown: Authoring Books and Technical Documents with R
+Markdown</a></li>
+<li><a href="https://bookdown.org/yihui/bookdown/">bookdown: Authoring
+Books and Technical Documents with R Markdown</a></li>
 <li><a href="https://r-pkgs.org/">R Packages</a></li>
-<li><a href="https://qiita.com/kazutan/items/024b7b7176b1f70582ed">R MarkdownでKnitした日付を自動的に挿入 - Qiita</a>
+<li><a href="https://qiita.com/kazutan/items/024b7b7176b1f70582ed">R
+MarkdownでKnitした日付を自動的に挿入 - Qiita</a> NA</li>
+<li><a
+href="https://github.com/tikeda-caravan/hoai">tikeda-caravan/hoai:
+xaringan packageの拡張themeのPackage</a></li>
+<li><a
+href="file:///Users/tikeda/Dropbox/hoai/inst/rmarkdown/templates/dastatis_style/skeleton/skeleton.html#1">dastatis
+templates</a></li>
+<li><a
+href="file:///Users/tikeda/Dropbox/hoai/inst/rmarkdown/templates/Hochi1115_style/skeleton/skeleton.html#1">Hochi115
+template slides</a></li>
+<li><a
+href="file:///Users/tikeda/Dropbox/hoai/inst/rmarkdown/templates/tikeda-caravan_style/skeleton/skeleton.html#1">tikeda-caravan
+templates</a></li>
+<li><a
+href="https://qiita.com/opengl-8080/items/d44aec7c6c643996916b">Remark使い方メモ（Markdown
+でスライドを作るやつ） - Qiita</a> NA</li>
+<li><a href="https://github.com/remlapmot/cibookex-r">GitHub -
+remlapmot/cibookex-r: Causal Inference: What If. R and Stata code for
+Exercises</a></li>
+<li><a href="https://github.com/CausalInference/gfoRmula">GitHub -
+CausalInference/gfoRmula: Parametric G-formula for R</a></li>
+<li><a
+href="https://remlapmot.github.io/cibookex-r/index.html#downloading-the-datasets">Causal
+Inference: What If. R and Stata code for Exercises</a> NA</li>
+<li><a href="https://kray.jp/blog/git-pull-rebase/">git pull と git pull
+–rebase の違いって？図を交えて説明します！ – KRAY Inc.</a></li>
+<li><a
+href="https://qiita.com/hshimo/items/99811144bf4a081319e5">すぐ分かる!
+git の origin と master ってなんだ? - Qiita</a></li>
+<li><a
+href="https://qiita.com/hogeta_/items/33d2334c9b1919bd5120">Gitでローカルブランチを削除する
+- Qiita</a></li>
+<li><a href="https://backlog.com/ja/git-tutorial/stepup/10/">4.
+ブランチを削除する｜サル先生のGit入門【プロジェクト管理ツールBacklog】</a></li>
+<li><a
+href="https://qiita.com/uri/items/6b94609f156173ed43ed">RStudioではじめるGitによるバージョン管理
+- Qiita</a></li>
+<li><a href="https://techacademy.jp/magazine/10268">git
+remoteでリモートリポジトリの追加を行う方法 |
+TechAcademyマガジン</a></li>
+<li><a
+href="https://backlog.com/ja/git-tutorial/stepup/04/">ブランチの統合｜サル先生のGit入門【プロジェクト管理ツールBacklog】</a></li>
+<li><a
+href="https://qiita.com/yousan/items/f0801437644527b00342">複数人開発の際にはGitのワークフロー、GitFlowとGitHub
+Flowを導入すると便利です - Qiita</a></li>
+<li><a
+href="https://qiita.com/zakkiiii/items/6bad68c378412003c949">個人的Gitトラブルシューティング
+- Qiita</a></li>
+<li><a
+href="https://app.zenhub.com/workspaces/study-6027f8fbdce6ee001c13df8f/roadmap">zenhub</a></li>
+<li><a
+href="https://www.itra.co.jp/webmedia/basic_authentication.html">ベーシック認証（Basic認証）とは？設定方法と注意点・エラーになる原因を解説
+| Webmedia</a></li>
+<li><a
+href="https://qiita.com/Naoto9282/items/8427918564400968bd2b">【JWT】
+入門 - Qiita</a> NA</li>
+<li><a
+href="https://raym-d.jp/blog/hugo-netlify/">HugoとNetlifyを連携して静的ブログを公開する
+- RAYM DESIGN</a></li>
+<li><a
+href="https://qiita.com/jrfk/items/4c6df87ca72a76e30224">HugoとNetlifyで静的サイト構築するメモ(themeはsubmoduleを利用)
+- Qiita</a></li>
+<li><a href="https://blog.u-chan-chi.com/post/hugo/">hugo
+を使って爆速でブログ・サイトを作る | STAY FREE</a></li>
+<li><a
+href="https://knowledge.sakura.ad.jp/22908/">静的サイトジェネレータ「Hugo」と技術文書公開向けテーマ「Docsy」でOSSサイトを作る
+| さくらのナレッジ</a></li>
+<li><a
+href="https://www.boatrace.jp/owpc/pc/extra/data/download.html">ダウンロード・他
+| BOAT RACE オフィシャルウェブサイト</a></li>
+<li><a href="http://www1.mbrace.or.jp/od2/K/dindex.html">BOAT RACE
+Today’s Race Information Index</a></li>
+<li><a href="https://themes.gohugo.io/hugo-theme-bootstrap4-blog/">Hugo
+Theme Bootstrap4 Blog | Hugo Themes</a></li>
+<li><a
+href="https://github.com/alanorth/hugo-theme-bootstrap4-blog/blob/master/exampleSite/config.toml">hugo-theme-bootstrap4-blog/config.toml
+at master · alanorth/hugo-theme-bootstrap4-blog</a></li>
+<li><a
+href="https://gohugo.io/hosting-and-deployment/hosting-on-netlify/">Host
+on Netlify | Hugo</a></li>
+<li><a href="https://tomtomtom.ga/posts/20190528_2/">Netlify + Hugo
+でのCD環境構築時ハマりどころメモ – whasseのノート</a></li>
+<li><a
+href="https://ytake2.github.io/blog2/post/blogdown/">RStudioではグラブれないけど、ブログれる</a></li>
+<li><a
+href="http://staff.feedtailor.jp/2016/07/06/hugo_12/">静的サイトジェネレータHugoを使ったサイト構築（テーマ編）
+· feedtailor Inc. スタッフブログ</a></li>
+<li><a
+href="https://qiita.com/n0bisuke/items/4701481c3bca4df81b0b">Hugoで新規記事を作成するときのTips的なメモ
+- Qiita</a></li>
+<li><a
+href="https://wdkk.co.jp/note/2015/0807-hugo-config/">Hugoでwebサイト構築(2)
+サイト全体の設定’config.toml’ | Watanabe-DENKI
+Inc. 渡辺電気株式会社</a></li>
+<li><a href="https://themes.gohugo.io/mainroad/">Mainroad | Hugo
+Themes</a></li>
+<li><a
+href="https://mainroad-demo.netlify.app/post/creating-a-new-theme/">Creating
+a New Theme - Mainroad</a></li>
+<li><a href="https://themes.gohugo.io/themes/hyde/">Hyde | Hugo
+Themes</a></li>
+<li><a href="https://themes.gohugo.io/themes/hyde-hyde/">hyde-hyde |
+Hugo Themes</a></li>
+<li><a
+href="https://themes.gohugo.io/themes/hugo-theme-techdoc/">Techdoc |
+Hugo Themes</a></li>
+<li><a href="https://themes.gohugo.io/themes/github-style/">Github Style
+| Hugo Themes</a></li>
+<li><a href="https://themes.gohugo.io/themes/hugo-theme-zdoc/">Zdoc |
+Hugo Themes</a></li>
+<li><a
+href="https://themes.gohugo.io/themes/hugo-whisper-theme/">Whisper |
+Hugo Themes</a></li>
+<li><a href="https://blog.hgrs.me/20200406030144">GitHub Pages
+でパスワードによる認証をつける | hgrs’s Blog</a> NA</li>
+<li><a
+href="https://qiita.com/kozmats/items/ac32f1ac1d676a09e3b2">homebrew
+から MariaDB をインストールする方法 - Qiita</a></li>
+<li><a
+href="https://qiita.com/pugiemonn/items/247dccb6dc56e373ba92">よく使うMariaDB
+か MySQLのSQLコマンドメモ - Qiita</a></li>
+<li><a
+href="https://qiita.com/hana_shin/items/4d7e9f07e206e989834b">MariaDB10.1のインストール方法
+- Qiita</a></li>
+<li><a
+href="https://www.ipentec.com/document/software-mariadb-dump-database">MariaDB
+(MySQL) のデータベースをダンプする - MariaDB
+データベースのバックアップ</a></li>
+<li><a
+href="https://ryotatake.hatenablog.com/entry/2019/11/12/access_denied_for_user_rootlocalhost"><code>mysql -u root -p</code>
+でERROR 1698 (28000): Access denied for user
+‘root’@’localhost’と表示されるときの解決方法 - ryotatake blog</a></li>
+<li><a
+href="https://www.dbonline.jp/mysql/table/index2.html">テーブルの一覧とテーブルに関する情報を取得する
+| MySQLの使い方</a></li>
+<li><a
+href="https://qiita.com/tomaaaaaaaa/items/08ce75b95df3d310817a">【MySQL】Mysql2::Error:
+Incorrect string value 【エラー】 - Qiita</a></li>
+<li><a href="https://blog.amedama.jp/entry/2015/08/30/225750">MariaDB
+のデータを mysqldump でバックアップ・リストアする - CUBE SUGAR
+CONTAINER</a></li>
+<li><a
+href="https://qiita.com/PlanetMeron/items/3a41e14607a65bc9b60c">mysqldumpまとめ
+- Qiita</a></li>
+<li><a
+href="https://www.ipentec.com/document/software-mariadb-server-start-stop-show-status">MariaDB
+データベースサーバーの起動・停止・サービス状態の表示</a></li>
+<li><a
+href="https://oku.edu.mie-u.ac.jp/~okumura/stat/sqlite.html">RからSQLiteを使う</a>
 NA</li>
-<li><a href="https://github.com/tikeda-caravan/hoai">tikeda-caravan/hoai: xaringan packageの拡張themeのPackage</a></li>
-<li><a href="file:///Users/tikeda/Dropbox/hoai/inst/rmarkdown/templates/dastatis_style/skeleton/skeleton.html#1">dastatis templates</a></li>
-<li><a href="file:///Users/tikeda/Dropbox/hoai/inst/rmarkdown/templates/Hochi1115_style/skeleton/skeleton.html#1">Hochi115 template slides</a></li>
-<li><a href="file:///Users/tikeda/Dropbox/hoai/inst/rmarkdown/templates/tikeda-caravan_style/skeleton/skeleton.html#1">tikeda-caravan templates</a></li>
-<li><a href="https://qiita.com/opengl-8080/items/d44aec7c6c643996916b">Remark使い方メモ（Markdown でスライドを作るやつ） - Qiita</a>
+<li><a
+href="https://www.google.com/search?q=Mermaid+Markdown+Rstudio&amp;oq=Mermaid+Markdown+Rstudio&amp;aqs=chrome..69i57.6802j0j1&amp;sourceid=chrome&amp;ie=UTF-8">Mermaid
+Markdown Rstudio - Google 検索</a></li>
+<li><a
+href="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggVERcblx0QVtDaHJpc3RtYXNdIC0tPnxHZXQgbW9uZXl8IEIoR28gc2hvcHBpbmcpXG5cdEIgLS0-IEN7TGV0IG1lIHRoaW5rfVxuXHRDIC0tPnxPbmV8IERbTGFwdG9wXVxuXHRDIC0tPnxUd298IEVbaVBob25lXVxuXHRDIC0tPnxUaHJlZXwgRltmYTpmYS1jYXIgQ2FyXVxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19">Mermaid
+live editor</a></li>
+<li><a href="https://mermaid-js.github.io/mermaid/#/classDiagram">Class
+Diagram - mermaid - Markdownish syntax for generating flowcharts,
+sequence diagrams, class diagrams, gantt charts and git graphs.</a></li>
+<li><a
+href="https://www.itsenka.com/contents/development/uml/class.html">クラス図(Class
+Diagram) - UML入門 - IT専科</a> NA</li>
+<li><a
+href="https://qiita.com/gologo13/items/7e4e404af80377b48fd5">Dockerでホストとコンテナ間でのファイルコピー
+- Qiita</a></li>
+<li><a href="https://qiita.com/fkooo/items/ad7d023b59df71cc9a60">Docker
+for Windowsでイメージからコンテナを生成／操作してみる - Qiita</a>
 NA</li>
-<li><a href="https://github.com/remlapmot/cibookex-r">GitHub - remlapmot/cibookex-r: Causal Inference: What If. R and Stata code for Exercises</a></li>
-<li><a href="https://github.com/CausalInference/gfoRmula">GitHub - CausalInference/gfoRmula: Parametric G-formula for R</a></li>
-<li><a href="https://remlapmot.github.io/cibookex-r/index.html#downloading-the-datasets">Causal Inference: What If. R and Stata code for Exercises</a>
-NA</li>
-<li><a href="https://kray.jp/blog/git-pull-rebase/">git pull と git pull –rebase の違いって？図を交えて説明します！ – KRAY Inc.</a></li>
-<li><a href="https://qiita.com/hshimo/items/99811144bf4a081319e5">すぐ分かる! git の origin と master ってなんだ? - Qiita</a></li>
-<li><a href="https://qiita.com/hogeta_/items/33d2334c9b1919bd5120">Gitでローカルブランチを削除する - Qiita</a></li>
-<li><a href="https://backlog.com/ja/git-tutorial/stepup/10/">4. ブランチを削除する｜サル先生のGit入門【プロジェクト管理ツールBacklog】</a></li>
-<li><a href="https://qiita.com/uri/items/6b94609f156173ed43ed">RStudioではじめるGitによるバージョン管理 - Qiita</a></li>
-<li><a href="https://techacademy.jp/magazine/10268">git remoteでリモートリポジトリの追加を行う方法 | TechAcademyマガジン</a></li>
-<li><a href="https://backlog.com/ja/git-tutorial/stepup/04/">ブランチの統合｜サル先生のGit入門【プロジェクト管理ツールBacklog】</a></li>
-<li><a href="https://qiita.com/yousan/items/f0801437644527b00342">複数人開発の際にはGitのワークフロー、GitFlowとGitHub Flowを導入すると便利です - Qiita</a></li>
-<li><a href="https://qiita.com/zakkiiii/items/6bad68c378412003c949">個人的Gitトラブルシューティング - Qiita</a></li>
-<li><a href="https://app.zenhub.com/workspaces/study-6027f8fbdce6ee001c13df8f/roadmap">zenhub</a></li>
-<li><a href="https://www.itra.co.jp/webmedia/basic_authentication.html">ベーシック認証（Basic認証）とは？設定方法と注意点・エラーになる原因を解説 | Webmedia</a></li>
-<li><a href="https://qiita.com/Naoto9282/items/8427918564400968bd2b">【JWT】 入門 - Qiita</a>
-NA</li>
-<li><a href="https://raym-d.jp/blog/hugo-netlify/">HugoとNetlifyを連携して静的ブログを公開する - RAYM DESIGN</a></li>
-<li><a href="https://qiita.com/jrfk/items/4c6df87ca72a76e30224">HugoとNetlifyで静的サイト構築するメモ(themeはsubmoduleを利用) - Qiita</a></li>
-<li><a href="https://blog.u-chan-chi.com/post/hugo/">hugo を使って爆速でブログ・サイトを作る | STAY FREE</a></li>
-<li><a href="https://knowledge.sakura.ad.jp/22908/">静的サイトジェネレータ「Hugo」と技術文書公開向けテーマ「Docsy」でOSSサイトを作る | さくらのナレッジ</a></li>
-<li><a href="https://www.boatrace.jp/owpc/pc/extra/data/download.html">ダウンロード・他 | BOAT RACE オフィシャルウェブサイト</a></li>
-<li><a href="http://www1.mbrace.or.jp/od2/K/dindex.html">BOAT RACE Today’s Race Information Index</a></li>
-<li><a href="https://themes.gohugo.io/hugo-theme-bootstrap4-blog/">Hugo Theme Bootstrap4 Blog | Hugo Themes</a></li>
-<li><a href="https://github.com/alanorth/hugo-theme-bootstrap4-blog/blob/master/exampleSite/config.toml">hugo-theme-bootstrap4-blog/config.toml at master · alanorth/hugo-theme-bootstrap4-blog</a></li>
-<li><a href="https://gohugo.io/hosting-and-deployment/hosting-on-netlify/">Host on Netlify | Hugo</a></li>
-<li><a href="https://tomtomtom.ga/posts/20190528_2/">Netlify + Hugo でのCD環境構築時ハマりどころメモ – whasseのノート</a></li>
-<li><a href="https://ytake2.github.io/blog2/post/blogdown/">RStudioではグラブれないけど、ブログれる</a></li>
-<li><a href="http://staff.feedtailor.jp/2016/07/06/hugo_12/">静的サイトジェネレータHugoを使ったサイト構築（テーマ編） · feedtailor Inc. スタッフブログ</a></li>
-<li><a href="https://qiita.com/n0bisuke/items/4701481c3bca4df81b0b">Hugoで新規記事を作成するときのTips的なメモ - Qiita</a></li>
-<li><a href="https://wdkk.co.jp/note/2015/0807-hugo-config/">Hugoでwebサイト構築(2) サイト全体の設定’config.toml’ | Watanabe-DENKI Inc. 渡辺電気株式会社</a></li>
-<li><a href="https://themes.gohugo.io/mainroad/">Mainroad | Hugo Themes</a></li>
-<li><a href="https://mainroad-demo.netlify.app/post/creating-a-new-theme/">Creating a New Theme - Mainroad</a></li>
-<li><a href="https://themes.gohugo.io/themes/hyde/">Hyde | Hugo Themes</a></li>
-<li><a href="https://themes.gohugo.io/themes/hyde-hyde/">hyde-hyde | Hugo Themes</a></li>
-<li><a href="https://themes.gohugo.io/themes/hugo-theme-techdoc/">Techdoc | Hugo Themes</a></li>
-<li><a href="https://themes.gohugo.io/themes/github-style/">Github Style | Hugo Themes</a></li>
-<li><a href="https://themes.gohugo.io/themes/hugo-theme-zdoc/">Zdoc | Hugo Themes</a></li>
-<li><a href="https://themes.gohugo.io/themes/hugo-whisper-theme/">Whisper | Hugo Themes</a></li>
-<li><a href="https://blog.hgrs.me/20200406030144">GitHub Pages でパスワードによる認証をつける | hgrs’s Blog</a>
-NA</li>
-<li><a href="https://qiita.com/kozmats/items/ac32f1ac1d676a09e3b2">homebrew から MariaDB をインストールする方法 - Qiita</a></li>
-<li><a href="https://qiita.com/pugiemonn/items/247dccb6dc56e373ba92">よく使うMariaDB か MySQLのSQLコマンドメモ - Qiita</a></li>
-<li><a href="https://qiita.com/hana_shin/items/4d7e9f07e206e989834b">MariaDB10.1のインストール方法 - Qiita</a></li>
-<li><a href="https://www.ipentec.com/document/software-mariadb-dump-database">MariaDB (MySQL) のデータベースをダンプする - MariaDB データベースのバックアップ</a></li>
-<li><a href="https://ryotatake.hatenablog.com/entry/2019/11/12/access_denied_for_user_rootlocalhost"><code>mysql -u root -p</code> でERROR 1698 (28000): Access denied for user ‘root’@’localhost’と表示されるときの解決方法 - ryotatake blog</a></li>
-<li><a href="https://www.dbonline.jp/mysql/table/index2.html">テーブルの一覧とテーブルに関する情報を取得する | MySQLの使い方</a></li>
-<li><a href="https://qiita.com/tomaaaaaaaa/items/08ce75b95df3d310817a">【MySQL】Mysql2::Error: Incorrect string value 【エラー】 - Qiita</a></li>
-<li><a href="https://blog.amedama.jp/entry/2015/08/30/225750">MariaDB のデータを mysqldump でバックアップ・リストアする - CUBE SUGAR CONTAINER</a></li>
-<li><a href="https://qiita.com/PlanetMeron/items/3a41e14607a65bc9b60c">mysqldumpまとめ - Qiita</a></li>
-<li><a href="https://www.ipentec.com/document/software-mariadb-server-start-stop-show-status">MariaDB データベースサーバーの起動・停止・サービス状態の表示</a></li>
-<li><a href="https://oku.edu.mie-u.ac.jp/~okumura/stat/sqlite.html">RからSQLiteを使う</a>
-NA</li>
-<li><a href="https://www.google.com/search?q=Mermaid+Markdown+Rstudio&amp;oq=Mermaid+Markdown+Rstudio&amp;aqs=chrome..69i57.6802j0j1&amp;sourceid=chrome&amp;ie=UTF-8">Mermaid Markdown Rstudio - Google 検索</a></li>
-<li><a href="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggVERcblx0QVtDaHJpc3RtYXNdIC0tPnxHZXQgbW9uZXl8IEIoR28gc2hvcHBpbmcpXG5cdEIgLS0-IEN7TGV0IG1lIHRoaW5rfVxuXHRDIC0tPnxPbmV8IERbTGFwdG9wXVxuXHRDIC0tPnxUd298IEVbaVBob25lXVxuXHRDIC0tPnxUaHJlZXwgRltmYTpmYS1jYXIgQ2FyXVxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19">Mermaid live editor</a></li>
-<li><a href="https://mermaid-js.github.io/mermaid/#/classDiagram">Class Diagram - mermaid - Markdownish syntax for generating flowcharts, sequence diagrams, class diagrams, gantt charts and git graphs.</a></li>
-<li><a href="https://www.itsenka.com/contents/development/uml/class.html">クラス図(Class Diagram) - UML入門 - IT専科</a>
-NA</li>
-<li><a href="https://qiita.com/gologo13/items/7e4e404af80377b48fd5">Dockerでホストとコンテナ間でのファイルコピー - Qiita</a></li>
-<li><a href="https://qiita.com/fkooo/items/ad7d023b59df71cc9a60">Docker for Windowsでイメージからコンテナを生成／操作してみる - Qiita</a>
-NA</li>
-<li><a href="https://qiita.com/suigin/items/10960e516f2d44f6b6de">アカデミックヤクザにキレられないためのLaTeX論文執筆メソッド - Qiita</a></li>
-<li><a href="https://www.google.com/search?ei=0WtfX-zGJpX7wQOR04mQAg&amp;q=lualatex+%E6%97%A5%E6%9C%AC%E8%AA%9E+%E3%82%AF%E3%83%A9%E3%82%B9&amp;oq=lualatex+%E6%97%A5%E6%9C%AC%E8%AA%9E+%E3%82%AF%E3%83%A9%E3%82%B9&amp;gs_lcp=CgZwc3ktYWIQAzIFCAAQzQIyBQgAEM0COgUIABCxAzoICAAQsQMQgwE6AggAOgQIABAKOgQIABAEOgYIABAEEB46BAgAEB5Q0pc3WLy9N2DAvzdoAHAAeAGAAY8CiAHZHJIBBjAuMjIuM5gBAKABAaoBB2d3cy13aXrAAQE&amp;sclient=psy-ab&amp;ved=0ahUKEwis872X3OjrAhWVfXAKHZFpAiIQ4dUDCA0&amp;uact=5">lualatex 日本語 クラス - Google 検索</a></li>
-<li><a href="https://konoyonohana.blog.fc2.com/blog-entry-63.html">天地有情 lualatex用の日本語クラスファイル</a>
-NA</li>
-<li><a href="https://setsuna-no-matataki.hateblo.jp/entry/2019/12/27/234527">iPhoneからUbuntuの共有フォルダにアクセスするなら - 刹那（せつな）の瞬き</a></li>
-<li><a href="https://www.pc-koubou.jp/magazine/10062">Ubuntuで簡単ファイルサーバー（NAS）構築 | パソコン工房 NEXMAG</a></li>
-<li><a href="https://forums.ubuntulinux.jp/viewtopic.php?id=19970">Ubuntu日本語フォーラム / Ubuntu 18.04 LTS でWineがインストールできない</a>
-NA</li>
-<li><a href="https://github.com/aviatesk/intro-statistical-modeling">aviatesk/intro-statistical-modeling: 『データ解析のための統計モデリング入門』の勉強ノート</a></li>
-<li><a href="https://www.itmedia.co.jp/news/articles/2002/09/news012.html">ラズパイで自宅ファイルサーバを作る (1/2) - ITmedia NEWS</a></li>
-<li><a href="https://estrellita.hatenablog.com/">INPUTしたらOUTPUT!</a></li>
-<li><a href="https://www.seo-pro.jp/seo/google_qualification">履歴書にも書ける！Google公認の認定資格一覧｜Enazeal Engineer BLOG</a></li>
-<li><a href="https://gigazine.net/news/20200820-umami-analytics/">他人にデータを渡さずに無料でアクセス解析できるオープンソースツール「umami」 - GIGAZINE</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%8F%E3%82%A4%E3%83%97%E3%83%BB%E3%82%B5%E3%82%A4%E3%82%AF%E3%83%AB#:~:text=%E3%83%8F%E3%82%A4%E3%83%97%E3%83%BB%E3%82%B5%E3%82%A4%E3%82%AF%E3%83%AB%EF%BC%88%E8%8B%B1%E8%AA%9E%3A%20hype,%E3%81%93%E3%81%AE%E7%94%A8%E8%AA%9E%E3%82%92%E9%80%A0%E3%82%8A%E5%87%BA%E3%81%97%E3%81%9F%E3%80%82">ハイプ・サイクル - Wikipedia</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/S%26P_500">S&amp;P 500 - Wikipedia</a></li>
-<li><a href="https://www.google.com/search?q=SBI&amp;oq=SBI+&amp;aqs=chrome..69i57.1458j0j4&amp;sourceid=chrome&amp;ie=UTF-8">SBI - Google 検索</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/%E5%85%88%E7%89%A9%E5%8F%96%E5%BC%95">先物取引 - Wikipedia</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/%E7%A4%BE%E5%82%B5">社債 - Wikipedia</a></li>
-<li><a href="https://www.joa.or.jp/public/sick/condition/paronychia.html">「爪周囲炎」｜日本整形外科学会 症状・病気をしらべる</a></li>
-<li><a href="https://www.nta.go.jp/taxes/shiraberu/shinkoku/tokushu/tvcm.htm">動画で見る確定申告：令和元年分 確定申告特集</a></li>
-<li><a href="https://www.furusato-tax.jp/about#section-01">ふるさと納税とは？ | ふるさと納税 [ふるさとチョイス]</a></li>
-<li><a href="https://gigazine.net/">GIGAZINE（ギガジン） - Adobeの永続ライセンス版「Lightroom 6」は崩壊しつつあるとの指摘</a></li>
-<li><a href="http://kaigainohannoublog.blog55.fc2.com/">【海外の反応】　パンドラの憂鬱</a></li>
-<li><a href="https://qiita.com/iwaseasahi/items/0b2da68269397906c14c">初心者向け vimrcの設定方法 - Qiita</a></li>
-<li><a href="https://knowledge.sakura.ad.jp/21687/">はじめてのVim 〜 Vimはいいぞ！ゴリラと学ぶVim講座(1) | さくらのナレッジ</a></li>
-<li><a href="https://extensions.gnome.org/">GNOME Shell 拡張機能</a></li>
-<li><a href="http://sample.komorikomasha.info/">komorikomash（こもりこましゃ）</a></li>
-<li><a href="http://htmlcss.cat-speak.net/">作りながら学ぶ HTML/CSSデザインの教科書-公式サポートサイト</a></li>
-<li><a href="file:///home/guest/Dropbox/%E4%BD%9C%E3%82%8A%E3%81%AA%E3%81%8C%E3%82%89%E5%AD%A6%E3%81%B6HTML:CSS%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3%E3%81%AE%E6%95%99%E7%A7%91%E6%9B%B8/work/www/portfolio/01.html">ページタイトル</a></li>
-<li><a href="https://ja.javascript.info/">現代の JavaScript チュートリアル</a></li>
-<li><a href="https://9cguide.appspot.com/">苦しんで覚えるＣ言語 - 苦しんで覚えるC言語</a></li>
-<li><a href="http://www.boatrace-db.net/race/index/">2021年1月2日 開催一覧 | 艇国データバンク</a></li>
-<li><a href="http://www.boatrace-db.net/result/same/year/2018/">2018年 同着レース一覧 | 艇国データバンク</a></li>
+<li><a
+href="https://qiita.com/suigin/items/10960e516f2d44f6b6de">アカデミックヤクザにキレられないためのLaTeX論文執筆メソッド
+- Qiita</a></li>
+<li><a
+href="https://www.google.com/search?ei=0WtfX-zGJpX7wQOR04mQAg&amp;q=lualatex+%E6%97%A5%E6%9C%AC%E8%AA%9E+%E3%82%AF%E3%83%A9%E3%82%B9&amp;oq=lualatex+%E6%97%A5%E6%9C%AC%E8%AA%9E+%E3%82%AF%E3%83%A9%E3%82%B9&amp;gs_lcp=CgZwc3ktYWIQAzIFCAAQzQIyBQgAEM0COgUIABCxAzoICAAQsQMQgwE6AggAOgQIABAKOgQIABAEOgYIABAEEB46BAgAEB5Q0pc3WLy9N2DAvzdoAHAAeAGAAY8CiAHZHJIBBjAuMjIuM5gBAKABAaoBB2d3cy13aXrAAQE&amp;sclient=psy-ab&amp;ved=0ahUKEwis872X3OjrAhWVfXAKHZFpAiIQ4dUDCA0&amp;uact=5">lualatex
+日本語 クラス - Google 検索</a></li>
+<li><a
+href="https://konoyonohana.blog.fc2.com/blog-entry-63.html">天地有情
+lualatex用の日本語クラスファイル</a> NA</li>
+<li><a
+href="https://setsuna-no-matataki.hateblo.jp/entry/2019/12/27/234527">iPhoneからUbuntuの共有フォルダにアクセスするなら
+- 刹那（せつな）の瞬き</a></li>
+<li><a
+href="https://www.pc-koubou.jp/magazine/10062">Ubuntuで簡単ファイルサーバー（NAS）構築
+| パソコン工房 NEXMAG</a></li>
+<li><a
+href="https://forums.ubuntulinux.jp/viewtopic.php?id=19970">Ubuntu日本語フォーラム
+/ Ubuntu 18.04 LTS でWineがインストールできない</a> NA</li>
+<li><a
+href="https://github.com/aviatesk/intro-statistical-modeling">aviatesk/intro-statistical-modeling:
+『データ解析のための統計モデリング入門』の勉強ノート</a></li>
+<li><a
+href="https://www.itmedia.co.jp/news/articles/2002/09/news012.html">ラズパイで自宅ファイルサーバを作る
+(1/2) - ITmedia NEWS</a></li>
+<li><a
+href="https://estrellita.hatenablog.com/">INPUTしたらOUTPUT!</a></li>
+<li><a
+href="https://www.seo-pro.jp/seo/google_qualification">履歴書にも書ける！Google公認の認定資格一覧｜Enazeal
+Engineer BLOG</a></li>
+<li><a
+href="https://gigazine.net/news/20200820-umami-analytics/">他人にデータを渡さずに無料でアクセス解析できるオープンソースツール「umami」
+- GIGAZINE</a></li>
+<li><a
+href="https://ja.wikipedia.org/wiki/%E3%83%8F%E3%82%A4%E3%83%97%E3%83%BB%E3%82%B5%E3%82%A4%E3%82%AF%E3%83%AB#:~:text=%E3%83%8F%E3%82%A4%E3%83%97%E3%83%BB%E3%82%B5%E3%82%A4%E3%82%AF%E3%83%AB%EF%BC%88%E8%8B%B1%E8%AA%9E%3A%20hype,%E3%81%93%E3%81%AE%E7%94%A8%E8%AA%9E%E3%82%92%E9%80%A0%E3%82%8A%E5%87%BA%E3%81%97%E3%81%9F%E3%80%82">ハイプ・サイクル
+- Wikipedia</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/S%26P_500">S&amp;P 500 -
+Wikipedia</a></li>
+<li><a
+href="https://www.google.com/search?q=SBI&amp;oq=SBI+&amp;aqs=chrome..69i57.1458j0j4&amp;sourceid=chrome&amp;ie=UTF-8">SBI
+- Google 検索</a></li>
+<li><a
+href="https://ja.wikipedia.org/wiki/%E5%85%88%E7%89%A9%E5%8F%96%E5%BC%95">先物取引
+- Wikipedia</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E7%A4%BE%E5%82%B5">社債 -
+Wikipedia</a></li>
+<li><a
+href="https://www.joa.or.jp/public/sick/condition/paronychia.html">「爪周囲炎」｜日本整形外科学会
+症状・病気をしらべる</a></li>
+<li><a
+href="https://www.nta.go.jp/taxes/shiraberu/shinkoku/tokushu/tvcm.htm">動画で見る確定申告：令和元年分
+確定申告特集</a></li>
+<li><a
+href="https://www.furusato-tax.jp/about#section-01">ふるさと納税とは？ |
+ふるさと納税 [ふるさとチョイス]</a></li>
+<li><a href="https://gigazine.net/">GIGAZINE（ギガジン） -
+Adobeの永続ライセンス版「Lightroom 6」は崩壊しつつあるとの指摘</a></li>
+<li><a
+href="http://kaigainohannoublog.blog55.fc2.com/">【海外の反応】　パンドラの憂鬱</a></li>
+<li><a
+href="https://qiita.com/iwaseasahi/items/0b2da68269397906c14c">初心者向け
+vimrcの設定方法 - Qiita</a></li>
+<li><a href="https://knowledge.sakura.ad.jp/21687/">はじめてのVim 〜
+Vimはいいぞ！ゴリラと学ぶVim講座(1) | さくらのナレッジ</a></li>
+<li><a href="https://extensions.gnome.org/">GNOME Shell
+拡張機能</a></li>
+<li><a
+href="http://sample.komorikomasha.info/">komorikomash（こもりこましゃ）</a></li>
+<li><a href="http://htmlcss.cat-speak.net/">作りながら学ぶ
+HTML/CSSデザインの教科書-公式サポートサイト</a></li>
+<li><a
+href="file:///home/guest/Dropbox/%E4%BD%9C%E3%82%8A%E3%81%AA%E3%81%8C%E3%82%89%E5%AD%A6%E3%81%B6HTML:CSS%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3%E3%81%AE%E6%95%99%E7%A7%91%E6%9B%B8/work/www/portfolio/01.html">ページタイトル</a></li>
+<li><a href="https://ja.javascript.info/">現代の JavaScript
+チュートリアル</a></li>
+<li><a href="https://9cguide.appspot.com/">苦しんで覚えるＣ言語 -
+苦しんで覚えるC言語</a></li>
+<li><a href="http://www.boatrace-db.net/race/index/">2021年1月2日
+開催一覧 | 艇国データバンク</a></li>
+<li><a href="http://www.boatrace-db.net/result/same/year/2018/">2018年
+同着レース一覧 | 艇国データバンク</a></li>
 <li><a href="https://jsprimer.net/">JS Primer</a></li>
-<li><a href="https://stackoverflow.com/questions/40578609/set-r-bookdown-input-directory">Set R bookdown input directory - Stack Overflow</a></li>
-<li><a href="https://stackoverflow.com/questions/57916839/convert-png-to-multi-page-pdf-using-magick-in-r">Convert .png to multi-page pdf using Magick in R - Stack Overflow</a></li>
-<li><a href="https://qiita.com/toshiyuki_tsutsui/items/604f92dbe6e20a18a17e">【自然言語処理】感情分析の進め方＆ハマりやすいポイント - Qiita</a></li>
-<li><a href="https://smartparty.jp/convenience-goods-summary">【2021年】PCデスク周りの便利グッズおすすめ24選！愛用のアイテムを厳選して紹介 | SmartParty.jp</a></li>
-<li><a href="https://www.jstage.jst.go.jp/article/mscom/94/0/94_13/_pdf">ＲＤＤによる世論調査の現状と課題</a></li>
-<li><a href="https://qiita.com/tomomoto/items/b3fd1ec7f9b68ab6dfe2">代表的な機械学習手法一覧 - Qiita</a>
+<li><a
+href="https://stackoverflow.com/questions/40578609/set-r-bookdown-input-directory">Set
+R bookdown input directory - Stack Overflow</a></li>
+<li><a
+href="https://stackoverflow.com/questions/57916839/convert-png-to-multi-page-pdf-using-magick-in-r">Convert
+.png to multi-page pdf using Magick in R - Stack Overflow</a></li>
+<li><a
+href="https://qiita.com/toshiyuki_tsutsui/items/604f92dbe6e20a18a17e">【自然言語処理】感情分析の進め方＆ハマりやすいポイント
+- Qiita</a></li>
+<li><a
+href="https://smartparty.jp/convenience-goods-summary">【2021年】PCデスク周りの便利グッズおすすめ24選！愛用のアイテムを厳選して紹介
+| SmartParty.jp</a></li>
+<li><a
+href="https://www.jstage.jst.go.jp/article/mscom/94/0/94_13/_pdf">ＲＤＤによる世論調査の現状と課題</a></li>
+<li><a
+href="https://qiita.com/tomomoto/items/b3fd1ec7f9b68ab6dfe2">代表的な機械学習手法一覧
+- Qiita</a> NA</li>
+<li><a
+href="https://www.amazon.co.jp/s?k=DDR3&amp;__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&amp;ref=nb_sb_noss_2">Amazon.co.jp
+: DDR3</a></li>
+<li><a href="https://www.asus.com/jp/Motherboards/P8Z77M/">P8Z77-M |
+マザーボード | ASUS 日本</a></li>
+<li><a
+href="https://dlcdnets.asus.com/pub/ASUS/mb/13MANUAL/PRIME_PRO_TUF_GAMING_Intel_500_Series_BIOS_EM_WEB_JP.pdf">PRIME_PRO_TUF_GAMING_Intel_500_Series_BIOS_EM_WEB_JP.pdf</a></li>
+<li><a href="https://www.ark-pc.co.jp/i/15600683/">Seasonic Seasonic
+SS-460FL ATX 460W FANレス - 製品詳細 |
+パソコンSHOPアーク（ark）</a></li>
+<li><a
+href="https://www.google.com/search?q=windows+%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E4%BD%9C%E6%88%90&amp;oq=windows+%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E4%BD%9C%E6%88%90&amp;aqs=chrome..69i57.7893j0j1&amp;sourceid=chrome&amp;ie=UTF-8">windows
+ディスクイメージ作成 - Google 検索</a></li>
+<li><a
+href="https://www.dospara.co.jp/monotech/review/10560.html">パソコン自作のススメ「ドライバー1本で始めよう！」－その8「ついに組み立て！（中編2）」　Text
+by
+高橋敏也｜ものテクアーカイブス｜パソコン（PC）通販のドスパラ【公式】</a></li>
+<li><a
+href="https://kakaku.com/item/K0000354566/spec/?lid=spec_anchorlink_details#tab">価格.com
+- ASUS P8Z77-M スペック・仕様</a></li>
+<li><a href="https://kakaku.com/item/K0001344551/spec/">価格.com - ASUS
+TUF GAMING B560M-PLUS スペック・仕様</a></li>
+<li><a
+href="https://akiba-pc.watch.impress.co.jp/docs/dosv/705315.html">電源投入時のトラブル対策編4
+～電源は入るが画面に何も表示されない場合～ - AKIBA PC Hotline!</a>
 NA</li>
-<li><a href="https://www.amazon.co.jp/s?k=DDR3&amp;__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&amp;ref=nb_sb_noss_2">Amazon.co.jp : DDR3</a></li>
-<li><a href="https://www.asus.com/jp/Motherboards/P8Z77M/">P8Z77-M | マザーボード | ASUS 日本</a></li>
-<li><a href="https://dlcdnets.asus.com/pub/ASUS/mb/13MANUAL/PRIME_PRO_TUF_GAMING_Intel_500_Series_BIOS_EM_WEB_JP.pdf">PRIME_PRO_TUF_GAMING_Intel_500_Series_BIOS_EM_WEB_JP.pdf</a></li>
-<li><a href="https://www.ark-pc.co.jp/i/15600683/">Seasonic Seasonic SS-460FL ATX 460W FANレス - 製品詳細 | パソコンSHOPアーク（ark）</a></li>
-<li><a href="https://www.google.com/search?q=windows+%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E4%BD%9C%E6%88%90&amp;oq=windows+%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E4%BD%9C%E6%88%90&amp;aqs=chrome..69i57.7893j0j1&amp;sourceid=chrome&amp;ie=UTF-8">windows ディスクイメージ作成 - Google 検索</a></li>
-<li><a href="https://www.dospara.co.jp/monotech/review/10560.html">パソコン自作のススメ「ドライバー1本で始めよう！」－その8「ついに組み立て！（中編2）」　Text by 高橋敏也｜ものテクアーカイブス｜パソコン（PC）通販のドスパラ【公式】</a></li>
-<li><a href="https://kakaku.com/item/K0000354566/spec/?lid=spec_anchorlink_details#tab">価格.com - ASUS P8Z77-M スペック・仕様</a></li>
-<li><a href="https://kakaku.com/item/K0001344551/spec/">価格.com - ASUS TUF GAMING B560M-PLUS スペック・仕様</a></li>
-<li><a href="https://akiba-pc.watch.impress.co.jp/docs/dosv/705315.html">電源投入時のトラブル対策編4 ～電源は入るが画面に何も表示されない場合～ - AKIBA PC Hotline!</a>
+<li><a
+href="https://qiita.com/Esfahan/items/a3cb8e91e13b96eacc73">Jupyter
+LabをDockerで環境構築する - Qiita</a></li>
+<li><a
+href="https://qiita.com/mtskhs/items/0323f299d03f5b07efdc">pythonで日本語文の感情分析（＋言語処理の基礎）
+- Qiita</a></li>
+<li><a
+href="https://qiita.com/cleeeear/items/2fa90aded84e90f9bff5">jupyterlabとgithubを連携させよう！
+- Qiita</a></li>
+<li><a
+href="https://www.simpletraveler.jp/2020/04/25/nlp-emotion-analysis/">【自然言語処理】テキストデータを極性辞書で感情分析してみる
+| SIMPLE TRAVELER</a> NA</li>
+<li><a href="https://linuc.org/study/knowledge/548/">/tmpディレクトリ |
+Linux技術者認定 LinuC | LPI-Japan</a></li>
+<li><a
+href="https://www.google.com/search?q=deja-dup&amp;oq=deja-dup&amp;aqs=chrome..69i57.1226j0j1&amp;sourceid=chrome&amp;ie=UTF-8">deja-dup
+- Google 検索</a></li>
+<li><a
+href="https://www.pc-master.jp/jisaku/bios-uefi.html">BIOSとUEFI　パソコン初心者講座</a></li>
+<li><a
+href="https://www.pc-master.jp/jisaku/boot.html">ドライブの起動順位の変更　パソコン初心者講座</a></li>
+<li><a
+href="https://faq.tsukumo.co.jp/index.php?solution_id=1308">マザーボードのCSM(Compatibility
+Supported Module)を有効にする方法（ASUS製マザーボード） | TSUKUMO
+サポートFAQ</a></li>
+<li><a
+href="https://bbs.kakaku.com/bbs/K0001267980/SortID=23512439/">価格.com
+- 『CSMを有効にできない。』 ASUS TUF GAMING B460M-PLUS
+のクチコミ掲示板</a></li>
+<li><a
+href="https://www.google.com/search?q=B560M-PLUS+csm&amp;oq=B560M-PLUS+csm&amp;aqs=chrome..69i57.2139j0j1&amp;sourceid=chrome&amp;ie=UTF-8">B560M-PLUS
+csm - Google 検索</a></li>
+<li><a
+href="https://www.lifeboat.jp/newblog2/?p=2252">「セキュアブート」って何さ
+– ライフボート　裏ブログ（非公式ブログ）</a></li>
+<li><a
+href="https://www.archlinux.site/2018/05/ubuntuuefiubuntu-1804-lts-remix.html">UbuntuをUEFIモードでインストールする方法（Ubuntu
+18.04 LTS 日本語Remix） | 普段使いのArch Linux</a></li>
+<li><a
+href="https://datahukugen.com/ubuntuhukugen/">Ubuntuのデータをバックアップして復元する手順｜データ復旧ポート：PC・HDDファイルの復元方法</a></li>
+<li><a
+href="https://kledgeb.blogspot.com/2020/06/ubuntu-2004-74-ubuntuuefi.html">Ubuntu
+20.04 その74 - UbuntuとUEFIセキュアブート - kledgeb</a></li>
+<li><a href="https://linuxfan.info/ubuntu-18-04-install-guide">Ubuntu
+18.04 LTSインストールガイド【スクリーンショットつき解説】 | LFI</a></li>
+<li><a
+href="https://qiita.com/seigot/items/faea0998e17c40b3a63e">Ubuntu20.04LTSのブートUSBをMacで作成する
+- Qiita</a></li>
+<li><a href="https://linuxfan.info/ubuntu-18-04-install-guide">Ubuntu
+18.04 LTSインストールガイド【スクリーンショットつき解説】 | LFI</a></li>
+<li><a href="https://www.balena.io/etcher/">balenaEtcher - Flash OS
+images to SD cards &amp; USB drives</a></li>
+<li><a
+href="https://www.ubuntulinux.jp/ubuntu/mirrors">日本国内のダウンロードサイト
+| Ubuntu Japanese Team</a></li>
+<li><a href="https://www.ubuntulinux.jp/News/ubuntu1804-ja-remix">Ubuntu
+18.04 LTS 日本語 Remix リリース | Ubuntu Japanese Team</a></li>
+<li><a href="https://www.ubuntulinux.jp/News/ubuntu1804-ja-remix">Ubuntu
+18.04 LTS 日本語 Remix リリース | Ubuntu Japanese Team</a></li>
+<li><a
+href="https://qiita.com/DaisukeMiyamoto/items/98ef077ddf44b5727c29">Linuxでコマンドラインからマシンスペックを確認する方法
+- Qiita</a></li>
+<li><a
+href="https://hacknote.jp/archives/24511/">子ディレクトリも含めて特定のファイルを見つけて削除する
+| ハックノート</a> NA</li>
+<li><a
+href="https://learn-aws.cafe/clf/design-resilient-architectures">CLF –
+AWS 認定 クラウドプラクティショナー – 分野 1: クラウドの概念 |
+Web問題集でAWS試験に合格しよう</a></li>
+<li><a
+href="http://chuu-information.com/cloud/page-1573/">AWS認定資格-練習問題　一覧</a></li>
+<li><a href="https://awsjp.com/exam/saa-sap/c/">AWS SAA/SAP資格
+予想問題集 Web版 | 日本語完全無料</a></li>
+<li><a href="https://www.udemy.com/course/aws-knan/">【SAA-C02版】AWS
+認定ソリューションアーキテクト アソシエイト模擬試験問題集（6回分390問）
+| Udemy</a></li>
+<li><a
+href="https://wsr.pearsonvue.com/testtaker/checkout/OrderSummaryPage/AWS?conversationId=2630822">ピアソン
+VUE - 予約されました。</a></li>
+<li><a
+href="https://wsr.pearsonvue.com/testtaker/registration/Dashboard/AWS?conversationId=2631626">ピアソン
+VUE - ダッシュボード</a></li>
+<li><a
+href="https://d1.awsstatic.com/ja_JP/training-and-certification/docs-certification-guide/Online-Proctoring_Exam-Guide.pdf">This
+PowerPoint template is intended to be a quick and easy way to create
+presentations and marketing collateral that hold true to the AWS
+Training and Certification brand look and feel.</a></li>
+<li><a
+href="https://aws.amazon.com/jp/premiumsupport/knowledge-center/ebs-charge-stopped-instance/">停止したインスタンスの
+EBS 料金の停止</a></li>
+<li><a
+href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/ebs-deleting-volume.html">Amazon
+EBS ボリュームの削除 - Amazon Elastic Compute Cloud</a></li>
+<li><a
+href="https://docs.aws.amazon.com/ja_jp/glue/latest/dg/console-jobs.html">AWS
+Glue コンソールでのジョブの使用 - AWS Glue</a></li>
+<li><a
+href="https://aws-exam.net/saa/">【AWS資格】無料WEB問題集＆徹底解説 |
+ソリューションアーキテクト(SAA)</a></li>
+<li><a href="https://www.aws.training/Certification">AWS 認定 | AWS
+トレーニングと認定</a></li>
+<li><a href="https://aws.amazon.com/jp/">AWS</a> NA</li>
+<li><a
+href="https://www.google.com/search?q=%E3%83%87%E3%83%BC%E3%82%BF%E3%82%A6%E3%82%A7%E3%82%A2%E3%83%8F%E3%82%A6%E3%82%B9&amp;oq=%E3%83%87%E3%83%BC%E3%82%BF%E3%82%A6%E3%82%A7%E3%82%A2%E3%83%8F%E3%82%A6%E3%82%B9&amp;aqs=chrome..69i57j69i61&amp;sourceid=chrome&amp;ie=UTF-8">データウェアハウス
+- Google 検索</a></li>
+<li><a
+href="https://knowledge.sakura.ad.jp/867/">サーバー設定ツール「Chef」の概要と基礎的な使い方
+| さくらのナレッジ</a></li>
+<li><a href="https://aws.amazon.com/jp/glacier/">Amazon S3
+Glacier（低コストで安全なクラウドアーカイブストレージ）| AWS</a></li>
+<li><a
+href="https://www.idcf.jp/words/failover.html">フェイルオーバーとは |
+クラウド・データセンター用語集／IDCフロンティア</a></li>
+<li><a
+href="https://milestone-of-se.nesuke.com/nw-basic/as-nw-engineer/stateful-and-stateless/#:~:text=%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%95%E3%83%AB%E3%81%A8%E3%81%AF%E3%80%81%E7%8A%B6%E6%B3%81%E3%81%AB%E3%82%88%E3%81%A3%E3%81%A6,%E5%A4%89%E3%82%8F%E3%82%8B%E3%82%82%E3%81%AE%E3%82%92%E8%A8%80%E3%81%84%E3%81%BE%E3%81%99%E3%80%82">【初心者向け】ステートフル(Stateful)とステートレス(Stateless)の違い,IPv6やAWSでの考え方
+| SEの道標</a></li>
+<li><a
+href="https://docs.aws.amazon.com/ja_jp/Route53/latest/DeveloperGuide/dns-failover-types.html">フェイルオーバー
+(アクティブ/アクティブとアクティブ/パッシブ) の設定 - Amazon Route
+53</a></li>
+<li><a
+href="https://aws.amazon.com/jp/snowball/?whats-new-cards.sort-by=item.additionalFields.postDateTime&amp;whats-new-cards.sort-order=desc">AWS
+Snowball（セキュアなペタバイト規模のデータ転送）| AWS</a></li>
+<li><a
+href="https://dev.classmethod.jp/articles/ec2-placement-group/">EC2
+拡張ネットワーキングとプレイスメントグループの効果を試す |
+DevelopersIO</a></li>
+<li><a
+href="https://yougo.ascii.jp/caltar/%E3%83%AC%E3%82%AC%E3%82%B7%E3%83%BC%E3%83%BB%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3">レガシー・アプリケーション
+- 意味・説明・解説 : ASCII.jpデジタル用語辞典</a></li>
+<li><a
+href="https://aws-exam.net/saa/saa_q.php?q_id=77&amp;q_num=88&amp;level=desc">【AWS資格】問88
+低レイテンシなサーバレスソリューション</a> NA</li>
+<li><a
+href="https://en-ambi.com/?PK=9B6DEF">ハイクラス転職・求人情報サイト
+AMBI（アンビ）</a></li>
+<li><a href="https://eh-career.com/">エンジニアHub</a> NA</li>
+<li><a
+href="https://qiita.com/okoppe8/items/6caca7ab6509edf0c497">統計検定２級に楽に合格する方法
+- Qiita</a></li>
+<li><a href="https://www.toukei-kentei.jp/about/grade2/">統計検定
+2級｜統計検定：Japan Statistical Society Certificate</a></li>
+<li><a
+href="https://www.toukei-kentei.jp/cbt/">統計検定（CBT方式試験）｜統計検定（CBT方式試験）：Japan
+Statistical Society Certificate</a></li>
+<li><a
+href="https://www.toukei-kentei.jp/cbt/cbt_about/grade2/">統計検定CBT方式　2級｜統計検定（CBT方式試験）：Japan
+Statistical Society Certificate</a></li>
+<li><a
+href="https://www.toukei-kentei.jp/exam/">受験のご案内｜統計検定：Japan
+Statistical Society Certificate</a></li>
+<li><a
+href="https://qiita.com/akiyoshi_sasaki/items/c81032c1683f69ff9d11">統計検定2級のためのチートシート
+- Qiita</a></li>
+<li><a href="https://bellcurve.jp/statistics/course/">統計学の時間 |
+統計WEB</a></li>
+<li><a
+href="https://travel-times.hatenablog.com/entry/toukei-kentei">文系出身ド素人が統計検定2級に合格した話
+- Cruise × Cruise</a></li>
+<li><a
+href="https://qiita.com/moriokumura/items/ed246efe11fc5d3fc760">統計検定2級チートシート
+- Qiita</a></li>
+<li><a
+href="https://mimikousi.com/statistics2-textbook/">【失敗しない】統計検定２級向けのオススメ参考書（無料あり）</a>
 NA</li>
-<li><a href="https://qiita.com/Esfahan/items/a3cb8e91e13b96eacc73">Jupyter LabをDockerで環境構築する - Qiita</a></li>
-<li><a href="https://qiita.com/mtskhs/items/0323f299d03f5b07efdc">pythonで日本語文の感情分析（＋言語処理の基礎） - Qiita</a></li>
-<li><a href="https://qiita.com/cleeeear/items/2fa90aded84e90f9bff5">jupyterlabとgithubを連携させよう！ - Qiita</a></li>
-<li><a href="https://www.simpletraveler.jp/2020/04/25/nlp-emotion-analysis/">【自然言語処理】テキストデータを極性辞書で感情分析してみる | SIMPLE TRAVELER</a>
-NA</li>
-<li><a href="https://linuc.org/study/knowledge/548/">/tmpディレクトリ | Linux技術者認定 LinuC | LPI-Japan</a></li>
-<li><a href="https://www.google.com/search?q=deja-dup&amp;oq=deja-dup&amp;aqs=chrome..69i57.1226j0j1&amp;sourceid=chrome&amp;ie=UTF-8">deja-dup - Google 検索</a></li>
-<li><a href="https://www.pc-master.jp/jisaku/bios-uefi.html">BIOSとUEFI　パソコン初心者講座</a></li>
-<li><a href="https://www.pc-master.jp/jisaku/boot.html">ドライブの起動順位の変更　パソコン初心者講座</a></li>
-<li><a href="https://faq.tsukumo.co.jp/index.php?solution_id=1308">マザーボードのCSM(Compatibility Supported Module)を有効にする方法（ASUS製マザーボード） | TSUKUMO サポートFAQ</a></li>
-<li><a href="https://bbs.kakaku.com/bbs/K0001267980/SortID=23512439/">価格.com - 『CSMを有効にできない。』 ASUS TUF GAMING B460M-PLUS のクチコミ掲示板</a></li>
-<li><a href="https://www.google.com/search?q=B560M-PLUS+csm&amp;oq=B560M-PLUS+csm&amp;aqs=chrome..69i57.2139j0j1&amp;sourceid=chrome&amp;ie=UTF-8">B560M-PLUS csm - Google 検索</a></li>
-<li><a href="https://www.lifeboat.jp/newblog2/?p=2252">「セキュアブート」って何さ – ライフボート　裏ブログ（非公式ブログ）</a></li>
-<li><a href="https://www.archlinux.site/2018/05/ubuntuuefiubuntu-1804-lts-remix.html">UbuntuをUEFIモードでインストールする方法（Ubuntu 18.04 LTS 日本語Remix） | 普段使いのArch Linux</a></li>
-<li><a href="https://datahukugen.com/ubuntuhukugen/">Ubuntuのデータをバックアップして復元する手順｜データ復旧ポート：PC・HDDファイルの復元方法</a></li>
-<li><a href="https://kledgeb.blogspot.com/2020/06/ubuntu-2004-74-ubuntuuefi.html">Ubuntu 20.04 その74 - UbuntuとUEFIセキュアブート - kledgeb</a></li>
-<li><a href="https://linuxfan.info/ubuntu-18-04-install-guide">Ubuntu 18.04 LTSインストールガイド【スクリーンショットつき解説】 | LFI</a></li>
-<li><a href="https://qiita.com/seigot/items/faea0998e17c40b3a63e">Ubuntu20.04LTSのブートUSBをMacで作成する - Qiita</a></li>
-<li><a href="https://linuxfan.info/ubuntu-18-04-install-guide">Ubuntu 18.04 LTSインストールガイド【スクリーンショットつき解説】 | LFI</a></li>
-<li><a href="https://www.balena.io/etcher/">balenaEtcher - Flash OS images to SD cards &amp; USB drives</a></li>
-<li><a href="https://www.ubuntulinux.jp/ubuntu/mirrors">日本国内のダウンロードサイト | Ubuntu Japanese Team</a></li>
-<li><a href="https://www.ubuntulinux.jp/News/ubuntu1804-ja-remix">Ubuntu 18.04 LTS 日本語 Remix リリース | Ubuntu Japanese Team</a></li>
-<li><a href="https://www.ubuntulinux.jp/News/ubuntu1804-ja-remix">Ubuntu 18.04 LTS 日本語 Remix リリース | Ubuntu Japanese Team</a></li>
-<li><a href="https://qiita.com/DaisukeMiyamoto/items/98ef077ddf44b5727c29">Linuxでコマンドラインからマシンスペックを確認する方法 - Qiita</a></li>
-<li><a href="https://hacknote.jp/archives/24511/">子ディレクトリも含めて特定のファイルを見つけて削除する | ハックノート</a>
-NA</li>
-<li><a href="https://learn-aws.cafe/clf/design-resilient-architectures">CLF – AWS 認定 クラウドプラクティショナー – 分野 1: クラウドの概念 | Web問題集でAWS試験に合格しよう</a></li>
-<li><a href="http://chuu-information.com/cloud/page-1573/">AWS認定資格-練習問題　一覧</a></li>
-<li><a href="https://awsjp.com/exam/saa-sap/c/">AWS SAA/SAP資格 予想問題集 Web版 | 日本語完全無料</a></li>
-<li><a href="https://www.udemy.com/course/aws-knan/">【SAA-C02版】AWS 認定ソリューションアーキテクト アソシエイト模擬試験問題集（6回分390問） | Udemy</a></li>
-<li><a href="https://wsr.pearsonvue.com/testtaker/checkout/OrderSummaryPage/AWS?conversationId=2630822">ピアソン VUE - 予約されました。</a></li>
-<li><a href="https://wsr.pearsonvue.com/testtaker/registration/Dashboard/AWS?conversationId=2631626">ピアソン VUE - ダッシュボード</a></li>
-<li><a href="https://d1.awsstatic.com/ja_JP/training-and-certification/docs-certification-guide/Online-Proctoring_Exam-Guide.pdf">This PowerPoint template is intended to be a quick and easy way to create presentations and marketing collateral that hold true to the AWS Training and Certification brand look and feel.</a></li>
-<li><a href="https://aws.amazon.com/jp/premiumsupport/knowledge-center/ebs-charge-stopped-instance/">停止したインスタンスの EBS 料金の停止</a></li>
-<li><a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/ebs-deleting-volume.html">Amazon EBS ボリュームの削除 - Amazon Elastic Compute Cloud</a></li>
-<li><a href="https://docs.aws.amazon.com/ja_jp/glue/latest/dg/console-jobs.html">AWS Glue コンソールでのジョブの使用 - AWS Glue</a></li>
-<li><a href="https://aws-exam.net/saa/">【AWS資格】無料WEB問題集＆徹底解説 | ソリューションアーキテクト(SAA)</a></li>
-<li><a href="https://www.aws.training/Certification">AWS 認定 | AWS トレーニングと認定</a></li>
-<li><a href="https://aws.amazon.com/jp/">AWS</a>
-NA</li>
-<li><a href="https://www.google.com/search?q=%E3%83%87%E3%83%BC%E3%82%BF%E3%82%A6%E3%82%A7%E3%82%A2%E3%83%8F%E3%82%A6%E3%82%B9&amp;oq=%E3%83%87%E3%83%BC%E3%82%BF%E3%82%A6%E3%82%A7%E3%82%A2%E3%83%8F%E3%82%A6%E3%82%B9&amp;aqs=chrome..69i57j69i61&amp;sourceid=chrome&amp;ie=UTF-8">データウェアハウス - Google 検索</a></li>
-<li><a href="https://knowledge.sakura.ad.jp/867/">サーバー設定ツール「Chef」の概要と基礎的な使い方 | さくらのナレッジ</a></li>
-<li><a href="https://aws.amazon.com/jp/glacier/">Amazon S3 Glacier（低コストで安全なクラウドアーカイブストレージ）| AWS</a></li>
-<li><a href="https://www.idcf.jp/words/failover.html">フェイルオーバーとは | クラウド・データセンター用語集／IDCフロンティア</a></li>
-<li><a href="https://milestone-of-se.nesuke.com/nw-basic/as-nw-engineer/stateful-and-stateless/#:~:text=%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%95%E3%83%AB%E3%81%A8%E3%81%AF%E3%80%81%E7%8A%B6%E6%B3%81%E3%81%AB%E3%82%88%E3%81%A3%E3%81%A6,%E5%A4%89%E3%82%8F%E3%82%8B%E3%82%82%E3%81%AE%E3%82%92%E8%A8%80%E3%81%84%E3%81%BE%E3%81%99%E3%80%82">【初心者向け】ステートフル(Stateful)とステートレス(Stateless)の違い,IPv6やAWSでの考え方 | SEの道標</a></li>
-<li><a href="https://docs.aws.amazon.com/ja_jp/Route53/latest/DeveloperGuide/dns-failover-types.html">フェイルオーバー (アクティブ/アクティブとアクティブ/パッシブ) の設定 - Amazon Route 53</a></li>
-<li><a href="https://aws.amazon.com/jp/snowball/?whats-new-cards.sort-by=item.additionalFields.postDateTime&amp;whats-new-cards.sort-order=desc">AWS Snowball（セキュアなペタバイト規模のデータ転送）| AWS</a></li>
-<li><a href="https://dev.classmethod.jp/articles/ec2-placement-group/">EC2 拡張ネットワーキングとプレイスメントグループの効果を試す | DevelopersIO</a></li>
-<li><a href="https://yougo.ascii.jp/caltar/%E3%83%AC%E3%82%AC%E3%82%B7%E3%83%BC%E3%83%BB%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3">レガシー・アプリケーション - 意味・説明・解説 : ASCII.jpデジタル用語辞典</a></li>
-<li><a href="https://aws-exam.net/saa/saa_q.php?q_id=77&amp;q_num=88&amp;level=desc">【AWS資格】問88 低レイテンシなサーバレスソリューション</a>
-NA</li>
-<li><a href="https://en-ambi.com/?PK=9B6DEF">ハイクラス転職・求人情報サイト AMBI（アンビ）</a></li>
-<li><a href="https://eh-career.com/">エンジニアHub</a>
-NA</li>
-<li><a href="https://qiita.com/okoppe8/items/6caca7ab6509edf0c497">統計検定２級に楽に合格する方法 - Qiita</a></li>
-<li><a href="https://www.toukei-kentei.jp/about/grade2/">統計検定 2級｜統計検定：Japan Statistical Society Certificate</a></li>
-<li><a href="https://www.toukei-kentei.jp/cbt/">統計検定（CBT方式試験）｜統計検定（CBT方式試験）：Japan Statistical Society Certificate</a></li>
-<li><a href="https://www.toukei-kentei.jp/cbt/cbt_about/grade2/">統計検定CBT方式　2級｜統計検定（CBT方式試験）：Japan Statistical Society Certificate</a></li>
-<li><a href="https://www.toukei-kentei.jp/exam/">受験のご案内｜統計検定：Japan Statistical Society Certificate</a></li>
-<li><a href="https://qiita.com/akiyoshi_sasaki/items/c81032c1683f69ff9d11">統計検定2級のためのチートシート - Qiita</a></li>
-<li><a href="https://bellcurve.jp/statistics/course/">統計学の時間 | 統計WEB</a></li>
-<li><a href="https://travel-times.hatenablog.com/entry/toukei-kentei">文系出身ド素人が統計検定2級に合格した話 - Cruise × Cruise</a></li>
-<li><a href="https://qiita.com/moriokumura/items/ed246efe11fc5d3fc760">統計検定2級チートシート - Qiita</a></li>
-<li><a href="https://mimikousi.com/statistics2-textbook/">【失敗しない】統計検定２級向けのオススメ参考書（無料あり）</a>
-NA</li>
-<li><a href="https://www.apple.com/jp/shop/buy-watch/apple-watch-se">Apple Watch SEを購入 - Apple（日本）</a></li>
-<li><a href="https://www.google.com/search?q=%E3%83%AD%E3%83%95%E3%83%88&amp;sxsrf=AOaemvJj5XhOjIHBhsEF4Q1MnzislvaTzQ%3A1637411258704&amp;ei=uumYYcy4KpmtoAS07rHoBQ&amp;ved=0ahUKEwjM_bOj-Kb0AhWZFogKHTR3DF0Q4dUDCA4&amp;uact=5&amp;oq=%E3%83%AD%E3%83%95%E3%83%88&amp;gs_lcp=Cgdnd3Mtd2l6EAMyBAgjECcyBwgAEIAEEAQyBAgAEEMyBwgAEIAEEAQyCggAEIAEEAQQiwMyBwgAEEMQiwMyCggAEIAEEAQQiwMyCggAEIAEEAQQiwM6BwgjELADECc6BwgAEEcQsANKBAhBGABQ3AVYvwpglwxoAXACeACAAXWIAb4DkgEDMC40mAEAoAEByAEDuAEBwAEB&amp;sclient=gws-wiz">ロフト - Google 検索</a></li>
-<li><a href="https://www.google.com/search?sxsrf=AOaemvIpcRJlTjXpjdvdQ_0F2AsY_v_eZw:1637411286710&amp;q=%E6%9D%B1%E6%80%A5%E3%83%8F%E3%83%B3%E3%82%BA&amp;stick=H4sIAAAAAAAAAONgFuLSz9U3yDA1Na-yUOIEsc2LLItTtASDM1NSyxMri_1SK0qCS1ILihex8j-bu_FZw9LHzf2Pmzc_btq1g5URAElbICdBAAAA&amp;sa=X&amp;ved=2ahUKEwjuqeGw-Kb0AhXP7WEKHer1D8sQxA16BAhNEAU&amp;biw=1920&amp;bih=879&amp;dpr=1">東急ハンズ - Google 検索</a></li>
-<li><a href="https://www.plazastyle.com/ec/srDispCategoryTreeLink/doSearchCategory/11030000000/04-05/2/1">ファッション | PLAZA ONLINE STORE - プラザオンラインストア</a></li>
-<li><a href="https://support.apple.com/ja-jp/HT204818">Apple Watch のバンドを取り換える - Apple サポート (日本)</a></li>
-<li><a href="https://usano.net/sport-loop-sport-band/#i-2">【Apple Watch】「スポーツバンド」「スポーツループ」どっちがおすすめ？実際に比較！ | ウサノ通信</a></li>
-<li><a href="https://www.apple.com/jp/shop/buy-watch/apple-watch-se?option.watch_cases=MKQG3J/A&amp;option.watch_bands=ML303FE/A&amp;preSelect=false&amp;product=Z0YQ&amp;step=detail#">ゴールドアルミニウムケースとスポーツループ - Apple（日本）</a></li>
-<li><a href="https://www.google.com/search?q=%E3%83%AD%E3%83%95%E3%83%88+%E3%82%AB%E3%83%90%E3%83%B3&amp;oq=%E3%83%AD%E3%83%95%E3%83%88%E3%80%80%E3%82%AB%E3%83%90%E3%83%B3&amp;aqs=chrome..69i57.2362j0j1&amp;sourceid=chrome&amp;ie=UTF-8">ロフト カバン - Google 検索</a></li>
-<li><a href="https://70cp.pref.kanagawa.jp/">総額70億円還元キャンペーン／神奈川県キャッシュレス・消費喚起事業</a></li>
+<li><a
+href="https://www.apple.com/jp/shop/buy-watch/apple-watch-se">Apple
+Watch SEを購入 - Apple（日本）</a></li>
+<li><a
+href="https://www.google.com/search?q=%E3%83%AD%E3%83%95%E3%83%88&amp;sxsrf=AOaemvJj5XhOjIHBhsEF4Q1MnzislvaTzQ%3A1637411258704&amp;ei=uumYYcy4KpmtoAS07rHoBQ&amp;ved=0ahUKEwjM_bOj-Kb0AhWZFogKHTR3DF0Q4dUDCA4&amp;uact=5&amp;oq=%E3%83%AD%E3%83%95%E3%83%88&amp;gs_lcp=Cgdnd3Mtd2l6EAMyBAgjECcyBwgAEIAEEAQyBAgAEEMyBwgAEIAEEAQyCggAEIAEEAQQiwMyBwgAEEMQiwMyCggAEIAEEAQQiwMyCggAEIAEEAQQiwM6BwgjELADECc6BwgAEEcQsANKBAhBGABQ3AVYvwpglwxoAXACeACAAXWIAb4DkgEDMC40mAEAoAEByAEDuAEBwAEB&amp;sclient=gws-wiz">ロフト
+- Google 検索</a></li>
+<li><a
+href="https://www.google.com/search?sxsrf=AOaemvIpcRJlTjXpjdvdQ_0F2AsY_v_eZw:1637411286710&amp;q=%E6%9D%B1%E6%80%A5%E3%83%8F%E3%83%B3%E3%82%BA&amp;stick=H4sIAAAAAAAAAONgFuLSz9U3yDA1Na-yUOIEsc2LLItTtASDM1NSyxMri_1SK0qCS1ILihex8j-bu_FZw9LHzf2Pmzc_btq1g5URAElbICdBAAAA&amp;sa=X&amp;ved=2ahUKEwjuqeGw-Kb0AhXP7WEKHer1D8sQxA16BAhNEAU&amp;biw=1920&amp;bih=879&amp;dpr=1">東急ハンズ
+- Google 検索</a></li>
+<li><a
+href="https://www.plazastyle.com/ec/srDispCategoryTreeLink/doSearchCategory/11030000000/04-05/2/1">ファッション
+| PLAZA ONLINE STORE - プラザオンラインストア</a></li>
+<li><a href="https://support.apple.com/ja-jp/HT204818">Apple Watch
+のバンドを取り換える - Apple サポート (日本)</a></li>
+<li><a href="https://usano.net/sport-loop-sport-band/#i-2">【Apple
+Watch】「スポーツバンド」「スポーツループ」どっちがおすすめ？実際に比較！
+| ウサノ通信</a></li>
+<li><a
+href="https://www.apple.com/jp/shop/buy-watch/apple-watch-se?option.watch_cases=MKQG3J/A&amp;option.watch_bands=ML303FE/A&amp;preSelect=false&amp;product=Z0YQ&amp;step=detail#">ゴールドアルミニウムケースとスポーツループ
+- Apple（日本）</a></li>
+<li><a
+href="https://www.google.com/search?q=%E3%83%AD%E3%83%95%E3%83%88+%E3%82%AB%E3%83%90%E3%83%B3&amp;oq=%E3%83%AD%E3%83%95%E3%83%88%E3%80%80%E3%82%AB%E3%83%90%E3%83%B3&amp;aqs=chrome..69i57.2362j0j1&amp;sourceid=chrome&amp;ie=UTF-8">ロフト
+カバン - Google 検索</a></li>
+<li><a
+href="https://70cp.pref.kanagawa.jp/">総額70億円還元キャンペーン／神奈川県キャッシュレス・消費喚起事業</a></li>
 <li><a href="https://www.youtube.com/">YT</a></li>
-<li><a href="https://docs.google.com/spreadsheets/d/1iM5VIH-uYOlboYBIgfV0X4hErrbTfgR83_9vzjVg-eU/edit#gid=0">TODOリスト</a></li>
-<li><a href="https://github.com/tikeda-caravan?tab=repositories">GitHub</a></li>
+<li><a
+href="https://docs.google.com/spreadsheets/d/1iM5VIH-uYOlboYBIgfV0X4hErrbTfgR83_9vzjVg-eU/edit#gid=0">TODOリスト</a></li>
+<li><a
+href="https://github.com/tikeda-caravan?tab=repositories">GitHub</a></li>
 <li><a href="http://localhost:8787/">RS</a></li>
-<li><a href="https://www.amazon.co.jp/ref=nav_logo_prime">Amazon</a></li>
+<li><a
+href="https://www.amazon.co.jp/ref=nav_logo_prime">Amazon</a></li>
 <li><a href="https://www.dropbox.com/h">Dropbox</a></li>
 <li><a href="https://trello.com/b/gedkCNJ9/br-analysis">Trello</a></li>
-<li><a href="https://app.netlify.com/teams/tikeda-caravan/sites">netlify</a></li>
-<li><a href="https://kinakomoch.netlify.app/">きなこもちの休憩所</a></li>
+<li><a
+href="https://app.netlify.com/teams/tikeda-caravan/sites">netlify</a></li>
+<li><a
+href="https://kinakomoch.netlify.app/">きなこもちの休憩所</a></li>
 <li><a href="https://translate.google.co.jp/?hl=ja">翻訳</a></li>
 <li><a href="https://ango-blog.netlify.app/">あんごうの経験</a></li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
