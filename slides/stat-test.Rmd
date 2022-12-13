@@ -475,6 +475,22 @@ Q. 連続型確率変数の式を答えろ
 \end{align}
 
 ---
+Q. 累積分布関数 $F()$ をつかって、以下の確率を求めよ
+
+連続型確率変数 $X$ の $P(a\leq X \leq b)$
+
+--
+
+$$ P(a < X \leq b)  = P(a \leq X \leq b) = F(b) - F(a) = P(X \leq b) - P(X \leq a)$$
+
+- ただし、このときの値が必ずマイナスにならないようにするため $F(b)$ と $F(a)$ が入れ替わる場合がある(練習問題参照)。
+
+<a href="https://bellcurve.jp/statistics/course/7885.html" target="_blank" rel="noopener noreferrer">練習問題</a>
+
+.footnote[<a href="https://bellcurve.jp/statistics/course/6710.html" target="_blank" rel="noopener noreferrer">参考サイト</a>]
+
+
+---
 Q. 連続型一様分布の確率密度関数と期待値を求めろ
 
 \begin{equation}
@@ -484,7 +500,7 @@ f(x)=
 $$E(X)$$
 
 ---
-Q. 一様分布の確率密度関数と期待値を求めろ
+Q. 連続型一様分布の確率密度関数と期待値を求めろ
 
 \begin{equation}
 f(x)=\left\{\begin{array}{l}

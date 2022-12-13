@@ -4,7 +4,7 @@
     <title>stat test cheet sheet</title>
     <meta charset="utf-8" />
     <meta name="author" content="Ango" />
-    <meta name="date" content="2022-12-12" />
+    <meta name="date" content="2022-12-13" />
     <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
 document.addEventListener('DOMContentLoaded', function(e) {
@@ -1563,7 +1563,7 @@ class: center, middle, inverse, title-slide
 ### Ango
 ]
 .date[
-### 2022-12-12
+### 2022-12-13
 ]
 
 ---
@@ -1966,6 +1966,22 @@ Q. 連続型確率変数の式を答えろ
 \end{align}`
 
 ---
+Q. 累積分布関数 `\(F()\)` をつかって、以下の確率を求めよ
+
+連続型確率変数 `\(X\)` の `\(P(a\leq X \leq b)\)`
+
+--
+
+$$ P(a &lt; X \leq b)  = P(a \leq X \leq b) = F(b) - F(a) = P(X \leq b) - P(X \leq a)$$
+
+- ただし、このときの値が必ずマイナスにならないようにするため `\(F(b)\)` と `\(F(a)\)` が入れ替わる場合がある(練習問題参照)。
+
+&lt;a href=&quot;https://bellcurve.jp/statistics/course/7885.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;練習問題&lt;/a&gt;
+
+.footnote[&lt;a href=&quot;https://bellcurve.jp/statistics/course/6710.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;参考サイト&lt;/a&gt;]
+
+
+---
 Q. 連続型一様分布の確率密度関数と期待値を求めろ
 
 `\begin{equation}
@@ -1975,7 +1991,7 @@ f(x)=
 `$$E(X)$$`
 
 ---
-Q. 一様分布の確率密度関数と期待値を求めろ
+Q. 連続型一様分布の確率密度関数と期待値を求めろ
 
 `\begin{equation}
 f(x)=\left\{\begin{array}{l}
