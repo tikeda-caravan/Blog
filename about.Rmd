@@ -8,3 +8,39 @@ description: |
 
 改めてこのブログについてですが、tikeda-caravanの勉強したことやRのTips等を残していくことをメインしたブログになります。
 
+## Information
+
+ディスク情報
+
+- SSD(Windows):
+  - モデル名: WD_BLACK SN770 2TB (731100WD)
+  - シリアルナンバー: 230623447409
+  - サイズ: 230623447409
+
+- HDD(Windows Backup):
+  - モデル名: Hitachi HDS721050CLA362 (JP2OA39C)
+  - シリアルナンバー: JP1521HN0SH4EA
+  - サイズ: 500 GB (500,107,862,016 bytes)
+
+- 4.0TB:
+  - モデル名: WDC WD40EZAZ-00SF3B0 (80.00A80)
+  - シリアルナンバー: WD-WX42D51DTRF1
+  - サイズ: 4.0 TB (4,000,787,030,016 bytes)
+
+- Ubuntu Desktop:
+  - モデル名: TOSHIBA THNSNJ512GCSU (JURA0101)
+  - シリアルナンバー: 25IS102JT7TW
+  - サイズ: 512 GB (512,110,190,592 bytes)
+
+- 1.0TB:
+  - モデル名: WDC WD10EZEX-22MFCA0 (01.01A01)
+  - シリアルナンバー: WD-WCC6Y3NEAD80
+  - サイズ: 1.0 TB (1,000,204,886,016 bytes)
+
+- CD/DVD Drive:
+  - モデル名: Optiarc DVD RW AD-7280S (1.21)
+  - シリアルナンバー: Optiarc_DVD_RW_AD-7280S
+
+
+
+

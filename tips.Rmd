@@ -298,6 +298,5 @@ NA
 - [Dropbox](https://www.dropbox.com/h)
 - [Trello](https://trello.com/b/gedkCNJ9/br-analysis)
 - [netlify](https://app.netlify.com/teams/tikeda-caravan/sites)
-- [きなこもちの休憩所](https://kinakomoch.netlify.app/)
 - [翻訳](https://translate.google.co.jp/?hl=ja)
 - [あんごうの経験](https://ango-blog.netlify.app/)
